@@ -9,15 +9,12 @@ const AuthButton = () => {
     <div>
       {!session && (
         <div>
-          <button onClick={() => signIn()}>SIGN IN</button>
-        </div>
-      )}
-      
-      {session && (
-        <div>
-          <button onClick={() => signOut()}>SIGN OUT</button>
-
-          <div>Hello {session.user?.name} ✌️</div>
+          <button
+            onClick={() => signIn()}
+            className="btn btn-sm btn-outline btn-primary"
+          >
+            SIGN IN
+          </button>
         </div>
       )}
     </div>

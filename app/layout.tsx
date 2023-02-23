@@ -1,7 +1,9 @@
+import './globals.css'
+
 import AuthContext from '@/components/AuthContext'
+import Navbar from '@/components/ui/Navbar'
 import { Session } from 'next-auth'
 import { headers } from 'next/headers'
-import './globals.css'
 
 const getSession = async (cookie: string): Promise<Session> => {
   const response = await fetch(`${process.env.NEXTAUTH_URL}/api/auth/session`, {
@@ -21,6 +23,8 @@ export default async function RootLayout({
   children: React.ReactNode
 }) {
   const session = await getSession(headers().get('cookie') ?? '')
+  const user = session ? session.user : undefined
+
   return (
     <html lang="en">
       {/*
@@ -29,7 +33,14 @@ export default async function RootLayout({
       */}
       <head />
       <body>
-        <AuthContext session={session}>{children}</AuthContext>
+        <AuthContext session={session}>
+          <>
+            <Navbar user={user} />
+            <div className="flex flex-col items-center justify-center m-2 ">
+              {children}
+            </div>
+          </>
+        </AuthContext>
       </body>
     </html>
   )

@@ -1,14 +1,15 @@
-import AuthButton from '@/components/ui/AuthButton'
 import { Inter } from '@next/font/google'
+import { NextPage } from 'next'
+import { getSession } from 'next-auth/react'
 
 const inter = Inter({ subsets: ['latin'] })
 
-const Home = () => {
+const Home: NextPage = () => {
   return (
-    <div>
-      <h1>Welcome to Qards App</h1>
+    <div className="text-center">
+      <h1>Welcome</h1>
       <div>
-        <AuthButton />
+        <p>this is app body</p>
       </div>
     </div>
   )
