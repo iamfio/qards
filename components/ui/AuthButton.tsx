@@ -10,7 +10,9 @@ const AuthButton = () => {
       {!session && (
         <div>
           <button
-            onClick={() => signIn()}
+            onClick={() => {
+              signIn()
+            }}
             className="btn btn-sm btn-outline btn-primary"
           >
             SIGN IN

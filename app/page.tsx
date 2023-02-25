@@ -1,13 +1,19 @@
+import { authOptions } from '@/pages/api/auth/[...nextauth]'
 import { Inter } from '@next/font/google'
-import { NextPage } from 'next'
-import { getSession } from 'next-auth/react'
+import { getServerSession } from 'next-auth'
+import { redirect } from 'next/navigation'
 
 const inter = Inter({ subsets: ['latin'] })
 
-const Home: NextPage = () => {
+const Home = async () => {
+  const session = await getServerSession(authOptions)
+
+  if (session?.user) {
+    redirect('/dashboard')
+  }
+
   return (
     <div className="text-center">
-      <h1>Welcome</h1>
       <div>
         <p>this is app body</p>
       </div>

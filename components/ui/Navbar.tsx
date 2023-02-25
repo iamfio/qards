@@ -1,7 +1,8 @@
-// 'use client'
-import { User } from '@prisma/client'
+'use client'
+
 import { Session } from 'next-auth'
-import { AdapterUser } from 'next-auth/adapters'
+import { signOut } from 'next-auth/react'
+import Link from 'next/link'
 
 import AuthButton from './AuthButton'
 
@@ -14,7 +15,7 @@ const Navbar = ({ user }: NavbarProps): JSX.Element => {
     <div className="shadow-md navbar bg-base-100">
       <div className="flex-1">
         <a className="text-xl normal-case btn btn-ghost">
-          <span className="text-xl text-primary">Q</span>a
+          <span className="text-xxl text-primary">Q</span>a
           <span className="text-xl text-primary">R</span>ds
         </a>
       </div>
@@ -32,13 +33,13 @@ const Navbar = ({ user }: NavbarProps): JSX.Element => {
               className="p-2 mt-3 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
             >
               <li>
-                <a className="justify-between">Profile</a>
+                <Link href="/profile" className="justify-between">
+                  Profile
+                </Link>
               </li>
+
               <li>
-                <a>Settings</a>
-              </li>
-              <li>
-                <a>Logout</a>
+                <a onClick={() => signOut()}>Logout</a>
               </li>
             </ul>
           </div>

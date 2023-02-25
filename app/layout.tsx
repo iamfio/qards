@@ -36,7 +36,7 @@ export default async function RootLayout({
         <AuthContext session={session}>
           <>
             <Navbar user={user} />
-            <div className="flex flex-col items-center justify-center m-2 ">
+            <div className="flex flex-col items-center justify-center mx-2 my-4 ">
               {children}
             </div>
           </>
