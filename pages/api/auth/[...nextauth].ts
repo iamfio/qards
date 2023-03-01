@@ -1,20 +1,52 @@
+import clientPromise from '@/lib/mongodb'
 import prisma from '@/lib/prismadb'
+import { MongoDBAdapter } from '@next-auth/mongodb-adapter'
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
+import { randomBytes, randomUUID } from 'crypto'
 import NextAuth, { AuthOptions, Session } from 'next-auth'
+import { JWT } from 'next-auth/jwt'
 import GithubProvider from 'next-auth/providers/github'
 
 export const authOptions: AuthOptions = {
-  adapter: PrismaAdapter(prisma),
+  secret: process.env.JWT_SIGNING_PRIVATE_KEY,
+  // adapter: PrismaAdapter(prisma),
+  adapter: MongoDBAdapter(clientPromise),
   providers: [
     GithubProvider({
-      clientId: String(process.env.GITHUB_CLIENT_ID),
-      clientSecret: String(process.env.GITHUB_CLIENT_SECRET),
+      clientId: process.env.GITHUB_CLIENT_ID as string,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
     }),
   ],
+  jwt: {
+    secret: process.env.JWT_SIGNING_PRIVATE_KEY,
+    maxAge: 60 * 60 * 24 * 30,
+  },
+  session: {
+    // strategy: 'jwt',
+    maxAge: 7 * 24 * 60 * 60, // 1 Week
+    generateSessionToken: () => {
+      return randomUUID?.() ?? randomBytes(32).toString('hex')
+    },
+  },
   callbacks: {
-    async session({ session, user }: { session: Session; user: any }) {
+    async session({
+      session,
+      user,
+      token,
+    }: {
+      session: Session
+      user: any
+      token: JWT
+    }) {
       session.user.id = user.id
       return session
+    },
+    async jwt({ token, user, account, profile, isNewUser }) {
+      return {
+        token,
+        user,
+        isNewUser,
+      }
     },
   },
 }

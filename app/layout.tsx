@@ -2,27 +2,15 @@ import './globals.css'
 
 import AuthContext from '@/components/AuthContext'
 import Navbar from '@/components/ui/Navbar'
-import { Session } from 'next-auth'
-import { headers } from 'next/headers'
-
-const getSession = async (cookie: string): Promise<Session> => {
-  const response = await fetch(`${process.env.NEXTAUTH_URL}/api/auth/session`, {
-    headers: {
-      cookie,
-    },
-  })
-
-  const session = await response.json()
-
-  return Object.keys(session).length > 0 ? session : null
-}
+import { authOptions } from '@/pages/api/auth/[...nextauth]'
+import { getServerSession } from 'next-auth'
 
 export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  const session = await getSession(headers().get('cookie') ?? '')
+  const session = await getServerSession(authOptions)
   const user = session ? session.user : undefined
 
   return (
