@@ -9,8 +9,8 @@ import GithubProvider from 'next-auth/providers/github'
 
 export const authOptions: AuthOptions = {
   secret: process.env.JWT_SIGNING_PRIVATE_KEY,
-  // adapter: PrismaAdapter(prisma),
-  adapter: MongoDBAdapter(clientPromise),
+  adapter: PrismaAdapter(prisma),
+  // adapter: MongoDBAdapter(clientPromise),
   providers: [
     GithubProvider({
       clientId: process.env.GITHUB_CLIENT_ID as string,
