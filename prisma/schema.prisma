@@ -6,8 +6,8 @@ generator client {
 }
 
 datasource db {
-  provider          = "mongodb"
-  url               = env("DATABASE_URL")
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
 }
 
 model Account {
@@ -43,8 +43,7 @@ model Session {
 model User {
   id            String    @id @default(auto()) @map("_id") @db.ObjectId
   name          String?
-  firstName     String?
-  lastname      String?
+  username      String?   @unique
   company       String?
   email         String?   @unique
   emailVerified DateTime?
