@@ -11,7 +11,6 @@ export default async function RootLayout({
   children: React.ReactNode
 }) {
   const session = await getServerSession(authOptions)
-  const user = session ? session.user : undefined
 
   return (
     <html lang="en">
@@ -23,7 +22,7 @@ export default async function RootLayout({
       <body>
         <AuthContext session={session}>
           <>
-            <Navbar user={user} />
+            <Navbar />
             <div className="flex flex-col items-center justify-center mx-2 my-4 ">
               {children}
             </div>

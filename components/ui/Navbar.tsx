@@ -1,31 +1,26 @@
 'use client'
 
-import { Session } from 'next-auth'
-import { signOut } from 'next-auth/react'
+import { signOut, useSession } from 'next-auth/react'
 import Link from 'next/link'
 
 import AuthButton from './AuthButton'
+import Logo from './Logo'
 
-type NavbarProps = {
-  user: Session['user']
-}
+const Navbar = (): JSX.Element => {
+  const { data: session } = useSession()
 
-const Navbar = ({ user }: NavbarProps): JSX.Element => {
   return (
     <div className="shadow-md navbar bg-base-100">
       <div className="flex-1">
-        <a className="text-xl normal-case btn btn-ghost">
-          <span className="text-xxl text-primary">Q</span>a
-          <span className="text-xl text-primary">R</span>ds
-        </a>
+        <Logo />
       </div>
 
       <div className="flex-none gap-2">
-        {user && (
+        {session?.user && (
           <div className="dropdown dropdown-end">
             <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
               <div className="w-10 rounded-full">
-                <img src={user.image || ''} />
+                <img src={session.user.image || ''} />
               </div>
             </label>
             <ul
@@ -44,7 +39,7 @@ const Navbar = ({ user }: NavbarProps): JSX.Element => {
             </ul>
           </div>
         )}
-        {!user && <AuthButton />}
+        {!session?.user && <AuthButton />}
       </div>
     </div>
   )
