@@ -45,6 +45,7 @@ model User {
   name          String?
   username      String?   @unique
   company       String?
+  jobRole       String?
   email         String?   @unique
   emailVerified DateTime?
   image         String?

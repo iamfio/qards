@@ -28,7 +28,7 @@ const Navbar = (): JSX.Element => {
               className="p-2 mt-3 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
             >
               <li>
-                <Link href="/profile" className="justify-between">
+                <Link href="/dashboard/profile" className="justify-between">
                   Profile
                 </Link>
               </li>

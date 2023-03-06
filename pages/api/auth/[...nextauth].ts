@@ -1,15 +1,13 @@
-import { prisma } from '@/lib/prismadb';
-import { PrismaAdapter } from '@next-auth/prisma-adapter';
-import { randomBytes, randomUUID } from 'crypto';
-import NextAuth, { AuthOptions, Session } from 'next-auth';
-import { JWT } from 'next-auth/jwt';
-import GithubProvider from 'next-auth/providers/github';
+import { prisma } from '@/lib/prismadb'
+import { PrismaAdapter } from '@next-auth/prisma-adapter'
+import { randomBytes, randomUUID } from 'crypto'
+import NextAuth, { AuthOptions, Session } from 'next-auth'
+import { JWT } from 'next-auth/jwt'
+import GithubProvider from 'next-auth/providers/github'
 
-// import prisma from '@/lib/prismadb'
 export const authOptions: AuthOptions = {
   secret: process.env.JWT_SIGNING_PRIVATE_KEY,
   adapter: PrismaAdapter(prisma),
-  // adapter: MongoDBAdapter(clientPromise),
   providers: [
     GithubProvider({
       clientId: process.env.GITHUB_CLIENT_ID as string,
