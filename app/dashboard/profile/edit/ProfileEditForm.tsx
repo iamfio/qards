@@ -62,18 +62,6 @@ const ProfileEditForm = ({ user }: { user: User }) => {
     }
   }
 
-  // const onChange = async (event: ChangeEvent) => {
-  //   const file = (event.target as HTMLInputElement).files![0]
-
-  //   console.log(file)
-
-  //   const imageRef = storageRef(storage, 'images')
-
-  //   uploadBytes(imageRef, file).then((snapshot) =>
-  //     console.log('File Uploaded', snapshot)
-  //   )
-  // }
-
   return (
     <div className="w-[275px]">
       <form onSubmit={handleSubmit(onSubmit)}>
