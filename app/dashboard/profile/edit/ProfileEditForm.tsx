@@ -1,9 +1,8 @@
 'use client'
 
 import { User } from '@prisma/client'
-import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { ChangeEvent, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 type FormData = {
