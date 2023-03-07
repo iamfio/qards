@@ -8,7 +8,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     const user = await prisma.user.findUnique({
       where: {
-        id: String(uid),
+        id: uid as string,
       },
       include: {
         qards: true,

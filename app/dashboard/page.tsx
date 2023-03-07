@@ -1,11 +1,20 @@
+import { prisma } from '@/lib/globalPrisma'
 import { authOptions } from '@/pages/api/auth/[...nextauth]'
 import { getServerSession } from 'next-auth'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
-import React from 'react'
 
 const Dashboard = async () => {
   const session = await getServerSession(authOptions)
+  
+  const qards = await prisma.user.findUnique({
+    where: { id: session?.user.id as string },
+    select: { qards: true },
+  })
+
+  // On this state of project the Qards, created by SESSION User can be retrieved and listet.
+  // TODO: Show cards by User's username!
+  console.log(qards)
 
   if (!session) {
     redirect('/')
@@ -30,7 +39,10 @@ const Dashboard = async () => {
 
           <div className="flex justify-between">
             <div className="my-2 mx-4">
-              <Link href="/dashboard/qards/new" className="btn btn-outline btn-primary">
+              <Link
+                href="/dashboard/qards/new"
+                className="btn btn-outline btn-primary"
+              >
                 New Qard
               </Link>
             </div>
@@ -44,6 +56,9 @@ const Dashboard = async () => {
             </div>
           </div>
         </div>
+      </div>
+      <div className="my-6">
+        <pre>{JSON.stringify(qards, null, 2)}</pre>
       </div>
     </div>
   )
