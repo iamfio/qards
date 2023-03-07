@@ -13,7 +13,7 @@ const Dashboard = async () => {
 
   return (
     <div>
-      <div className="text-center">
+      <div className="w-full text-center">
         <div className="my-6">
           <h1 className="font-semibold text-xl">
             Hello{' '}
@@ -25,12 +25,22 @@ const Dashboard = async () => {
             </Link>{' '}
             👋
           </h1>
+
+          <div className="divider"></div>
+
           <div className="flex justify-between">
             <div className="my-2 mx-4">
-              <Link href="/dashboard/profile/edit">Edit Profile</Link>
+              <Link href="/dashboard/qards/new" className="btn btn-outline btn-primary">
+                New Qard
+              </Link>
             </div>
             <div className="my-2 mx-4">
-              <Link href="#">New Qard</Link>
+              <Link
+                href="/dashboard/profile/edit"
+                className="btn btn-outline btn-secondary"
+              >
+                Edit Profile
+              </Link>
             </div>
           </div>
         </div>
