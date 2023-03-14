@@ -4,6 +4,7 @@ import AuthContext from '@/components/AuthContext'
 import Navbar from '@/components/ui/Navbar'
 import { authOptions } from '@/pages/api/auth/[...nextauth]'
 import { getServerSession } from 'next-auth'
+import Footer from '@/components/ui/Footer'
 
 export default async function RootLayout({
   children,
@@ -26,6 +27,7 @@ export default async function RootLayout({
             <div className="flex flex-col items-center justify-center mx-2 my-4 ">
               {children}
             </div>
+            <Footer />
           </>
         </AuthContext>
       </body>
