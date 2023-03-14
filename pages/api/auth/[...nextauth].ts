@@ -36,6 +36,7 @@ export const authOptions: AuthOptions = {
       token: JWT
     }) {
       session.user.id = user.id
+      session.user.username = user.username
       return session
     },
     async jwt({ token, user, account, profile, isNewUser }) {

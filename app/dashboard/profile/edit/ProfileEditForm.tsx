@@ -29,10 +29,10 @@ const ProfileEditForm = ({ user }: { user: User }) => {
     formState: { errors },
   } = useForm<FormData>({
     defaultValues: {
-      name: user.name || '',
-      username: user.username || '',
-      company: user.company || '',
-      jobRole: user.jobRole || '',
+      name: user.name ?? '',
+      username: user.username ?? '',
+      company: user.company ?? '',
+      jobRole: user.jobRole ?? '',
     },
   })
 

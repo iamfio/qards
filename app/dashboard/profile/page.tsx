@@ -25,7 +25,7 @@ const Profile = async () => {
   return (
     <div>
       <div>
-        <div className="shadow-xl card w-96 bg-base-100">
+        <div className="shadow-xl card w-[300px] bg-base-100">
           <figure>
             <img src={user?.image || ''} alt={user?.name || ''} />
           </figure>
