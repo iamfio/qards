@@ -6,10 +6,10 @@ import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 type FormData = {
-  name: string
-  username: string
-  company: string
-  jobRole: string
+  name: User['name']
+  username: User['username']
+  company: User['company']
+  jobRole: User['jobRole']
 }
 
 const ProfileEditForm = ({ user }: { user: User }) => {

@@ -1,7 +1,9 @@
 import { prisma } from '@/lib/prismadb'
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
 import { randomBytes, randomUUID } from 'crypto'
-import NextAuth, { AuthOptions, Session } from 'next-auth'
+import NextAuth, { AuthOptions, getServerSession, Session } from 'next-auth'
+import { type GetServerSidePropsContext } from 'next'
+
 import { JWT } from 'next-auth/jwt'
 import GithubProvider from 'next-auth/providers/github'
 
@@ -50,3 +52,13 @@ export const authOptions: AuthOptions = {
 }
 
 export default NextAuth(authOptions)
+
+
+// Gives session object back to user without have to pass authOptions again
+// Works on API Side
+export const getServerAuthSession = (ctx: {
+  req: GetServerSidePropsContext['req']
+  res: GetServerSidePropsContext['res']
+}) => {
+  return getServerSession(ctx.req, ctx.res, authOptions)
+}

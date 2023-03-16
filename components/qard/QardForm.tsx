@@ -17,6 +17,7 @@ type QardProps = {
   accountLink?: Qard['accountLink']
   handleToggle?: any
   onClose(): void
+  getQards(): Promise<void>
 }
 
 const QardForm = ({
@@ -25,6 +26,7 @@ const QardForm = ({
   accountName,
   accountLink,
   onClose,
+  getQards,
 }: QardProps) => {
   const { data: session } = useSession()
 
@@ -48,7 +50,7 @@ const QardForm = ({
     }
 
     let httpMethod = 'POST'
-    
+
     if (isEdit) {
       httpMethod = 'PUT'
     }
@@ -57,11 +59,11 @@ const QardForm = ({
       method: httpMethod,
       body: JSON.stringify(qardData),
     })
-    // if (response.ok) {
-    //   const qard = await response.json()
 
-    //    router.push('/dashboard/profile')
-    // }
+    if (response.ok) {
+      getQards()
+      onClose()
+    }
   }
 
   return (

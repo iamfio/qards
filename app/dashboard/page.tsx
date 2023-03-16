@@ -1,5 +1,4 @@
 import QardList from '@/components/qard/QardList'
-import { prisma } from '@/lib/globalPrisma'
 import { authOptions } from '@/pages/api/auth/[...nextauth]'
 import { getServerSession } from 'next-auth'
 import Link from 'next/link'
@@ -7,20 +6,14 @@ import { redirect } from 'next/navigation'
 
 const Dashboard = async () => {
   const session = await getServerSession(authOptions)
-  // On this state of project the Qards, created by SESSION User can be retrieved and listed.
-  // TODO: Show cards by User's username!
+
   if (!session) {
     redirect('/')
   }
 
-  const userQards = await prisma.user.findUnique({
-    where: { id: session?.user.id as string },
-    select: { qards: true },
-  })
-
   return (
     <div>
-      <div className="w-full ">
+      <div className="w-full">
         <div className="my-6 text-center">
           <h1 className="text-xl font-semibold">
             Hello{' '}
@@ -36,7 +29,7 @@ const Dashboard = async () => {
           <div className="divider"></div>
         </div>
 
-        {userQards && <QardList qards={userQards.qards} />}
+        <QardList />
       </div>
     </div>
   )

@@ -1,29 +1,38 @@
 'use client'
 
 import QardForm from '@/components/qard/QardForm'
+import IconGeneric from '@/components/ui/icons/IconGeneric'
+import Modal from '@/components/ui/modal/Modal'
 import { capitalize } from '@/lib/utils'
 import { Qard } from '@prisma/client'
 import { useState } from 'react'
 import { AiOutlineDelete, AiOutlineEdit } from 'react-icons/ai'
 
-import Modal from '@/components/ui/modal/Modal'
-import IconGeneric from '@/components/ui/icons/IconGeneric'
-
 type QardListItemProps = {
   id: Qard['id']
   accountName: Qard['accountName']
   accountLink: Qard['accountLink']
+  getQards(): Promise<void>
 }
 
-const QardListItem = ({ id, accountName, accountLink }: QardListItemProps) => {
+const QardListItem = ({
+  id,
+  accountName,
+  accountLink,
+  getQards,
+}: QardListItemProps) => {
   const [openEditQard, setOpenEditQard] = useState<boolean>(false)
   const handleOpenEditQard = () => setOpenEditQard((prev) => !prev)
-  
+
   const deleteQard = async (qardId: string) => {
-    await fetch('/api/qard', {
+    const response = await fetch('/api/qard', {
       method: 'DELETE',
       body: JSON.stringify(qardId),
     })
+
+    if (response.ok) {
+      getQards()
+    }
   }
 
   return (
@@ -37,6 +46,7 @@ const QardListItem = ({ id, accountName, accountLink }: QardListItemProps) => {
               onClose={handleOpenEditQard}
               accountLink={accountLink ?? ''}
               accountName={accountName ?? ''}
+              getQards={getQards}
             />
           </Modal>
         )}

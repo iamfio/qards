@@ -2,13 +2,8 @@ import { prisma } from '@/lib/globalPrisma'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-  if (req.method === 'GET') {
-  }
-
   if (req.method === 'PUT') {
     const userData = JSON.parse(req.body)
-
-    console.log(userData)
 
     const user = await prisma.user.update({
       where: {

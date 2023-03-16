@@ -32,6 +32,7 @@ const UserPage = async ({ params }: UserPageProps) => {
               accountName={qard.accountName ?? ''}
               id={qard.id}
               key={qard.id}
+              isPrivate={false}
             />
           ))}
         </div>
