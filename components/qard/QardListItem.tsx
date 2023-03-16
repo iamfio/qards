@@ -3,11 +3,11 @@
 import QardForm from '@/components/qard/QardForm'
 import { capitalize } from '@/lib/utils'
 import { Qard } from '@prisma/client'
-import { SetStateAction, useState } from 'react'
+import { useState } from 'react'
 import { AiOutlineDelete, AiOutlineEdit } from 'react-icons/ai'
 
-import Modal from '../modal/Modal'
-import IconGeneric from '../ui/icons/IconGeneric'
+import Modal from '@/components/ui/modal/Modal'
+import IconGeneric from '@/components/ui/icons/IconGeneric'
 
 type QardListItemProps = {
   id: Qard['id']
@@ -17,8 +17,14 @@ type QardListItemProps = {
 
 const QardListItem = ({ id, accountName, accountLink }: QardListItemProps) => {
   const [openEditQard, setOpenEditQard] = useState<boolean>(false)
-
   const handleOpenEditQard = () => setOpenEditQard((prev) => !prev)
+  
+  const deleteQard = async (qardId: string) => {
+    await fetch('/api/qard', {
+      method: 'DELETE',
+      body: JSON.stringify(qardId),
+    })
+  }
 
   return (
     <div className="w-full px-2 py-4 my-2 border border-gray-300 rounded-md shadow-sm cursor-pointer hover:shadow-xl">
@@ -50,7 +56,10 @@ const QardListItem = ({ id, accountName, accountLink }: QardListItemProps) => {
           </div>
 
           <div className="mx-1">
-            <button className="btn btn-sm btn-error btn-square btn-outline">
+            <button
+              className="btn btn-sm btn-error btn-square btn-outline"
+              onClick={() => deleteQard(id)}
+            >
               <AiOutlineDelete className="text-xl" />
             </button>
           </div>

@@ -40,8 +40,6 @@ const QardForm = ({
   })
 
   const onSubmit = async (data: FormData) => {
-    let httpMethod
-
     const qardData = {
       qardId: qardId,
       userId: session?.user.id,
@@ -49,10 +47,10 @@ const QardForm = ({
       accountLink: data.accountLink,
     }
 
+    let httpMethod = 'POST'
+    
     if (isEdit) {
       httpMethod = 'PUT'
-    } else {
-      httpMethod = 'POST'
     }
 
     const response = await fetch('/api/qard/', {
