@@ -1,12 +1,9 @@
-import Qard from '@/components/qard/Qard'
-import QardListItem from '@/components/qard/QardListItem'
+import QardList from '@/components/qard/QardList'
 import { prisma } from '@/lib/globalPrisma'
 import { authOptions } from '@/pages/api/auth/[...nextauth]'
 import { getServerSession } from 'next-auth'
-import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
-import QardList from '@/components/qard/QardList'
 
 const Dashboard = async () => {
   const session = await getServerSession(authOptions)

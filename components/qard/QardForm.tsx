@@ -1,10 +1,8 @@
 'use client'
 
+import { Qard } from '@prisma/client'
 import { useSession } from 'next-auth/react'
 import { useForm } from 'react-hook-form'
-import { redirect } from 'next/navigation'
-import { useRouter } from 'next/router'
-import { Dispatch, SetStateAction } from 'react'
 
 type FormData = {
   accountName: string
@@ -15,23 +13,19 @@ type QardProps = {
   qardId?: string
   userId?: string
   isEdit?: boolean
-  accountName?: string
-  accountLink?: string
-  // handleToggle?: Dispatch<SetStateAction<boolean>>
+  accountName?: Qard['accountName']
+  accountLink?: Qard['accountLink']
   handleToggle?: any
   onClose(): void
 }
 
 const QardForm = ({
-  userId,
   qardId,
   isEdit,
-  handleToggle,
   accountName,
   accountLink,
   onClose,
 }: QardProps) => {
-  // const router = useRouter()
   const { data: session } = useSession()
 
   const {
@@ -45,26 +39,31 @@ const QardForm = ({
     },
   })
 
-  // TODO: Impl. PUT for known QardID (Edit Qard)
   const onSubmit = async (data: FormData) => {
-    const newQard = {
+    let httpMethod
+
+    const qardData = {
+      qardId: qardId,
       userId: session?.user.id,
       accountName: data.accountName,
       accountLink: data.accountLink,
     }
 
-    const response = await fetch('/api/qard', {
-      method: 'POST',
-      body: JSON.stringify(newQard),
-    })
-
-    if (response.ok) {
-      const qard = await response.json()
-
-      console.log(qard)
-
-      // router.push('/dashboard/profile')
+    if (isEdit) {
+      httpMethod = 'PUT'
+    } else {
+      httpMethod = 'POST'
     }
+
+    const response = await fetch('/api/qard/', {
+      method: httpMethod,
+      body: JSON.stringify(qardData),
+    })
+    // if (response.ok) {
+    //   const qard = await response.json()
+
+    //    router.push('/dashboard/profile')
+    // }
   }
 
   return (
@@ -112,8 +111,6 @@ const QardForm = ({
             <button
               type="button"
               className="btn btn-secondary btn-outline"
-              // onClick={() => redirect('/dashboard/qard/new')}
-              // onClick={handleToggle}
               onClick={() => onClose()}
             >
               Cancel

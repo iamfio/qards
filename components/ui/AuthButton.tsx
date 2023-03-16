@@ -15,7 +15,7 @@ const AuthButton = () => {
             }}
             className="btn btn-sm btn-outline btn-primary"
           >
-            SIGN IN
+            SIGN IN / SIGN UP
           </button>
         </div>
       )}
