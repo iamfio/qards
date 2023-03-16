@@ -38,3 +38,6 @@ next-env.d.ts
 
 # misc
 notes.txt
+
+# not public
+components/ui/accordion
