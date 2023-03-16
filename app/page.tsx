@@ -1,4 +1,3 @@
-import Accordeon from '@/components/ui/accordion/Accordion'
 import { authOptions } from '@/pages/api/auth/[...nextauth]'
 import { Inter } from '@next/font/google'
 import { getServerSession } from 'next-auth'
@@ -20,8 +19,9 @@ const Home = async () => {
           <h1 className="m-2 text-3xl">QaRds App</h1>
           <h3 className="my-3 text-lg font-light ">Show and share</h3>
           <p className="my-3 text-lg font-medium w-96 ">
-            Makes the management of your QR Businesscard for your social profiles or
-            projects realy easy. Just create new Qard and let your partner scan it.
+            Makes the management of your QR Businesscard for your social
+            profiles or projects realy easy. Just create new Qard and let your
+            partner scan it.
           </p>
           <p className="my-3 text-lg font-medium w-96 ">
             With just 3 easy steps!
