@@ -1,9 +1,9 @@
 import { authOptions } from '@/pages/api/auth/[...nextauth]'
-import { Inter } from '@next/font/google'
+// import { Inter } from '@next/font/google'
 import { getServerSession } from 'next-auth'
 import { redirect } from 'next/navigation'
 
-const inter = Inter({ subsets: ['latin'] })
+// const inter = Inter({ subsets: ['latin'] })
 
 const Home = async () => {
   const session = await getServerSession(authOptions)
