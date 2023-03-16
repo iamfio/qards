@@ -1,3 +1,4 @@
+import Accordeon from '@/components/ui/accordion/Accordion'
 import { authOptions } from '@/pages/api/auth/[...nextauth]'
 import { Inter } from '@next/font/google'
 import { getServerSession } from 'next-auth'
@@ -14,8 +15,24 @@ const Home = async () => {
 
   return (
     <div className="text-center">
-      <div>
-        <p>this is app body</p>
+      <div className="px-4 py-3">
+        <div className="mb-10">
+          <h1 className="m-2 text-3xl">QaRds App</h1>
+          <h3 className="my-3 text-lg font-light ">Show and share</h3>
+          <p className="my-3 text-lg font-medium w-96 ">
+            Small and easy tool to manage your collection of social profiles or
+            projects. Just create new Qard and let your partner scan it.
+          </p>
+          <p className="my-3 text-lg font-medium w-96 ">
+            With just 3 easy steps!
+          </p>
+        </div>
+
+        <ul className="mb-10 steps steps-vertical">
+          <li className="step step-primary">Sign Up</li>
+          <li className="step step-secondary">Create first Qard</li>
+          <li className="step step-accent">Enjoy!</li>
+        </ul>
       </div>
     </div>
   )
