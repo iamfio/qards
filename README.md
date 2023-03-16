@@ -13,3 +13,5 @@
 - TypeScript
 
 The App is set up for use with base features like "C. R. U. D" your QR business cards and user profile.
+
+This App is development mode. Minimal functionality is available.
