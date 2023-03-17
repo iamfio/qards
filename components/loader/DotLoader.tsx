@@ -9,9 +9,9 @@ const DotLoader = (props: any) => {
       backgroundColor="#cde4ff"
       {...props}
     >
-      <circle cx="150" cy="86" r="8" />
-      <circle cx="194" cy="86" r="8" />
-      <circle cx="238" cy="86" r="8" />
+      <circle cx="150" cy="86" r="12" />
+      <circle cx="194" cy="86" r="12" />
+      <circle cx="238" cy="86" r="12" />
     </ContentLoader>
   )
 }

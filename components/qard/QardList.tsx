@@ -13,7 +13,6 @@ const QardList = () => {
   const [qards, setQards] = useState<[]>()
   const [openNewQard, setOpenNewQard] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false)
-  const [data, setData] = useState<boolean>(false)
 
   const handleOpenNewQard = () => setOpenNewQard((prev) => !prev)
 
@@ -23,7 +22,6 @@ const QardList = () => {
     const userData = await response.json()
 
     setQards(userData.qards)
-    setData(true)
     setLoading(false)
   }, [])
 
@@ -64,7 +62,11 @@ const QardList = () => {
           <QardListItem {...qard} key={qard.id} getQards={getQards} />
         ))}
 
-        {!qards && <div>You have no cards yet.</div>}
+        {qards?.length === 0 && (
+          <div className="p-8 my-10 text-xl rounded-lg bg-primary-content">
+            You have no cards yet
+          </div>
+        )}
       </div>
     </div>
   )
