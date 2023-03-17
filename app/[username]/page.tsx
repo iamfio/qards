@@ -1,13 +1,17 @@
 import ProfileCard from '@/components/profile/ProfileCard'
 import Qard from '@/components/qard/Qard'
 import { prisma } from '@/lib/globalPrisma'
-import { redirect } from 'next/navigation'
+import { User } from '@prisma/client'
 
 type UserPageProps = {
   params: { username: string }
 }
 
-const getUserByUsername = async (username: string) => {
+const getUserByUsername = async (username: User['username']) => {
+  if (!username) {
+    return null
+  }
+
   return await prisma.user.findUnique({
     where: { username },
     include: { qards: true },
@@ -17,16 +21,12 @@ const getUserByUsername = async (username: string) => {
 const UserPage = async ({ params }: UserPageProps) => {
   const user = await getUserByUsername(params.username)
 
-  if (!user) {
-    redirect('/')
-  }
-
   return (
     <div>
       <div className="snap-mandatory snap-always snap-y">
         <div className="snap-start">
           <ProfileCard user={user} />
-          {user.qards.map((qard) => (
+          {user?.qards.map((qard) => (
             <Qard
               accountLink={qard.accountLink ?? ''}
               accountName={qard.accountName ?? ''}

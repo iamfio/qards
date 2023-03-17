@@ -38,7 +38,9 @@ const Qard = ({ id, accountName, accountLink, isPrivate }: QardProps) => {
 
         <div className="items-center text-center card-body">
           <div className="items-center text-center card-body">
-            <h2 className="text-4xl card-title">{capitalize(accountName)}</h2>
+            <h2 className="text-4xl card-title text-secondary hover:underline">
+              <a href={accountLink}>{capitalize(accountName)}</a>
+            </h2>
           </div>
 
           {isPrivate && (
