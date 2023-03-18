@@ -18,6 +18,7 @@ const QardList = () => {
 
   const getQards = useCallback(async () => {
     setLoading(true)
+    
     const response = await fetch('/api/qard')
     const userData = await response.json()
 

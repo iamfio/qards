@@ -11,6 +11,8 @@ type Props = {
 const ProfileCard = ({ user }: Props) => {
   const { Canvas } = useQRCode()
 
+  // TODO: replace windw.location.href the right way
+
   return (
     <div className="shadow-xl card w-[350px] bg-base-100">
       <figure>
@@ -41,7 +43,6 @@ const ProfileCard = ({ user }: Props) => {
 
         <div className="divider"></div>
 
-        {/* <div className="card-actions"> */}
         <div className="self-center">
           <Canvas
             text={window.location.href}
@@ -52,15 +53,6 @@ const ProfileCard = ({ user }: Props) => {
               width: 200,
             }}
           />
-          {/* </div> */}
-          {/* {session?.user && (
-            <Link
-              href="/dashboard/profile/edit"
-              className="btn btn-primary btn-outline"
-            >
-              Edit Profile
-            </Link>
-          )} */}
         </div>
       </div>
     </div>
