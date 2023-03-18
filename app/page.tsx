@@ -1,9 +1,9 @@
 import { authOptions } from '@/pages/api/auth/[...nextauth]'
-// import { Inter } from '@next/font/google'
+import { Inter } from '@next/font/google'
 import { getServerSession } from 'next-auth'
 import { redirect } from 'next/navigation'
 
-// const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ['latin'] })
 
 const Home = async () => {
   const session = await getServerSession(authOptions)
@@ -16,7 +16,7 @@ const Home = async () => {
     <div className="text-center">
       <div className="px-4 py-3">
         <div className="mb-10">
-          <h1 className="m-2 text-3xl">QaRds App</h1>
+          <h1 className="mb-8 text-5xl">QaRds App</h1>
           <h3 className="my-3 text-lg font-light ">Show and share</h3>
           <p className="my-3 text-lg font-medium w-96 ">
             Makes the management of your QR Businesscard for your social
