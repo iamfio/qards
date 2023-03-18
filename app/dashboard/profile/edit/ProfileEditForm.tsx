@@ -82,10 +82,18 @@ const ProfileEditForm = ({ user }: { user: User }) => {
                   ></path>
                 </svg>
                 <div>
-                  <div>
-                    Please notice, you can set your <strong>Username</strong>{' '}
-                    just <strong>ONCE!</strong>{' '}
-                  </div>
+                  <h1 className="mb-4 text-lg">Hello {user.name}!</h1>
+                  <p className='mb-2'>
+                    This is your first sign in into Qards App. Please create your profile so that
+                    you can use it properly.
+                  </p>
+                  <p>
+                    
+                  </p>
+                  <p>
+                    Please notice, you must set your <strong>Username</strong>{' '}
+                    and you can do it just <strong>ONCE!</strong>{' '}
+                  </p>
                   <div>So, choose wisely.</div>
                 </div>
               </div>

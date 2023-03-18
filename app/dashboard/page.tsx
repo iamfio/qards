@@ -11,6 +11,10 @@ const Dashboard = async () => {
     redirect('/')
   }
 
+  if (!session.user.username) {
+    redirect('/dashboard/profile/edit')
+  }
+
   return (
     <div>
       <div className="w-full">
