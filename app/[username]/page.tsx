@@ -18,6 +18,12 @@ const getUserByUsername = async (username: User['username']) => {
   })
 }
 
+export const generateMetadata = async ({ params }: UserPageProps) => {
+  return {
+    title: `${params.username}'s Qards`,
+  }
+}
+
 const UserPage = async ({ params }: UserPageProps) => {
   const user = await getUserByUsername(params.username)
 
