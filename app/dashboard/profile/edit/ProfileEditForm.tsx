@@ -16,7 +16,6 @@ const ProfileEditForm = ({ user }: { user: User }) => {
   const router = useRouter()
 
   const [usernamePresent, setUsernamePresent] = useState<boolean>(false)
-  const [saveBtnActive, setSaveBtnActive] = useState<boolean>(true)
 
   useEffect(() => {
     if (user.username) {
@@ -27,7 +26,7 @@ const ProfileEditForm = ({ user }: { user: User }) => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState,
   } = useForm<FormData>({
     defaultValues: {
       name: user.name ?? '',
@@ -66,49 +65,18 @@ const ProfileEditForm = ({ user }: { user: User }) => {
     <div className="w-[275px]">
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="w-full max-w-xs form-control">
-          {!usernamePresent && (
-            <div className="text-center shadow-lg alert alert-info">
-              <div>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  className="flex-shrink-0 w-6 h-6 stroke-current"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                  ></path>
-                </svg>
-                <div>
-                  <h1 className="mb-4 text-lg">Hello {user.name}!</h1>
-                  <p className="mb-2">
-                    This is your first sign in into Qards App. Please create
-                    your profile so that you can use it properly.
-                  </p>
-                  <p>
-                    Please notice, you must set your <strong>Username</strong>{' '}
-                    and you can do it just <strong>ONCE!</strong>{' '}
-                  </p>
-                  <div>So, choose wisely.</div>
-                </div>
-              </div>
-            </div>
-          )}
+          {!usernamePresent && <WelcomeCTA {...user} />}
           <label htmlFor="username" className="label">
             <span className="label-text">Username</span>
           </label>
           <input
             type="text"
-            {...register('username')}
+            {...register('username', { required: true })}
             className="w-full max-w-xs input input-bordered"
             placeholder="Username"
             disabled={usernamePresent}
-            onChange={() => setSaveBtnActive((prev) => !prev)}
           />
-          {errors.username && <div>Username is required</div>}
+          {formState.errors.username && <div>Username is required</div>}
         </div>
         <div className="w-full max-w-xs form-control">
           <label htmlFor="name" className="label">
@@ -131,7 +99,7 @@ const ProfileEditForm = ({ user }: { user: User }) => {
             className="w-full max-w-xs input input-bordered"
             placeholder="Company"
           />
-          {errors.company && <div>Company is required</div>}
+          {formState.errors.company && <div>Company is required</div>}
         </div>
         <div className="w-full max-w-xs form-control">
           <label htmlFor="jobRole" className="label">
@@ -149,7 +117,7 @@ const ProfileEditForm = ({ user }: { user: User }) => {
           <button
             type="submit"
             className="my-2 btn btn-primary btn-block btn-outline"
-            disabled={saveBtnActive}
+            disabled={!formState.isValid}
           >
             Save
           </button>
@@ -168,3 +136,35 @@ const ProfileEditForm = ({ user }: { user: User }) => {
 }
 
 export default ProfileEditForm
+
+const WelcomeCTA = ({ name }: { name: User['name'] }) => (
+  <div className="text-center shadow-lg alert alert-info">
+    <div>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        className="flex-shrink-0 w-6 h-6 stroke-current"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+        ></path>
+      </svg>
+      <div>
+        <h1 className="mb-4 text-lg">Hello {name}!</h1>
+        <p className="mb-2">
+          This is your first sign in into Qards App. Please create your profile
+          so that you can use it properly.
+        </p>
+        <p>
+          Please notice, you must set your <strong>Username</strong> and you can
+          do it just <strong>ONCE!</strong>{' '}
+        </p>
+        <div>So, choose wisely.</div>
+      </div>
+    </div>
+  </div>
+)
