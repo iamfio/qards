@@ -6,14 +6,19 @@ import { type GetServerSidePropsContext } from 'next'
 
 import { JWT } from 'next-auth/jwt'
 import GithubProvider from 'next-auth/providers/github'
+import GoogleProvider from 'next-auth/providers/google'
 
 export const authOptions: AuthOptions = {
   secret: process.env.JWT_SIGNING_PRIVATE_KEY,
   adapter: PrismaAdapter(prisma),
   providers: [
     GithubProvider({
-      clientId: process.env.GITHUB_CLIENT_ID as string,
-      clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
+      clientId: process.env.GITHUB_CLIENT_ID ?? '',
+      clientSecret: process.env.GITHUB_CLIENT_SECRET ?? '',
+    }),
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID ?? '',
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? '',
     }),
   ],
   jwt: {
@@ -52,7 +57,6 @@ export const authOptions: AuthOptions = {
 }
 
 export default NextAuth(authOptions)
-
 
 // Gives session object back to user without have to pass authOptions again
 // Works on API Side
