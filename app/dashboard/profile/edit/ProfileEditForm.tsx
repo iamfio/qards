@@ -16,6 +16,7 @@ const ProfileEditForm = ({ user }: { user: User }) => {
   const router = useRouter()
 
   const [usernamePresent, setUsernamePresent] = useState<boolean>(false)
+  const [saveBtnActive, setSaveBtnActive] = useState<boolean>(true)
 
   useEffect(() => {
     if (user.username) {
@@ -83,12 +84,9 @@ const ProfileEditForm = ({ user }: { user: User }) => {
                 </svg>
                 <div>
                   <h1 className="mb-4 text-lg">Hello {user.name}!</h1>
-                  <p className='mb-2'>
-                    This is your first sign in into Qards App. Please create your profile so that
-                    you can use it properly.
-                  </p>
-                  <p>
-                    
+                  <p className="mb-2">
+                    This is your first sign in into Qards App. Please create
+                    your profile so that you can use it properly.
                   </p>
                   <p>
                     Please notice, you must set your <strong>Username</strong>{' '}
@@ -108,6 +106,7 @@ const ProfileEditForm = ({ user }: { user: User }) => {
             className="w-full max-w-xs input input-bordered"
             placeholder="Username"
             disabled={usernamePresent}
+            onChange={() => setSaveBtnActive((prev) => !prev)}
           />
           {errors.username && <div>Username is required</div>}
         </div>
@@ -150,6 +149,7 @@ const ProfileEditForm = ({ user }: { user: User }) => {
           <button
             type="submit"
             className="my-2 btn btn-primary btn-block btn-outline"
+            disabled={saveBtnActive}
           >
             Save
           </button>
