@@ -4,6 +4,10 @@ import { getServerSession } from 'next-auth'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 
+export const metadata = {
+  title: 'Qards | Dashboard',
+}
+
 const Dashboard = async () => {
   const session = await getServerSession(authOptions)
 

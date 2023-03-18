@@ -5,6 +5,10 @@ import { getServerSession } from 'next-auth'
 import { redirect } from 'next/navigation'
 import ProfileEditForm from './ProfileEditForm'
 
+export const metadata = {
+  title: 'Qards | Edit Profile',
+}
+
 const getUserById = async (userId: string) => {
   return await prisma.user.findUnique({
     where: { id: userId },

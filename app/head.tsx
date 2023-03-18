@@ -1,9 +1,8 @@
 export default function Head() {
   return (
     <>
-      <title>QaRds App</title>
       <meta content="width=device-width, initial-scale=1" name="viewport" />
-      <meta name="description" content="Show and share" />
+      <meta name="description" content="Qards - show and share" />
       <link rel="icon" href="/favicon.ico" />
     </>
   )

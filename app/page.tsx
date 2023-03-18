@@ -5,6 +5,10 @@ import { redirect } from 'next/navigation'
 
 const inter = Inter({ subsets: ['latin'] })
 
+export const metadata = {
+  title: 'Qards',
+}
+
 const Home = async () => {
   const session = await getServerSession(authOptions)
 
