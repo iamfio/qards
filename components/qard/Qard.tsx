@@ -1,17 +1,14 @@
 'use client'
-import { capitalize } from '@/lib/utils'
-import { Session } from '@prisma/client'
-import { useSession } from 'next-auth/react'
 
+import { capitalize } from '@/lib/utils'
 import { useQRCode } from 'next-qrcode'
-import { AiOutlineEdit, AiOutlineDelete } from 'react-icons/ai'
+import { AiOutlineDelete, AiOutlineEdit } from 'react-icons/ai'
 
 type QardProps = {
   id?: string
   accountName: string
   accountLink: string
   isPrivate: boolean
-  // userId: Session['userId']
 }
 
 const Qard = ({ id, accountName, accountLink, isPrivate }: QardProps) => {
@@ -25,12 +22,12 @@ const Qard = ({ id, accountName, accountLink, isPrivate }: QardProps) => {
             text={accountLink}
             options={{
               level: 'H',
-              margin: 1,
+              margin: 0,
               scale: 4,
               width: 320,
               color: {
-                dark: '#1e1e2e',
-                light: '#fff',
+                dark: '#fff',
+                light: '#282a36',
               },
             }}
           />

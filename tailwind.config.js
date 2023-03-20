@@ -17,7 +17,6 @@ module.exports = {
     require('daisyui'),
   ],
   daisyui: {
-    // themes: ['dracula', 'night', 'winter'],
-    themes: ['winter'],
+    themes: ['winter', 'dracula'],
   },
 }
