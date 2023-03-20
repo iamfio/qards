@@ -5,6 +5,7 @@ import Link from 'next/link'
 
 import AuthButton from './AuthButton'
 import Logo from './Logo'
+import SwitchTheme from './SwitchTheme'
 
 const Navbar = (): JSX.Element => {
   const { data: session } = useSession()
@@ -16,6 +17,7 @@ const Navbar = (): JSX.Element => {
       </div>
 
       <div className="flex-none gap-2">
+        <SwitchTheme />
         {session?.user && (
           <div className="dropdown dropdown-end">
             <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
