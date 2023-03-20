@@ -51,6 +51,10 @@ const ProfileCard = ({ user }: Props) => {
               margin: 0,
               scale: 3,
               width: 200,
+              color: {
+                light: '#282a36',
+                dark: '#fff',
+              },
             }}
           />
         </div>
