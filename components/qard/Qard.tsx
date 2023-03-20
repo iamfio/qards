@@ -8,10 +8,9 @@ type QardProps = {
   id?: string
   accountName: string
   accountLink: string
-  isPrivate: boolean
 }
 
-const Qard = ({ id, accountName, accountLink, isPrivate }: QardProps) => {
+const Qard = ({ id, accountName, accountLink }: QardProps) => {
   const { Canvas } = useQRCode()
 
   return (
@@ -39,18 +38,6 @@ const Qard = ({ id, accountName, accountLink, isPrivate }: QardProps) => {
               <a href={accountLink}>{capitalize(accountName)}</a>
             </h2>
           </div>
-
-          {isPrivate && (
-            <div className="card-actions">
-              <button className="btn btn-md btn-wide btn-primary btn-sm btn-square btn-outline">
-                <AiOutlineEdit className="text-xl" />
-              </button>
-
-              <button className="btn btn-md btn-wide btn-error btn-sm btn-square btn-outline">
-                <AiOutlineDelete className="text-xl" />
-              </button>
-            </div>
-          )}
         </div>
       </div>
     </div>
