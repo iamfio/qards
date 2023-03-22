@@ -1,13 +1,12 @@
 'use client'
 
+import DotLoader from '@/components/loader/DotLoader'
+import QardForm from '@/components/qard/QardForm'
+import QardListItem from '@/components/qard/QardListItem'
 import Modal from '@/components/ui/modal/Modal'
 import { Qard } from '@prisma/client'
 import Link from 'next/link'
 import { useCallback, useEffect, useState } from 'react'
-import DotLoader from '../loader/DotLoader'
-
-import QardForm from './QardForm'
-import QardListItem from './QardListItem'
 
 const QardList = () => {
   const [qards, setQards] = useState<[]>()
@@ -18,7 +17,7 @@ const QardList = () => {
 
   const getQards = useCallback(async () => {
     setLoading(true)
-    
+
     const response = await fetch('/api/qard')
     const userData = await response.json()
 
