@@ -28,7 +28,7 @@ const UserPage = async ({ params }: UserPageProps) => {
   const user = await getUserByUsername(params.username)
 
   return (
-    <div>
+    <div className='my-8'>
       <div className="snap-mandatory snap-always snap-y">
         <div className="snap-start">
           <ProfileCard user={user} />

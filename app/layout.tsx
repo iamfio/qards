@@ -15,22 +15,18 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      {/*
-        <head /> will contain the components returned by the nearest parent
-        head.tsx. Find out more at https://beta.nextjs.org/docs/api-reference/file-conventions/head
-      */}
       <head />
-      <body>
-        <AuthContext session={session}>
-          <>
+      <AuthContext session={session}>
+        <body>
+          <div className="flex flex-col h-screen">
             <Navbar />
-            <div className="flex flex-col items-center justify-center mx-2 my-4 ">
+            <div className="flex flex-col items-center justify-center mx-8 sm:mx-4">
               {children}
             </div>
             <Footer />
-          </>
-        </AuthContext>
-      </body>
+          </div>
+        </body>
+      </AuthContext>
     </html>
   )
 }

@@ -33,7 +33,7 @@ const Home = async () => {
           </p>
         </div>
 
-        <ul className="mb-10 steps steps-vertical">
+        <ul className="steps steps-vertical">
           <li className="step step-primary">Sign Up</li>
           <li className="step step-secondary">Create first Qard</li>
           <li className="step step-accent">Enjoy!</li>

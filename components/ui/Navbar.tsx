@@ -30,12 +30,7 @@ const Navbar = (): JSX.Element => {
               className="p-2 mt-3 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
             >
               <li>
-                <Link
-                  href={encodeURIComponent(session?.user.username ?? '')}
-                  className="justify-between"
-                >
-                  Profile
-                </Link>
+                <Link href="/dashboard/profile/edit">Edit Profile</Link>
               </li>
 
               <li>

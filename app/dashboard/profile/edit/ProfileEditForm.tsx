@@ -23,11 +23,7 @@ const ProfileEditForm = ({ user }: { user: User }) => {
     }
   }, [user.username])
 
-  const {
-    register,
-    handleSubmit,
-    formState,
-  } = useForm<FormData>({
+  const { register, handleSubmit, formState } = useForm<FormData>({
     defaultValues: {
       name: user.name ?? '',
       username: user.username ?? '',
@@ -62,7 +58,7 @@ const ProfileEditForm = ({ user }: { user: User }) => {
   }
 
   return (
-    <div className="w-[275px]">
+    <div className="w-[300px]">
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="w-full max-w-xs form-control">
           {!usernamePresent && <WelcomeCTA {...user} />}
@@ -112,8 +108,7 @@ const ProfileEditForm = ({ user }: { user: User }) => {
             placeholder="Job Role"
           />
         </div>
-
-        <div className="">
+        <div className='mt-6'>
           <button
             type="submit"
             className="my-2 btn btn-primary btn-block btn-outline"
@@ -121,16 +116,15 @@ const ProfileEditForm = ({ user }: { user: User }) => {
           >
             Save
           </button>
+          <button
+            type="button"
+            className="my-2 btn btn-secondary btn-block btn-outline"
+            onClick={() => router.back()}
+          >
+            Cancel
+          </button>
         </div>
       </form>
-
-      <button
-        type="button"
-        className="my-2 btn btn-secondary btn-block btn-outline"
-        onClick={() => router.back()}
-      >
-        Cancel
-      </button>
     </div>
   )
 }

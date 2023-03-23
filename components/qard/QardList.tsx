@@ -40,14 +40,6 @@ const QardList = () => {
             New Qard
           </button>
         </div>
-        <div className="mx-4 my-2">
-          <Link
-            href="/dashboard/profile/edit"
-            className="btn btn-outline btn-secondary"
-          >
-            Edit Profile
-          </Link>
-        </div>
       </div>
       {openNewQard && (
         <Modal open={openNewQard} onClose={handleOpenNewQard}>

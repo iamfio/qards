@@ -17,17 +17,16 @@ const getUserById = async (userId: string) => {
 
 const Profile = async () => {
   const session = await getServerSession(authOptions)
+  const user = await getUserById(session?.user?.id as string)
 
-  if (!session) {
+  if (!session || !user) {
     redirect('/')
   }
 
-  const user = await getUserById(session?.user?.id as string)
-
   return (
     <div>
-      <div className="w-full">
-        <ProfileEditForm user={user!} />
+      <div className="w-full my-8">
+        <ProfileEditForm user={user} />
       </div>
     </div>
   )

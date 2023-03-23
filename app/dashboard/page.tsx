@@ -20,16 +20,17 @@ const Dashboard = async () => {
   }
 
   return (
-    <div>
-      <div className="w-full">
-        <div className="my-6 text-center">
+    <>
+      <div className="w-full my-8 sm:w-96">
+        <div className="text-center">
           <h1 className="text-xl font-semibold">
             Hello{' '}
             <Link
-              href="/dashboard/profile"
+              href={encodeURIComponent(session.user.username)}
               className="underline underline-offset-2"
+              target="_blank"
             >
-              {session?.user.name}
+              {session.user.name}
             </Link>{' '}
             👋
           </h1>
@@ -39,7 +40,7 @@ const Dashboard = async () => {
 
         <QardList />
       </div>
-    </div>
+    </>
   )
 }
 
