@@ -28,7 +28,6 @@ const Dashboard = async () => {
             <Link
               href={encodeURIComponent(session.user.username)}
               className="underline underline-offset-2"
-              target="_blank"
             >
               {session.user.name}
             </Link>{' '}
