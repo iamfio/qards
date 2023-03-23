@@ -45,7 +45,7 @@ const Dashboard = async () => {
   }
 
   return (
-      <div className="my-8 ">
+      <div className="my-8">
       <div className="text-center">
           <h1 className="text-xl font-semibold">
             Hello{' '}
