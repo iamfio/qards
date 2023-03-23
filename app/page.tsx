@@ -1,3 +1,4 @@
+import QCookieConsent from '@/components/ui/cookie-consent/QCookieConsent'
 import { authOptions } from '@/pages/api/auth/[...nextauth]'
 import { Inter } from '@next/font/google'
 import { getServerSession } from 'next-auth'
@@ -38,6 +39,8 @@ const Home = async () => {
           <li className="step step-accent">Enjoy!</li>
         </ul>
       </div>
+      <QCookieConsent />
+
     </div>
   )
 }
