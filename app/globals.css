@@ -24,3 +24,7 @@ body {
   height: 10vh;
   width: 100%;
 }
+
+.btn, .input {
+  @apply rounded-lg;
+}
