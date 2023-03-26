@@ -1,3 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500&family=Righteous&family=Urbanist&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+* {
+  font-family: 'Urbanist', sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  position: relative;
+}
+
+.justify-around {
+  margin-left: 3mm;
+}
+
+.my-8 {
+  margin-bottom: 11vh;
+}
+
+.footer-center {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 10vh;
+  width: 100%;
+}

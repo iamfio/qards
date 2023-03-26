@@ -33,7 +33,7 @@ const UserPage = async ({ params }: UserPageProps) => {
   }
 
   return (
-    <div className="my-8 ">
+    <div className="my-8">
       <div className="snap-mandatory snap-always snap-y">
         <div className="snap-start">
           <ProfileCard user={user} />
