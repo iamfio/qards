@@ -1,10 +1,13 @@
 import './globals.css'
 
 import AuthContext from '@/components/AuthContext'
+import Footer from '@/components/ui/Footer'
 import Navbar from '@/components/ui/Navbar'
 import { authOptions } from '@/pages/api/auth/[...nextauth]'
+import { Urbanist } from '@next/font/google'
 import { getServerSession } from 'next-auth'
-import Footer from '@/components/ui/Footer'
+
+const urbanist = Urbanist({ subsets: ['latin'] })
 
 export default async function RootLayout({
   children,
@@ -17,7 +20,7 @@ export default async function RootLayout({
     <html lang="en">
       <head />
       <AuthContext session={session}>
-        <body>
+        <body className={urbanist.className}>
           <Navbar />
           <div className="flex flex-col items-center justify-center mx-8 sm:mx-4">
             {children}

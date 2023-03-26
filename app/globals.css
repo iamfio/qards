@@ -1,11 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500&family=Righteous&family=Urbanist&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-* {
-  font-family: 'Urbanist', sans-serif;
-}
 
 body {
   margin: 0;
