@@ -50,8 +50,8 @@ const ProfileCard = ({ user }: Props) => {
               scale: 3,
               width: 200,
               color: {
-                light: '#282a36',
-                dark: '#fff',
+                light: '#fff',
+                dark: '#282a36',
               },
             }}
           />
