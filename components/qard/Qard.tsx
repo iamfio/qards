@@ -14,8 +14,8 @@ const Qard = ({ id, accountName, accountLink }: QardProps) => {
   const { Canvas } = useQRCode()
 
   return (
-    <div className="my-4">
-      <div className="shadow-md card w-[350px] bg-base-100 ">
+    <div className="my-6">
+      <div className="shadow-md  card w-[350px] bg-base-100 ">
         <figure className="px-10 pt-10 ">
           <Canvas
             text={accountLink}
@@ -25,8 +25,8 @@ const Qard = ({ id, accountName, accountLink }: QardProps) => {
               scale: 4,
               width: 320,
               color: {
-                dark: '#fff',
-                light: '#282a36',
+                dark: '#282a36',
+                light: '#fff',
               },
             }}
           />
@@ -34,7 +34,7 @@ const Qard = ({ id, accountName, accountLink }: QardProps) => {
 
         <div className="items-center text-center card-body">
           <div className="items-center text-center card-body">
-            <h2 className="text-4xl card-title text-secondary hover:underline">
+            <h2 className="text-4xl card-title text-secondary underline underline-offset-4">
               <a href={accountLink}>{capitalize(accountName)}</a>
             </h2>
           </div>
