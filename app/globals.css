@@ -7,10 +7,26 @@
    font-family: 'Urbanist', sans-serif;
 }
 
+.text-3xl {
+   font-family: monospace
+}
+
+.big-icon {
+   max-width: 50%;
+   height: auto;
+}
+.dropdown-end {
+   margin-right: 0.5vw;
+}
+
+.white-shadow {
+   box-shadow:  4px 4px 60px #002456;
+}
+
 body {
    margin: 0;
    padding: 0;
-  min-height: 100vh;
+   min-height: 100vh;
    position: relative;
 }
 

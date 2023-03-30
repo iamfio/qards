@@ -35,6 +35,7 @@ const QardListItem = ({
     }
   }
 
+
   return (
     <div className="w-full px-2 py-4 my-2 border border-gray-300 rounded-md shadow-sm cursor-pointer hover:shadow-xl">
       <div className="flex items-center">
@@ -52,7 +53,7 @@ const QardListItem = ({
         )}
 
         <div className="mr-4 avatar placeholder">
-          <IconGeneric name={capitalize(accountName?.[0]!)} />
+          {accountLink === null ? <IconGeneric name={'undef'} /> : <IconGeneric name={accountLink} />}
         </div>
         <div className="flex-1">{capitalize(accountName!)}</div>
         <div className="flex justify-around ">
