@@ -9,7 +9,7 @@ import Link from 'next/link'
 import { useCallback, useEffect, useState } from 'react'
 
 const QardList = () => {
-  const [qards, setQards] = useState<[]>()
+  const [qards, setQards] = useState<Qard[]>()
   const [openNewQard, setOpenNewQard] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false)
 
