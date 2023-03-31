@@ -1,10 +1,7 @@
 import QCookieConsent from '@/components/ui/cookie-consent/QCookieConsent'
 import { authOptions } from '@/pages/api/auth/[...nextauth]'
-import { Inter } from '@next/font/google'
 import { getServerSession } from 'next-auth'
 import { redirect } from 'next/navigation'
-
-const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
   title: 'Qards',
@@ -40,7 +37,6 @@ const Home = async () => {
         </ul>
       </div>
       <QCookieConsent />
-
     </div>
   )
 }

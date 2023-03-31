@@ -1,8 +1,8 @@
 'use client'
 
+import { getURL } from '@/lib/utils'
 import { Qard, User } from '@prisma/client'
 import { useQRCode } from 'next-qrcode'
-import Link from 'next/link'
 
 type Props = {
   user: (User & { qards: Qard[] }) | null
@@ -10,8 +10,6 @@ type Props = {
 
 const ProfileCard = ({ user }: Props) => {
   const { Canvas } = useQRCode()
-
-  // TODO: replace windw.location.href the right way
 
   return (
     <div className="shadow-xl card w-[350px] bg-base-100">
@@ -45,15 +43,15 @@ const ProfileCard = ({ user }: Props) => {
 
         <div className="self-center">
           <Canvas
-            text={window.location.href}
+            text={getURL(`/${user?.username}`)}
             options={{
               level: 'H',
               margin: 0,
               scale: 3,
               width: 200,
               color: {
-                light: '#282a36',
-                dark: '#fff',
+                light: '#fff',
+                dark: '#282a36',
               },
             }}
           />
