@@ -2,7 +2,8 @@
 
 import { capitalize } from '@/lib/utils'
 import { useQRCode } from 'next-qrcode'
-import { AiOutlineDelete, AiOutlineEdit } from 'react-icons/ai'
+
+import IconGeneric from '../ui/icons/IconGeneric'
 
 type QardProps = {
   id?: string
@@ -34,7 +35,10 @@ const Qard = ({ id, accountName, accountLink }: QardProps) => {
 
         <div className="items-center text-center card-body">
           <div className="items-center text-center card-body">
-            <h2 className="text-4xl card-title text-secondary underline hover:underline">
+            <div className="w-24 mb-2">
+              <IconGeneric name={accountLink} />
+            </div>
+            <h2 className="text-4xl underline card-title text-secondary hover:underline">
               <a href={accountLink}>{capitalize(accountName)}</a>
             </h2>
           </div>

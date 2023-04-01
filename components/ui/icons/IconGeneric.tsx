@@ -34,15 +34,11 @@ const IconGeneric = ({ name }: { name: string }) => {
     faSoundcloud,
   ]
 
-  icons.forEach((icon) => {
+  icons.map((icon) => {
     icon.iconName === (getFQDN(name) as IconName) && (i = icon)
   })
 
-  return (
-    <div className="w-12 rounded-full">
-      <FontAwesomeIcon className="big-icon" icon={i} />
-    </div>
-  )
+  return <FontAwesomeIcon className="big-icon" icon={i} />
 }
 
 export default IconGeneric
