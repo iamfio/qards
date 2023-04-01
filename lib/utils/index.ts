@@ -1,7 +1,7 @@
 //* String Utils
 
 export const getFQDN = (url: string) => {
-  return new URL(url).hostname.split('.')[0]
+  return new URL(url).hostname.replace('www.', '').split('.')[0]
 }
 
 export const getURL = (path: string) => {
