@@ -1,30 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500&family=Righteous&family=Urbanist&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+* {
+   font-family: 'Urbanist', sans-serif;
+}
+
+.text-3xl {
+   font-family: monospace
+}
+
+.big-icon {
+   max-width: 50%;
+   height: auto;
+}
+.dropdown-end {
+   margin-right: 0.5vw;
+}
+
+.white-shadow {
+   box-shadow:  4px 4px 60px #002456;
+}
+
 body {
-  margin: 0;
-  padding: 0;
-  min-height: 100vh;
-  position: relative;
+   margin: 0;
+   padding: 0;
+   min-height: 100vh;
+   position: relative;
 }
 
 .justify-around {
-  margin-left: 3mm;
+   margin-left: 3mm;
 }
 
 .my-8 {
-  margin-bottom: 11vh;
+   margin-bottom: 11vh;
 }
 
 .footer-center {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  height: 10vh;
-  width: 100%;
-}
-
-.btn, .input {
-  @apply rounded-lg;
+   position: absolute;
+   left: 0;
+   bottom: 0;
+   height: 10vh;
+   width: 100%;
 }

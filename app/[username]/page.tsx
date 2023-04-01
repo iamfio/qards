@@ -1,8 +1,9 @@
-import ProfileCard from '@/components/profile/ProfileCard'
-import Qard from '@/components/qard/Qard'
 import UserNotFound from '@/components/ui/UserNotFound'
 import { prisma } from '@/lib/globalPrisma'
 import { User } from '@prisma/client'
+import QardList from '@/components/qard/QardList'
+import ProfileCard from '@/components/profile/ProfileCard'
+import Qard from '@/components/qard/Qard'
 
 type UserPageProps = {
   params: { username: string }
@@ -17,12 +18,6 @@ const getUserByUsername = async (username: User['username']) => {
     where: { username },
     include: { qards: true },
   })
-}
-
-export const generateMetadata = async ({ params }: UserPageProps) => {
-  return {
-    title: `${params.username}'s Qards`,
-  }
 }
 
 const UserPage = async ({ params }: UserPageProps) => {
@@ -62,7 +57,7 @@ const UserPage = async ({ params }: UserPageProps) => {
                     d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                   ></path>
                 </svg>
-                <span>there is nothing here yet 🤷</span>
+                <span>You have no cards yet.</span>
               </div>
             </div>
           )}

@@ -1,7 +1,48 @@
-const IconGeneric = ({ name }: { name: string }) => (
-  <div className="w-12 bg-blue-100 rounded-full text-neutral-focus">
-    <span className="text-xl">{name}</span>
-  </div>
-)
+import { getFQDN } from '@/lib/utils'
+import {
+  faBitbucket,
+  faCodepen,
+  faDeviantart,
+  faDiscord,
+  faFacebook,
+  faGithub,
+  faGitlab,
+  faInstagram,
+  faLinkedin,
+  faSoundcloud,
+  faTwitter,
+  IconDefinition,
+  IconName,
+} from '@fortawesome/free-brands-svg-icons'
+import { faQrcode } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
+const IconGeneric = ({ name }: { name: string }) => {
+  let i: IconDefinition = faQrcode
+
+  const icons: IconDefinition[] = [
+    faGithub,
+    faGitlab,
+    faBitbucket,
+    faCodepen,
+    faDeviantart,
+    faInstagram,
+    faLinkedin,
+    faFacebook,
+    faTwitter,
+    faDiscord,
+    faSoundcloud,
+  ]
+
+  icons.forEach((icon) => {
+    icon.iconName === (getFQDN(name) as IconName) && (i = icon)
+  })
+
+  return (
+    <div className="w-12 rounded-full">
+      <FontAwesomeIcon className="big-icon" icon={i} />
+    </div>
+  )
+}
 
 export default IconGeneric

@@ -4,10 +4,10 @@ import { useEffect } from 'react'
 import { useLocalStorage } from 'usehooks-ts'
 
 const SwitchTheme = () => {
-  const [theme, setTheme] = useLocalStorage('theme', 'forest')
+  const [theme, setTheme] = useLocalStorage('theme', 'luxury')
 
   const toggleTheme = () => {
-    setTheme(theme === 'forest' ? 'winter' : 'forest')
+    setTheme(theme === 'luxury' ? 'bumblebee' : 'luxury')
   }
 
   useEffect(() => {

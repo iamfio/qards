@@ -34,7 +34,7 @@ const Qard = ({ id, accountName, accountLink }: QardProps) => {
 
         <div className="items-center text-center card-body">
           <div className="items-center text-center card-body">
-            <h2 className="text-4xl card-title text-secondary underline underline-offset-4">
+            <h2 className="text-4xl card-title text-secondary underline hover:underline">
               <a href={accountLink}>{capitalize(accountName)}</a>
             </h2>
           </div>
