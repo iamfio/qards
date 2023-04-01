@@ -25,14 +25,17 @@ const QardListItem = ({
   const handleOpenEditQard = () => setOpenEditQard((prev) => !prev)
 
   const deleteQard = async (qardId: string) => {
-    const response = await fetch('/api/qard', {
-      method: 'DELETE',
-      body: JSON.stringify(qardId),
-    })
+    if (window.confirm('Delete Qard?')) {
+      const response = await fetch('/api/qard', {
+        method: 'DELETE',
+        body: JSON.stringify(qardId),
+      })
 
-    if (response.ok) {
-      getQards()
+      if (response.ok) {
+        getQards()
+      }
     }
+    return null
   }
 
   return (
