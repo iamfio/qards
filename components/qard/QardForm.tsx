@@ -1,5 +1,6 @@
 'use client'
 
+import { isURL } from '@/lib/utils'
 import { Qard } from '@prisma/client'
 import { useSession } from 'next-auth/react'
 import { useForm } from 'react-hook-form'
@@ -53,6 +54,16 @@ const QardForm = ({
 
     if (isEdit) {
       httpMethod = 'PUT'
+    }
+
+    if (qardData.accountName.length === 0) {
+      alert('Please enter valid Account Nave')
+      return
+    }
+
+    if (!isURL(qardData.accountLink)) {
+      alert('Invalid URL')
+      return
     }
 
     const response = await fetch('/api/qard/', {

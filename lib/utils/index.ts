@@ -13,5 +13,9 @@ export const getURL = (path: string) => {
   return new URL(path, BASE_URL).toString()
 }
 
+export const isURL = (url: string) => {
+  return /^(?:\w+:)?\/\/([^\s\.]+\.\S{2}|localhost[\:?\d]*)\S*$/.test(url)
+}
+
 export const capitalize = (txt: string) =>
   txt.charAt(0).toUpperCase() + txt.slice(1)
