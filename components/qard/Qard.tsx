@@ -16,7 +16,7 @@ const Qard = ({ id, accountName, accountLink }: QardProps) => {
 
   return (
     <div className="my-6">
-      <div className="shadow-md  card w-[350px] bg-base-100 ">
+      <div className="shadow-md shadow-slate-300 card w-[350px] bg-base-100 ">
         <figure className="px-10 pt-10 ">
           <Canvas
             text={accountLink}
@@ -34,14 +34,12 @@ const Qard = ({ id, accountName, accountLink }: QardProps) => {
         </figure>
 
         <div className="items-center text-center card-body">
-          <div className="items-center text-center card-body">
-            <div className="w-24 mb-2">
-              <IconGeneric name={accountLink} />
-            </div>
-            <h2 className="text-4xl underline card-title text-secondary hover:underline">
-              <a href={accountLink}>{capitalize(accountName)}</a>
-            </h2>
+          <div className="w-24 mb-2">
+            <IconGeneric name={accountLink} />
           </div>
+          <h2 className="text-4xl underline card-title text-primary hover:underline">
+            <a href={accountLink}>{capitalize(accountName)}</a>
+          </h2>
         </div>
       </div>
     </div>

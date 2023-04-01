@@ -1,9 +1,8 @@
+import ProfileCard from '@/components/profile/ProfileCard'
+import Qard from '@/components/qard/Qard'
 import UserNotFound from '@/components/ui/UserNotFound'
 import { prisma } from '@/lib/globalPrisma'
 import { User } from '@prisma/client'
-import QardList from '@/components/qard/QardList'
-import ProfileCard from '@/components/profile/ProfileCard'
-import Qard from '@/components/qard/Qard'
 
 type UserPageProps = {
   params: { username: string }
@@ -32,6 +31,9 @@ const UserPage = async ({ params }: UserPageProps) => {
       <div className="snap-mandatory snap-always snap-y">
         <div className="snap-start">
           <ProfileCard user={user} />
+
+          <div className="divider my-14"></div>
+
           {user?.qards.map((qard) => (
             <Qard
               accountLink={qard.accountLink ?? ''}

@@ -12,7 +12,7 @@ const ProfileCard = ({ user }: Props) => {
   const { Canvas } = useQRCode()
 
   return (
-    <div className="shadow-xl card w-[350px] bg-base-100">
+    <div className="shadow-md shadow-slate-200 card w-[350px] bg-base-100">
       <figure>
         <img src={user?.image || ''} alt={user?.name || ''} />
       </figure>
