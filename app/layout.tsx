@@ -4,8 +4,8 @@ import AuthContext from '@/components/AuthContext'
 import Footer from '@/components/ui/Footer'
 import Navbar from '@/components/ui/Navbar'
 import { authOptions } from '@/pages/api/auth/[...nextauth]'
-import { Urbanist } from '@next/font/google'
 import { getServerSession } from 'next-auth'
+import { Urbanist } from 'next/font/google'
 
 const urbanist = Urbanist({ subsets: ['latin'] })
 
