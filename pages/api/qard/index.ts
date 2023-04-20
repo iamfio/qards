@@ -8,7 +8,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'GET') {
     const qards = await prisma.user.findUnique({
       where: { id: session?.user.id as string },
-      select: { qards: true },
+      include: {
+        qards: {
+          orderBy: {
+            position: 'asc',
+          },
+        },
+      },
     })
 
     if (!qards) {
@@ -34,8 +40,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       })
     }
 
-    const position =
-      data?.qards?.length! > 1 ? Number(data?.qards?.length! + 1) : 1
+    const position = data?.qards?.length! > 1 ? data?.qards?.length! + 1 : 1
 
     const qard = await prisma.user.update({
       where: {
@@ -86,6 +91,36 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     if (!qard) {
       res.status(401).json({
         message: 'Error UPDATE Qard',
+      })
+    }
+
+    res.status(200).json(qard)
+  }
+
+  if (req.method === 'PATCH') {
+    const existingQard = JSON.parse(req.body)
+
+    const qard = await prisma.user.update({
+      where: {
+        id: session?.user.id ?? '',
+      },
+      data: {
+        qards: {
+          update: {
+            where: {
+              id: existingQard.qardId ?? '',
+            },
+            data: {
+              position: existingQard.position,
+            },
+          },
+        },
+      },
+    })
+
+    if (!qard) {
+      res.status(401).json({
+        message: 'Error UPDATE Qard Position',
       })
     }
 
