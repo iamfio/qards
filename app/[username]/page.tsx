@@ -42,8 +42,8 @@ const UserPage = async ({ params }: UserPageProps) => {
 
           {user?.qards.map((qard) => (
             <Qard
-              accountLink={qard.accountLink ?? ''}
-              accountName={qard.accountName ?? ''}
+              accountLink={qard.accountLink}
+              accountName={qard.accountName}
               id={qard.id}
               key={qard.id}
             />

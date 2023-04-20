@@ -3,7 +3,6 @@
 import { isURL } from '@/lib/utils'
 import { Qard } from '@prisma/client'
 import { useSession } from 'next-auth/react'
-import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 type FormData = {
@@ -31,11 +30,6 @@ const QardForm = ({
   getQards,
 }: QardProps) => {
   const { data: session } = useSession()
-  const [allQards, setAllQards] = useState<Qard[]>([])
-
-  useEffect(() => {
-    // get user's cards
-  }, [])
 
   const {
     register,
@@ -43,8 +37,8 @@ const QardForm = ({
     formState: { errors },
   } = useForm<FormData>({
     defaultValues: {
-      accountName: accountName ?? '',
-      accountLink: accountLink ?? '',
+      accountName: accountName,
+      accountLink: accountLink,
     },
   })
 

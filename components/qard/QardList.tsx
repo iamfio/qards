@@ -19,18 +19,18 @@ const QardList = () => {
     setLoading(true)
 
     const response = await fetch('/api/qard')
-    const userData = await response.json()
+    const { qards } = await response.json()
 
-    setQards(userData.qards)
+    setQards(qards)
     setLoading(false)
   }, [])
 
-  const reorder = (list: Qard[], startIndex: number, endIndex: number) => {
-    const [removed] = list.splice(startIndex, 1)
+  const reorder = (qardsOrder: Qard[], startIndex: number, endIndex: number) => {
+    const [removed] = qardsOrder.splice(startIndex, 1)
 
-    list.splice(endIndex, 0, removed)
+    qardsOrder.splice(endIndex, 0, removed)
 
-    return list
+    return qardsOrder
   }
 
   const onDragEnd = (result: any) => {

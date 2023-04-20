@@ -3,7 +3,7 @@
 import { capitalize } from '@/lib/utils'
 import { useQRCode } from 'next-qrcode'
 
-import IconGeneric from '../ui/icons/IconGeneric'
+import IconGeneric from '@/components/ui/icons/IconGeneric'
 
 type QardProps = {
   id?: string
@@ -11,7 +11,7 @@ type QardProps = {
   accountLink: string
 }
 
-const Qard = ({ id, accountName, accountLink }: QardProps) => {
+const Qard = ({ accountName, accountLink }: QardProps) => {
   const { Canvas } = useQRCode()
 
   return (

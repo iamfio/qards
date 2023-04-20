@@ -36,7 +36,6 @@ const QardListItem = ({
         getQards()
       }
     }
-    return null
   }
 
   useEffect(() => {
@@ -74,8 +73,8 @@ const QardListItem = ({
                   isEdit
                   qardId={qard.id}
                   onClose={handleOpenEditQard}
-                  accountLink={qard.accountLink ?? ''}
-                  accountName={qard.accountName ?? ''}
+                  accountLink={qard.accountLink}
+                  accountName={qard.accountName}
                   getQards={getQards}
                 />
               </Modal>
