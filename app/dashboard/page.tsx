@@ -3,6 +3,9 @@ import { authOptions } from '@/pages/api/auth/[...nextauth]'
 import { getServerSession } from 'next-auth'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
+import { Suspense } from 'react'
+
+import Loading from './loading'
 
 export const metadata = {
   title: 'Qards | Dashboard',
@@ -37,7 +40,9 @@ const Dashboard = async () => {
           <div className="divider"></div>
         </div>
 
-        <QardList />
+        <Suspense fallback={<Loading />}>
+          <QardList />
+        </Suspense>
       </div>
     </>
   )
