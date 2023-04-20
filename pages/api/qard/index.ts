@@ -23,17 +23,19 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'POST') {
     const newQard = JSON.parse(req.body)
 
-    const userQards = await prisma.user.findUnique({
+    const data = await prisma.user.findUnique({
       where: { id: session?.user.id as string },
       select: { qards: true },
     })
 
-    if (!userQards) {
+    if (!data) {
       res.status(401).json({
         message: 'Error CREATE Qard - User not found',
       })
     }
-    const position = userQards?.qards?.length! > 1 ? userQards?.qards?.length! + 1 : 1
+
+    const position =
+      data?.qards?.length! > 1 ? Number(data?.qards?.length! + 1) : 1
 
     const qard = await prisma.user.update({
       where: {
