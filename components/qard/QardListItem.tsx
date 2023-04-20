@@ -13,14 +13,12 @@ type QardListItemProps = {
   qard: Qard
   getQards(): Promise<void>
   index: number
-  position: number
 }
 
 const QardListItem = ({
   qard,
   getQards,
   index,
-  position,
 }: QardListItemProps) => {
   const [openEditQard, setOpenEditQard] = useState<boolean>(false)
   const handleOpenEditQard = () => setOpenEditQard((prev) => !prev)
@@ -44,7 +42,7 @@ const QardListItem = ({
         method: 'PATCH',
         body: JSON.stringify({
           ...qard,
-          position,
+          position: index,
         }),
       })
 
@@ -54,7 +52,7 @@ const QardListItem = ({
     }
 
     updatePosition(qard)
-  }, [position])
+  }, [index])
 
   return (
     <Draggable draggableId={String(qard.id)} index={index}>

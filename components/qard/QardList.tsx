@@ -25,7 +25,11 @@ const QardList = () => {
     setLoading(false)
   }, [])
 
-  const reorder = (qardsOrder: Qard[], startIndex: number, endIndex: number) => {
+  const reorder = (
+    qardsOrder: Qard[],
+    startIndex: number,
+    endIndex: number
+  ) => {
     const [removed] = qardsOrder.splice(startIndex, 1)
 
     qardsOrder.splice(endIndex, 0, removed)
@@ -90,7 +94,6 @@ const QardList = () => {
                     key={qard.id}
                     getQards={getQards}
                     index={index}
-                    position={index}
                   />
                 ))}
                 {provided.placeholder}
