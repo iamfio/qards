@@ -40,7 +40,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       })
     }
 
-    const position = data?.qards?.length! > 1 ? data?.qards?.length! + 1 : 1
+    const position = data?.qards?.length! > 0 ? data?.qards?.length! + 1 : 1
 
     const qard = await prisma.user.update({
       where: {
