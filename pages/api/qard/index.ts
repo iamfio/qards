@@ -1,5 +1,6 @@
 import { prisma } from '@/lib/globalPrisma'
 import { NextApiRequest, NextApiResponse } from 'next'
+
 import { getServerAuthSession } from '../auth/[...nextauth]'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
@@ -7,7 +8,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   if (req.method === 'GET') {
     const qards = await prisma.user.findUnique({
-      where: { id: session?.user.id as string },
+      where: { id: String(session?.user.id) },
       include: {
         qards: {
           orderBy: {
@@ -40,11 +41,11 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       })
     }
 
-    const position = data?.qards?.length! > 0 ? data?.qards?.length! + 1 : 1
+    const position = data?.qards?.length! > 0 ? data?.qards?.length! + 1 : 0
 
     const qard = await prisma.user.update({
       where: {
-        id: session?.user.id ?? '',
+        id: String(session?.user.id),
       },
       data: {
         qards: {
@@ -71,13 +72,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     const qard = await prisma.user.update({
       where: {
-        id: session?.user.id ?? '',
+        id: String(session?.user.id),
       },
       data: {
         qards: {
           update: {
             where: {
-              id: existingQard.qardId ?? '',
+              id: String(existingQard.qardId),
             },
             data: {
               accountLink: existingQard.accountLink,
@@ -102,13 +103,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     const qard = await prisma.user.update({
       where: {
-        id: session?.user.id ?? '',
+        id: String(session?.user.id),
       },
       data: {
         qards: {
           update: {
             where: {
-              id: existingQard.qardId ?? '',
+              id: String(existingQard.id),
             },
             data: {
               position: existingQard.position,
@@ -132,7 +133,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     const response = await prisma.user.update({
       where: {
-        id: session?.user.id ?? '',
+        id: String(session?.user.id),
       },
       data: {
         qards: {

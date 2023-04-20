@@ -15,7 +15,13 @@ const getUserByUsername = async (username: User['username']) => {
 
   return await prisma.user.findUnique({
     where: { username },
-    include: { qards: true },
+    include: {
+      qards: {
+        orderBy: {
+          position: 'asc',
+        },
+      },
+    },
   })
 }
 

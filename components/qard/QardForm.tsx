@@ -3,6 +3,7 @@
 import { isURL } from '@/lib/utils'
 import { Qard } from '@prisma/client'
 import { useSession } from 'next-auth/react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 type FormData = {
@@ -30,6 +31,11 @@ const QardForm = ({
   getQards,
 }: QardProps) => {
   const { data: session } = useSession()
+  const [allQards, setAllQards] = useState<Qard[]>([])
+
+  useEffect(() => {
+    // get user's cards
+  }, [])
 
   const {
     register,
@@ -43,32 +49,24 @@ const QardForm = ({
   })
 
   const onSubmit = async (data: FormData) => {
-    const qardData = {
-      qardId: qardId,
-      userId: session?.user.id,
-      accountName: data.accountName,
-      accountLink: data.accountLink,
-    }
-
-    let httpMethod = 'POST'
-
-    if (isEdit) {
-      httpMethod = 'PUT'
-    }
-
-    if (qardData.accountName.length === 0) {
+    if (data.accountName.length === 0) {
       alert('Please enter valid Account Nave')
       return
     }
 
-    if (!isURL(qardData.accountLink)) {
+    if (!isURL(data.accountLink)) {
       alert('Invalid URL')
       return
     }
 
     const response = await fetch('/api/qard/', {
-      method: httpMethod,
-      body: JSON.stringify(qardData),
+      method: isEdit ? 'PUT' : 'POST',
+      body: JSON.stringify({
+        qardId: qardId,
+        userId: session?.user.id,
+        accountName: data.accountName,
+        accountLink: data.accountLink,
+      }),
     })
 
     if (response.ok) {

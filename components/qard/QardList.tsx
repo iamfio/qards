@@ -5,8 +5,8 @@ import QardForm from '@/components/qard/QardForm'
 import QardListItem from '@/components/qard/QardListItem'
 import Modal from '@/components/ui/modal/Modal'
 import { Qard } from '@prisma/client'
-import Link from 'next/link'
 import { useCallback, useEffect, useState } from 'react'
+import { DragDropContext, Droppable } from 'react-beautiful-dnd'
 
 const QardList = () => {
   const [qards, setQards] = useState<Qard[]>()
@@ -24,6 +24,32 @@ const QardList = () => {
     setQards(userData.qards)
     setLoading(false)
   }, [])
+
+  const reorder = (list: Qard[], startIndex: number, endIndex: number) => {
+    const [removed] = list.splice(startIndex, 1)
+
+    list.splice(endIndex, 0, removed)
+
+    return list
+  }
+
+  const onDragEnd = (result: any) => {
+    if (!result.destination) {
+      return
+    }
+
+    if (result.destination.index === result.source.index) {
+      return
+    }
+
+    const qardsOrdered = reorder(
+      qards!,
+      result.source.index,
+      result.destination.index
+    )
+
+    setQards(qardsOrdered)
+  }
 
   useEffect(() => {
     getQards()
@@ -50,9 +76,28 @@ const QardList = () => {
       <div className="flex flex-col items-center w-full m-auto">
         {loading && <DotLoader />}
 
-        {qards?.map((qard: Qard) => (
-          <QardListItem {...qard} key={qard.id} getQards={getQards} />
-        ))}
+        <DragDropContext onDragEnd={onDragEnd}>
+          <Droppable droppableId="qardsList">
+            {(provided) => (
+              <div
+                className="w-full"
+                ref={provided.innerRef}
+                {...provided.droppableProps}
+              >
+                {qards?.map((qard: Qard, index: number) => (
+                  <QardListItem
+                    qard={qard}
+                    key={qard.id}
+                    getQards={getQards}
+                    index={index}
+                    position={index}
+                  />
+                ))}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
 
         {qards?.length === 0 && (
           <div className="p-8 my-10 text-xl rounded-lg bg-primary-content">
