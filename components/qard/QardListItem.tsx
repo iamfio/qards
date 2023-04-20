@@ -54,13 +54,15 @@ const QardListItem = ({ qard, getQards, index }: QardListItemProps) => {
 
   return (
     <Draggable draggableId={String(qard.id)} index={index}>
-      {(provided) => (
+      {(provided, snapshot) => (
         <div
           key={qard.id}
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          className="w-full px-2 py-4 my-2 border border-gray-300 rounded-md shadow-sm cursor-pointer hover:shadow-xl"
+          className={`qard-list-item ${
+            snapshot.isDragging ? 'border-4 border-info/80' : 'border-inherit'
+          }`}
         >
           <div className="flex items-center">
             {openEditQard && (

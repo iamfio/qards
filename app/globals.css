@@ -4,44 +4,50 @@
 @tailwind utilities;
 
 * {
-   font-family: 'Urbanist', sans-serif;
+  font-family: 'Urbanist', sans-serif;
 }
 
 .text-3xl {
-   font-family: monospace
+  font-family: monospace;
 }
 
 .big-icon {
-   max-width: 50%;
-   height: auto;
+  max-width: 50%;
+  height: auto;
 }
 .dropdown-end {
-   margin-right: 0.5vw;
+  margin-right: 0.5vw;
 }
 
 .white-shadow {
-   box-shadow:  4px 4px 60px #002456;
+  box-shadow: 4px 4px 60px #002456;
 }
 
 body {
-   margin: 0;
-   padding: 0;
-   min-height: 100vh;
-   position: relative;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  position: relative;
 }
 
 .justify-around {
-   margin-left: 3mm;
+  margin-left: 3mm;
 }
 
 .my-8 {
-   margin-bottom: 11vh;
+  margin-bottom: 11vh;
 }
 
 .footer-center {
-   position: absolute;
-   left: 0;
-   bottom: 0;
-   height: 10vh;
-   width: 100%;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 10vh;
+  width: 100%;
+}
+
+@layer components {
+  .qard-list-item {
+    @apply w-full px-2 py-4 my-2 border border-gray-300 rounded-md shadow-sm cursor-pointer hover:shadow-xl bg-base-100 bg-gradient-to-r from-base-100 via-base-200 to-base-100;
+  }
 }

@@ -63,7 +63,7 @@ const QardList = () => {
   return (
     <div>
       <div className="flex justify-center">
-        <div className="mx-4 my-2">
+        <div className="mx-4 mt-4 mb-6">
           <button
             className="btn btn-outline btn-primary"
             onClick={handleOpenNewQard}
@@ -83,11 +83,13 @@ const QardList = () => {
 
         <DragDropContext onDragEnd={onDragEnd}>
           <Droppable droppableId="qardsList">
-            {(provided) => (
+            {(provided, snapshot) => (
               <div
-                className="w-full"
-                ref={provided.innerRef}
-                {...provided.droppableProps}
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+              className={`w-full ${
+                snapshot.isDraggingOver ? 'bg-primary/10' : 'bg-inherit'
+              }`}
               >
                 {qards?.map((qard: Qard, index: number) => (
                   <QardListItem
