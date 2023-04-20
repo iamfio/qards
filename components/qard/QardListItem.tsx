@@ -17,7 +17,11 @@ type QardListItemProps = {
   index: number
 }
 
-const QardListItem = ({ qard, getQards, index }: QardListItemProps) => {
+const QardListItem: React.FC<QardListItemProps> = ({
+  qard,
+  getQards,
+  index,
+}) => {
   const [openEditQard, setOpenEditQard] = useState<boolean>(false)
   const handleOpenEditQard = () => setOpenEditQard((prev) => !prev)
 

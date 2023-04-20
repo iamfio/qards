@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-const UserNotFound = () => (
+const UserNotFound = (): JSX.Element => (
   <div className="my-52">
     <div className="h-full rounded-lg hero bg-base-200">
       <div className="text-center hero-content">

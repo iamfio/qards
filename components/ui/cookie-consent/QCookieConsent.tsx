@@ -2,7 +2,7 @@
 
 import CookieConsent from 'react-cookie-consent'
 
-const QCookieConsent = () => {
+const QCookieConsent = (): JSX.Element => {
   return (
     <>
       <CookieConsent

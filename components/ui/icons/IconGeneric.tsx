@@ -17,7 +17,7 @@ import {
 import { faQrcode } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-const IconGeneric = ({ name }: { name: string }) => {
+const IconGeneric: React.FC<{ name: string }> = ({ name }) => {
   let i: IconDefinition = faQrcode
 
   const icons: IconDefinition[] = [

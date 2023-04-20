@@ -7,7 +7,7 @@ import AuthButton from '@/components/ui/AuthButton'
 import Logo from '@/components/ui/Logo'
 import SwitchTheme from '@/components/ui/SwitchTheme'
 
-const Navbar = (): JSX.Element => {
+const Navbar: React.FC = () => {
   const { data: session } = useSession()
 
   return (

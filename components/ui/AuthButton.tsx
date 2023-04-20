@@ -1,8 +1,8 @@
 'use client'
 
-import { signIn, signOut, useSession } from 'next-auth/react'
+import { signIn, useSession } from 'next-auth/react'
 
-const AuthButton = () => {
+const AuthButton: React.FC = () => {
   const { data: session } = useSession()
 
   return (

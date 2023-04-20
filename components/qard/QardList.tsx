@@ -9,7 +9,7 @@ import QardForm from '@/components/qard/QardForm'
 import QardListItem from '@/components/qard/QardListItem'
 import Modal from '@/components/ui/modal/Modal'
 
-const QardList = () => {
+const QardList: React.FC = () => {
   const [qards, setQards] = useState<Qard[]>()
   const [openNewQard, setOpenNewQard] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false)

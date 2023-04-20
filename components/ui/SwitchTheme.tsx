@@ -3,7 +3,7 @@
 import { useEffect } from 'react'
 import { useLocalStorage } from 'usehooks-ts'
 
-const SwitchTheme = () => {
+const SwitchTheme = (): JSX.Element => {
   const [theme, setTheme] = useLocalStorage('theme', 'dark')
 
   const toggleTheme = () => {

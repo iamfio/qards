@@ -2,14 +2,19 @@ import { useRef } from 'react'
 import cn from 'classnames'
 import { useOnClickOutside } from 'usehooks-ts'
 
-type Props = {
+type ModalProps = {
   children: React.ReactNode
   open: boolean
   disableClickOutside?: boolean
   onClose(): void
 }
 
-const Modal = ({ children, open, disableClickOutside, onClose }: Props) => {
+const Modal: React.FC<ModalProps> = ({
+  children,
+  open,
+  disableClickOutside,
+  onClose,
+}) => {
   const ref = useRef(null)
   useOnClickOutside(ref, () => {
     if (!disableClickOutside) {

@@ -5,11 +5,11 @@ import { Qard, User } from '@prisma/client'
 import { useQRCode } from 'next-qrcode'
 import { useReadLocalStorage } from 'usehooks-ts'
 
-type Props = {
+type ProfileCardProps = {
   user: (User & { qards: Qard[] }) | null
 }
 
-const ProfileCard = ({ user }: Props) => {
+const ProfileCard: React.FC<ProfileCardProps> = ({ user }) => {
   const { Canvas } = useQRCode()
   const theme = useReadLocalStorage('theme')
 
