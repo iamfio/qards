@@ -54,6 +54,10 @@ const QardList = () => {
     )
 
     setQards(qardsOrdered)
+
+    if (window.navigator.vibrate) {
+      window.navigator.vibrate(100)
+    }
   }
 
   useEffect(() => {
@@ -85,11 +89,11 @@ const QardList = () => {
           <Droppable droppableId="qardsList">
             {(provided, snapshot) => (
               <div
-              ref={provided.innerRef}
-              {...provided.droppableProps}
-              className={`w-full ${
-                snapshot.isDraggingOver ? 'bg-primary/10' : 'bg-inherit'
-              }`}
+                ref={provided.innerRef}
+                {...provided.droppableProps}
+                className={`w-full ${
+                  snapshot.isDraggingOver ? 'bg-primary/10' : 'bg-inherit'
+                }`}
               >
                 {qards?.map((qard: Qard, index: number) => (
                   <QardListItem
