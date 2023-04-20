@@ -103,7 +103,7 @@ const QardList = () => {
         </DragDropContext>
 
         {qards?.length === 0 && (
-          <div className="p-8 my-10 text-xl rounded-lg bg-primary-content">
+          <div className="p-8 my-10 text-xl rounded-lg bg-primary text-primary-content border-secondary">
             You have no cards yet
           </div>
         )}
