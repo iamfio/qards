@@ -4,10 +4,10 @@ import { useEffect } from 'react'
 import { useLocalStorage } from 'usehooks-ts'
 
 const SwitchTheme = () => {
-  const [theme, setTheme] = useLocalStorage('theme', 'luxury')
+  const [theme, setTheme] = useLocalStorage('theme', 'dark')
 
   const toggleTheme = () => {
-    setTheme(theme === 'luxury' ? 'bumblebee' : 'luxury')
+    setTheme(theme === 'dark' ? 'light' : 'dark')
   }
 
   useEffect(() => {
@@ -20,7 +20,7 @@ const SwitchTheme = () => {
       <input type="checkbox" className="hidden" onChange={toggleTheme} />
 
       <svg
-        className="w-10 h-10 fill-current swap-on"
+        className="w-10 h-10 fill-current swap-on text-primary"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
       >
@@ -28,7 +28,7 @@ const SwitchTheme = () => {
       </svg>
 
       <svg
-        className="w-10 h-10 fill-current swap-off"
+        className="w-10 h-10 fill-current swap-off text-primary"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
       >

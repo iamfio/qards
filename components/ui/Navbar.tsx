@@ -3,9 +3,9 @@
 import { signOut, useSession } from 'next-auth/react'
 import Link from 'next/link'
 
-import AuthButton from './AuthButton'
-import Logo from './Logo'
-import SwitchTheme from './SwitchTheme'
+import AuthButton from '@/components/ui/AuthButton'
+import Logo from '@/components/ui/Logo'
+import SwitchTheme from '@/components/ui/SwitchTheme'
 
 const Navbar = (): JSX.Element => {
   const { data: session } = useSession()
@@ -18,6 +18,7 @@ const Navbar = (): JSX.Element => {
 
       <div className="flex-none gap-2">
         <SwitchTheme />
+
         {session?.user && (
           <div className="dropdown dropdown-end">
             <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
@@ -30,15 +31,20 @@ const Navbar = (): JSX.Element => {
               className="p-2 mt-3 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
             >
               <li>
-                <Link href="/dashboard/profile/edit">Edit Profile</Link>
+                <Link href="/dashboard/profile/edit">
+                  <span className="text-xl">Edit Profile</span>
+                </Link>
               </li>
 
               <li>
-                <a onClick={() => signOut()}>Logout</a>
+                <a onClick={() => signOut()}>
+                  <span className="text-xl">Logout</span>
+                </a>
               </li>
             </ul>
           </div>
         )}
+
         {!session?.user && <AuthButton />}
       </div>
     </div>

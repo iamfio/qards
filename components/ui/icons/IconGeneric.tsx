@@ -38,7 +38,7 @@ const IconGeneric = ({ name }: { name: string }) => {
     icon.iconName === (getFQDN(name) as IconName) && (i = icon)
   })
 
-  return <FontAwesomeIcon className="big-icon" icon={i} />
+  return <FontAwesomeIcon className="big-icon text-primary" icon={i} />
 }
 
 export default IconGeneric

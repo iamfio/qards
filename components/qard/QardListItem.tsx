@@ -1,13 +1,15 @@
 'use client'
 
-import QardForm from '@/components/qard/QardForm'
-import IconGeneric from '@/components/ui/icons/IconGeneric'
-import Modal from '@/components/ui/modal/Modal'
-import { capitalize } from '@/lib/utils'
-import { Qard } from '@prisma/client'
 import { useEffect, useState } from 'react'
 import { Draggable } from 'react-beautiful-dnd'
 import { AiOutlineDelete, AiOutlineEdit } from 'react-icons/ai'
+
+import { Qard } from '@prisma/client'
+import { capitalize } from '@/lib/utils'
+
+import QardForm from '@/components/qard/QardForm'
+import IconGeneric from '@/components/ui/icons/IconGeneric'
+import Modal from '@/components/ui/modal/Modal'
 
 type QardListItemProps = {
   qard: Qard
@@ -15,11 +17,7 @@ type QardListItemProps = {
   index: number
 }
 
-const QardListItem = ({
-  qard,
-  getQards,
-  index,
-}: QardListItemProps) => {
+const QardListItem = ({ qard, getQards, index }: QardListItemProps) => {
   const [openEditQard, setOpenEditQard] = useState<boolean>(false)
   const handleOpenEditQard = () => setOpenEditQard((prev) => !prev)
 
