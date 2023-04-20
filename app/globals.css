@@ -48,6 +48,6 @@ body {
 
 @layer components {
   .qard-list-item {
-    @apply w-full px-2 py-4 my-2 border border-gray-300 rounded-md shadow-sm cursor-pointer hover:shadow-xl bg-base-100 bg-gradient-to-r from-base-100 via-base-200 to-base-100;
+    @apply w-full px-2 py-4 my-4 border rounded-md shadow-sm cursor-pointer hover:shadow-xl bg-base-100 bg-gradient-to-r from-base-100 via-base-200 to-base-100;
   }
 }
