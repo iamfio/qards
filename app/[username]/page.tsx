@@ -1,8 +1,12 @@
+import { Suspense } from 'react'
+
 import ProfileCard from '@/components/profile/ProfileCard'
 import Qard from '@/components/qard/Qard'
 import UserNotFound from '@/components/ui/UserNotFound'
 import { prisma } from '@/lib/globalPrisma'
 import { User } from '@prisma/client'
+
+import Loading from './loading'
 
 type UserPageProps = {
   params: { username: string }
@@ -15,7 +19,13 @@ const getUserByUsername = async (username: User['username']) => {
 
   return await prisma.user.findUnique({
     where: { username },
-    include: { qards: true },
+    include: {
+      qards: {
+        orderBy: {
+          position: 'asc',
+        },
+      },
+    },
   })
 }
 
@@ -30,18 +40,22 @@ const UserPage = async ({ params }: UserPageProps) => {
     <div className="my-8">
       <div className="snap-mandatory snap-always snap-y">
         <div className="snap-start">
-          <ProfileCard user={user} />
+          <Suspense fallback={<Loading />}>
+            <ProfileCard user={user} />
+          </Suspense>
 
           <div className="divider my-14"></div>
 
-          {user?.qards.map((qard) => (
-            <Qard
-              accountLink={qard.accountLink ?? ''}
-              accountName={qard.accountName ?? ''}
-              id={qard.id}
-              key={qard.id}
-            />
-          ))}
+          <Suspense fallback={<Loading />}>
+            {user?.qards.map((qard) => (
+              <Qard
+                accountLink={qard.accountLink}
+                accountName={qard.accountName}
+                id={qard.id}
+                key={qard.id}
+              />
+            ))}
+          </Suspense>
 
           {user.qards.length === 0 && (
             <div className="h-24 mt-12 shadow-lg alert">

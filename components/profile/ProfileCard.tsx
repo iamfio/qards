@@ -3,6 +3,7 @@
 import { getURL } from '@/lib/utils'
 import { Qard, User } from '@prisma/client'
 import { useQRCode } from 'next-qrcode'
+import { useReadLocalStorage } from 'usehooks-ts'
 
 type Props = {
   user: (User & { qards: Qard[] }) | null
@@ -10,12 +11,14 @@ type Props = {
 
 const ProfileCard = ({ user }: Props) => {
   const { Canvas } = useQRCode()
+  const theme = useReadLocalStorage('theme')
 
   return (
-    <div className="shadow-md shadow-slate-200 card w-[350px] bg-base-100">
+    <div className="card w-[350px] bg-base-100 shadow-xl">
       <figure>
         <img src={user?.image || ''} alt={user?.name || ''} />
       </figure>
+
       <div className="card-body">
         <h2 className="card-title">{user?.name}</h2>
 
@@ -46,12 +49,12 @@ const ProfileCard = ({ user }: Props) => {
             text={getURL(`/${user?.username}`)}
             options={{
               level: 'H',
-              margin: 0,
+              margin: 1,
               scale: 3,
               width: 200,
               color: {
                 light: '#fff',
-                dark: '#282a36',
+                dark: theme === 'night' ? '#2a303c' : '#282a36',
               },
             }}
           />

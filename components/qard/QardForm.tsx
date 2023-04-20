@@ -37,38 +37,30 @@ const QardForm = ({
     formState: { errors },
   } = useForm<FormData>({
     defaultValues: {
-      accountName: accountName ?? '',
-      accountLink: accountLink ?? '',
+      accountName: accountName,
+      accountLink: accountLink,
     },
   })
 
   const onSubmit = async (data: FormData) => {
-    const qardData = {
-      qardId: qardId,
-      userId: session?.user.id,
-      accountName: data.accountName,
-      accountLink: data.accountLink,
-    }
-
-    let httpMethod = 'POST'
-
-    if (isEdit) {
-      httpMethod = 'PUT'
-    }
-
-    if (qardData.accountName.length === 0) {
+    if (data.accountName.length === 0) {
       alert('Please enter valid Account Nave')
       return
     }
 
-    if (!isURL(qardData.accountLink)) {
+    if (!isURL(data.accountLink)) {
       alert('Invalid URL')
       return
     }
 
     const response = await fetch('/api/qard/', {
-      method: httpMethod,
-      body: JSON.stringify(qardData),
+      method: isEdit ? 'PUT' : 'POST',
+      body: JSON.stringify({
+        qardId: qardId,
+        userId: session?.user.id,
+        accountName: data.accountName,
+        accountLink: data.accountLink,
+      }),
     })
 
     if (response.ok) {

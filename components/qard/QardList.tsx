@@ -1,12 +1,13 @@
 'use client'
 
+import { useCallback, useEffect, useState } from 'react'
+import { DragDropContext, Droppable } from 'react-beautiful-dnd'
+import { Qard } from '@prisma/client'
+
 import DotLoader from '@/components/loader/DotLoader'
 import QardForm from '@/components/qard/QardForm'
 import QardListItem from '@/components/qard/QardListItem'
 import Modal from '@/components/ui/modal/Modal'
-import { Qard } from '@prisma/client'
-import Link from 'next/link'
-import { useCallback, useEffect, useState } from 'react'
 
 const QardList = () => {
   const [qards, setQards] = useState<Qard[]>()
@@ -19,11 +20,41 @@ const QardList = () => {
     setLoading(true)
 
     const response = await fetch('/api/qard')
-    const userData = await response.json()
+    const { qards } = await response.json()
 
-    setQards(userData.qards)
+    setQards(qards)
     setLoading(false)
   }, [])
+
+  const reorder = (
+    qardsOrder: Qard[],
+    startIndex: number,
+    endIndex: number
+  ) => {
+    const [removed] = qardsOrder.splice(startIndex, 1)
+
+    qardsOrder.splice(endIndex, 0, removed)
+
+    return qardsOrder
+  }
+
+  const onDragEnd = (result: any) => {
+    if (!result.destination) {
+      return
+    }
+
+    if (result.destination.index === result.source.index) {
+      return
+    }
+
+    const qardsOrdered = reorder(
+      qards!,
+      result.source.index,
+      result.destination.index
+    )
+
+    setQards(qardsOrdered)
+  }
 
   useEffect(() => {
     getQards()
@@ -32,7 +63,7 @@ const QardList = () => {
   return (
     <div>
       <div className="flex justify-center">
-        <div className="mx-4 my-2">
+        <div className="mx-4 mt-4 mb-6">
           <button
             className="btn btn-outline btn-primary"
             onClick={handleOpenNewQard}
@@ -50,12 +81,32 @@ const QardList = () => {
       <div className="flex flex-col items-center w-full m-auto">
         {loading && <DotLoader />}
 
-        {qards?.map((qard: Qard) => (
-          <QardListItem {...qard} key={qard.id} getQards={getQards} />
-        ))}
+        <DragDropContext onDragEnd={onDragEnd}>
+          <Droppable droppableId="qardsList">
+            {(provided, snapshot) => (
+              <div
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+              className={`w-full ${
+                snapshot.isDraggingOver ? 'bg-primary/10' : 'bg-inherit'
+              }`}
+              >
+                {qards?.map((qard: Qard, index: number) => (
+                  <QardListItem
+                    qard={qard}
+                    key={qard.id}
+                    getQards={getQards}
+                    index={index}
+                  />
+                ))}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
 
         {qards?.length === 0 && (
-          <div className="p-8 my-10 text-xl rounded-lg bg-primary-content">
+          <div className="p-8 my-10 text-xl rounded-lg bg-primary text-primary-content border-secondary">
             You have no cards yet
           </div>
         )}
