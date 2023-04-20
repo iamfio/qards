@@ -1,4 +1,5 @@
 import { Suspense } from 'react'
+import type { Metadata } from 'next'
 
 import ProfileCard from '@/components/profile/ProfileCard'
 import Qard from '@/components/qard/Qard'
@@ -27,6 +28,13 @@ const getUserByUsername = async (username: User['username']) => {
       },
     },
   })
+}
+
+export const generateMetadata = async ({
+  params,
+}: UserPageProps): Promise<Metadata> => {
+  const user = await getUserByUsername(params.username)
+  return { title: `${user?.name}'s Qards` }
 }
 
 const UserPage = async ({ params }: UserPageProps) => {
