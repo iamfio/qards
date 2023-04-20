@@ -69,7 +69,7 @@ const QardList = () => {
       <div className="flex justify-center">
         <div className="mx-4 mt-4 mb-6">
           <button
-            className="btn btn-outline btn-primary"
+            className="btn glass btn-wide bg-primary hover:bg-primary-focus"
             onClick={handleOpenNewQard}
           >
             New Qard
