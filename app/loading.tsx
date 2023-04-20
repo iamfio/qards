@@ -1,6 +1,6 @@
 import DotLoader from '@/components/loader/DotLoader'
 
-const Loading = () => {
+const Loading = (): JSX.Element => {
   return (
     <div>
       <DotLoader />

@@ -1,6 +1,6 @@
 import ContentLoader from 'react-content-loader'
 
-const DotLoader: React.FC<{ props: any }> = (props): JSX.Element => {
+const DotLoader = (props: any): JSX.Element => {
   return (
     <ContentLoader
       viewBox="0 0 400 160"
