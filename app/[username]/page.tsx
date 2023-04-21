@@ -50,11 +50,9 @@ const UserPage = async ({ params }: UserPageProps) => {
         <div className="snap-start">
           <Suspense fallback={<Loading />}>
             <ProfileCard user={user} />
-          </Suspense>
 
-          <div className="divider my-14"></div>
+            <div className="divider my-14"></div>
 
-          <Suspense fallback={<Loading />}>
             {user?.qards.map((qard) => (
               <Qard
                 accountLink={qard.accountLink}
