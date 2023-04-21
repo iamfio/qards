@@ -107,7 +107,7 @@ const QardForm: React.FC<QardProps> = ({
                 required: 'Required field',
                 validate: (value) =>
                   (value === watchAccountLink) === isURL(value) ||
-                  'URL Invalid',
+                  'Invalid URL',
               })}
               className="w-full max-w-xs input input-bordered"
               placeholder="Account URL"
