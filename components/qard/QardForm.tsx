@@ -86,10 +86,10 @@ const QardForm: React.FC<QardProps> = ({
               </span>
             </label>
             <input
-              type="text"
               {...register('accountName', {
                 required: 'Required field',
               })}
+              type="text"
               className="w-full max-w-xs input input-bordered"
               placeholder="Account Name"
             />
@@ -102,13 +102,13 @@ const QardForm: React.FC<QardProps> = ({
               </span>
             </label>
             <input
-              type="text"
               {...register('accountLink', {
                 required: 'Required field',
                 validate: (value) =>
                   (value === watchAccountLink) === isURL(value) ||
                   'Invalid URL',
               })}
+              type="text"
               className="w-full max-w-xs input input-bordered"
               placeholder="Account URL"
             />
