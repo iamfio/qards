@@ -11,6 +11,12 @@ import {
   faLinkedin,
   faSoundcloud,
   faTwitter,
+  faPinterest,
+  faVk,
+  faFacebookF,
+  faFlickr,
+  faTelegram,
+  faWhatsapp,
   IconDefinition,
   IconName,
 } from '@fortawesome/free-brands-svg-icons'
@@ -32,6 +38,12 @@ const IconGeneric: React.FC<{ name: string }> = ({ name }) => {
     faTwitter,
     faDiscord,
     faSoundcloud,
+    faPinterest,
+    faVk,
+    faFacebookF,
+    faFlickr,
+    faTelegram,
+    faWhatsapp,
   ]
 
   icons.map((icon) => {
