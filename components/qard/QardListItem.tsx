@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { Draggable } from 'react-beautiful-dnd'
+import { Draggable } from '@hello-pangea/dnd'
 import { AiOutlineDelete, AiOutlineEdit } from 'react-icons/ai'
 
 import { Qard } from '@prisma/client'
@@ -64,9 +64,8 @@ const QardListItem: React.FC<QardListItemProps> = ({
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          className={`qard-list-item ${
-            snapshot.isDragging ? 'border-4 border-info/80' : 'border-inherit'
-          }`}
+          className={`qard-list-item ${snapshot.isDragging ? 'border-4 border-info/80' : 'border-inherit'
+            }`}
         >
           <div className="flex items-center">
             {openEditQard && (
