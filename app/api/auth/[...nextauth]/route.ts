@@ -1,7 +1,7 @@
 import { prisma } from '@/lib/prismadb'
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
 import { randomBytes, randomUUID } from 'crypto'
-import NextAuth, { AuthOptions, getServerSession, Session } from 'next-auth'
+import NextAuth, { AuthOptions, Session } from 'next-auth'
 
 import { JWT } from 'next-auth/jwt'
 import GithubProvider from 'next-auth/providers/github'
