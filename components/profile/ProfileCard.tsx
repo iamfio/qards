@@ -48,7 +48,7 @@ const ProfileCard = ({ user }: ProfileCardProps) => {
           <Canvas
             text={getURL(`/${user?.username}`)}
             options={{
-              errorCorrectionLevel: 'H',
+              level: 'H',
               margin: 1,
               scale: 3,
               width: 200,
