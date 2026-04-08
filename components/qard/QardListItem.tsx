@@ -17,15 +17,15 @@ type QardListItemProps = {
   index: number
 }
 
-const QardListItem= ({
+export default function QardListItem({
   qard,
   getQards,
   index,
-}: QardListItemProps) => {
+}: QardListItemProps) {
   const [openEditQard, setOpenEditQard] = useState<boolean>(false)
   const handleOpenEditQard = () => setOpenEditQard((prev) => !prev)
 
-  const deleteQard = async (qardId: string) => {
+  async function deleteQard(qardId: string) {
     if (window.confirm('Delete Qard?')) {
       const response = await fetch('/api/qard', {
         method: 'DELETE',
@@ -121,5 +121,3 @@ const QardListItem= ({
     </Draggable>
   )
 }
-
-export default QardListItem

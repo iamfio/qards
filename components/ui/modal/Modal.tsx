@@ -9,12 +9,12 @@ type ModalProps = {
   onClose(): void
 }
 
-const Modal = ({
+export default function Modal({
   children,
   open,
   disableClickOutside,
   onClose,
-}: ModalProps) => {
+}: ModalProps) {
   const ref = useRef<HTMLDivElement>(null)
   
   useOnClickOutside(ref as React.RefObject<HTMLDivElement>, () => {
@@ -34,5 +34,3 @@ const Modal = ({
     </div>
   )
 }
-
-export default Modal

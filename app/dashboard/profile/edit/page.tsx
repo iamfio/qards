@@ -10,13 +10,13 @@ export const metadata: Metadata = {
   title: 'Qards | Edit Profile',
 }
 
-const getUserById = async (userId: User["id"]) => {
+async function getUserById(userId: User["id"]) {
   return prisma.user.findUnique({
     where: { id: userId },
   })
 }
 
-const Profile = async () => {
+export default async function Profile() {
   const session = await getServerSession(authOptions)
 
   if (!session?.user?.id) {
@@ -37,5 +37,3 @@ const Profile = async () => {
     </div>
   )
 }
-
-export default Profile

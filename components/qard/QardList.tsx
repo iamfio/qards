@@ -9,7 +9,7 @@ import QardForm from '@/components/qard/QardForm'
 import QardListItem from '@/components/qard/QardListItem'
 import Modal from '@/components/ui/modal/Modal'
 
-const QardList= () => {
+export default function QardList() {
   const [qards, setQards] = useState<Qard[]>()
   const [openNewQard, setOpenNewQard] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false)
@@ -123,5 +123,3 @@ const QardList= () => {
     </div>
   )
 }
-
-export default QardList

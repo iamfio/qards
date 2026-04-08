@@ -9,7 +9,7 @@ type ProfileCardProps = {
   user: (User & { qards: Qard[] }) | null
 }
 
-const ProfileCard = ({ user }: ProfileCardProps) => {
+export default function ProfileCard({ user }: ProfileCardProps) {
   const { Canvas } = useQRCode()
   const theme = useReadLocalStorage('theme')
 
@@ -48,7 +48,6 @@ const ProfileCard = ({ user }: ProfileCardProps) => {
           <Canvas
             text={getURL(`/${user?.username}`)}
             options={{
-              level: 'H',
               margin: 1,
               scale: 3,
               width: 200,
@@ -63,5 +62,3 @@ const ProfileCard = ({ user }: ProfileCardProps) => {
     </div>
   )
 }
-
-export default ProfileCard

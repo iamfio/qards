@@ -23,7 +23,7 @@ import {
 import { faQrcode } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-const IconGeneric = ({ name }: { name: string }) => {
+export default function IconGeneric({ name }: { name: string }) {
   let i: IconDefinition = faQrcode
 
   const icons: IconDefinition[] = [
@@ -52,5 +52,3 @@ const IconGeneric = ({ name }: { name: string }) => {
 
   return <FontAwesomeIcon className="big-icon text-primary" icon={i} />
 }
-
-export default IconGeneric

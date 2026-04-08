@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   title: 'Qards',
 }
 
-const Home = async () => {
+export default async function Home() {
   const session = await getServerSession(authOptions)
 
   if (session?.user) {
@@ -41,5 +41,3 @@ const Home = async () => {
     </div>
   )
 }
-
-export default Home

@@ -7,7 +7,7 @@ import AuthButton from '@/components/ui/AuthButton'
 import Logo from '@/components/ui/Logo'
 import SwitchTheme from '@/components/ui/SwitchTheme'
 
-const Navbar: React.FC = () => {
+export default function Navbar() {
   const { data: session } = useSession()
 
   return (
@@ -50,5 +50,3 @@ const Navbar: React.FC = () => {
     </div>
   )
 }
-
-export default Navbar

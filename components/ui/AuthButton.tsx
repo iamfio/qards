@@ -2,7 +2,7 @@
 
 import { signIn, useSession } from 'next-auth/react'
 
-const AuthButton= () => {
+export default function AuthButton() {
   const { data: session } = useSession()
 
   return (
@@ -22,5 +22,3 @@ const AuthButton= () => {
     </div>
   )
 }
-
-export default AuthButton

@@ -13,7 +13,7 @@ type UserPageProps = {
   params: Promise<{ username: string }>
 }
 
-const getUserByUsername = async (username: User['username']) => {
+async function getUserByUsername(username: User['username']) {
   if (!username) {
     return null
   }
@@ -30,13 +30,13 @@ const getUserByUsername = async (username: User['username']) => {
   })
 }
 
-export const generateMetadata = async ({ params }: UserPageProps): Promise<Metadata> => {
+export async function generateMetadata({ params }: UserPageProps): Promise<Metadata> {
   const { username } = await params;
   const user = await getUserByUsername(username)
   return { title: `${user?.name}'s Qards` }
 }
 
-const UserPage = async ({ params }: UserPageProps) => {
+export default async function UserPage({ params }: UserPageProps) {
   const { username } = await params;
   const user = await getUserByUsername(username)
 
@@ -88,5 +88,3 @@ const UserPage = async ({ params }: UserPageProps) => {
     </div>
   )
 }
-
-export default UserPage

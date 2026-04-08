@@ -1,7 +1,7 @@
 'use client';
 import CookieConsent from 'react-cookie-consent'
 
-const QCookieConsent = () => {
+export default function QCookieConsent() {
   return (
     <>
       <CookieConsent
@@ -21,5 +21,3 @@ const QCookieConsent = () => {
     </>
   )
 }
-
-export default QCookieConsent

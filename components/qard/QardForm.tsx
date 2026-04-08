@@ -22,14 +22,14 @@ type QardProps = {
   getQards(): Promise<void>
 }
 
-const QardForm= ({
+export default function QardForm({
   qardId,
   isEdit,
   accountName,
   accountLink,
   onClose,
   getQards,
-}: QardProps) => {
+}: QardProps) {
   const { data: session } = useSession()
 
   const {
@@ -46,7 +46,7 @@ const QardForm= ({
 
   const watchAccountLink = watch('accountLink')
 
-  const onSubmit = async (data: FormData) => {
+  async function onSubmit(data: FormData) {
     const response = await fetch('/api/qard/', {
       method: isEdit ? 'PUT' : 'POST',
       body: JSON.stringify({
@@ -131,5 +131,3 @@ const QardForm= ({
     </div>
   )
 }
-
-export default QardForm

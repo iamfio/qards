@@ -1,6 +1,6 @@
 import ContentLoader from 'react-content-loader'
 
-const DotLoader = (props: any)=> {
+export default function DotLoader(props: any) {
   return (
     <ContentLoader
       viewBox="0 0 400 160"
@@ -15,5 +15,3 @@ const DotLoader = (props: any)=> {
     </ContentLoader>
   )
 }
-
-export default DotLoader

@@ -3,10 +3,10 @@
 import { useEffect, type JSX } from 'react';
 import { useLocalStorage } from 'usehooks-ts'
 
-const SwitchTheme = (): JSX.Element => {
+export default function SwitchTheme(): JSX.Element {
   const [theme, setTheme] = useLocalStorage('theme', 'dark')
 
-  const toggleTheme = () => {
+  function toggleTheme() {
     setTheme(theme === 'dark' ? 'light' : 'dark')
   }
 
@@ -37,5 +37,3 @@ const SwitchTheme = (): JSX.Element => {
     </label>
   )
 }
-
-export default SwitchTheme

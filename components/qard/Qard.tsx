@@ -12,7 +12,7 @@ type QardProps = {
   accountLink: string
 }
 
-const Qard = ({ accountName, accountLink }: QardProps) => {
+export default function Qard({ accountName, accountLink }: QardProps) {
   const { Canvas } = useQRCode()
   const theme = useReadLocalStorage('theme')
 
@@ -23,7 +23,6 @@ const Qard = ({ accountName, accountLink }: QardProps) => {
           <Canvas
             text={accountLink}
             options={{
-              level: 'H',
               margin: 1,
               scale: 4,
               width: 320,
@@ -47,5 +46,3 @@ const Qard = ({ accountName, accountLink }: QardProps) => {
     </div>
   )
 }
-
-export default Qard

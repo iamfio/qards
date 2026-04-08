@@ -4,13 +4,13 @@ import { getServerSession } from 'next-auth'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 
-const getUserById = async (userId: string) => {
+async function getUserById(userId: string) {
   return prisma.user.findUnique({
     where: { id: userId },
   })
 }
 
-const Profile = async () => {
+export default async function Profile() {
   const session = await getServerSession(authOptions)
 
   if (!session) {
@@ -66,5 +66,3 @@ const Profile = async () => {
     </>
   )
 }
-
-export default Profile
