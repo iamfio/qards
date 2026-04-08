@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   title: 'Qards | Edit Profile',
 }
 
-const getUserById = async (userId: string) => {
+const getUserById = async (userId: User["id"]) => {
   return prisma.user.findUnique({
     where: { id: userId },
   })
