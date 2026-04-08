@@ -1,13 +1,14 @@
 import QardList from '@/components/qard/QardList'
-import { authOptions } from '@/pages/api/auth/[...nextauth]'
+import { authOptions } from '@/app/api/auth/[...nextauth]/route'
 import { getServerSession } from 'next-auth'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { Suspense } from 'react'
 
 import Loading from './loading'
+import { Metadata } from 'next'
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Qards | Dashboard',
 }
 

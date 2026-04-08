@@ -3,7 +3,7 @@ import './globals.css'
 import AuthContext from '@/components/AuthContext'
 import Footer from '@/components/ui/Footer'
 import Navbar from '@/components/ui/Navbar'
-import { authOptions } from '@/pages/api/auth/[...nextauth]'
+import { authOptions } from '@/app/api/auth/[...nextauth]/route'
 import { getServerSession } from 'next-auth'
 import { Urbanist } from 'next/font/google'
 

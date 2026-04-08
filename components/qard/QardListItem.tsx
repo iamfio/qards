@@ -39,23 +39,26 @@ const QardListItem= ({
   }
 
   useEffect(() => {
-    const updatePosition = async (qard: Qard) => {
-      const response = await fetch('/api/qard', {
-        method: 'PATCH',
-        body: JSON.stringify({
-          ...qard,
-          position: index,
-        }),
-      })
+    // Only update if the position in DB doesn't match the current index
+    if (qard.position !== index) {
+      const updatePosition = async (qard: Qard) => {
+        const response = await fetch('/api/qard', {
+          method: 'PATCH',
+          body: JSON.stringify({
+            ...qard,
+            position: index,
+          }),
+        })
 
-      if (response.ok) {
-        await getQards()
+        if (response.ok) {
+          await getQards()
+        }
       }
-    }
 
-    updatePosition(qard).catch((error) => {
-      console.error('Failed to update position:', error)
-    })
+      updatePosition(qard).catch((error) => {
+        console.error('Failed to update position:', error)
+      })
+    }
   }, [index, qard, getQards])
 
   return (

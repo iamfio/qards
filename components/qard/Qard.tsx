@@ -23,7 +23,7 @@ const Qard = ({ accountName, accountLink }: QardProps) => {
           <Canvas
             text={accountLink}
             options={{
-              errorCorrectionLevel: 'H',
+              level: 'H',
               margin: 1,
               scale: 4,
               width: 320,

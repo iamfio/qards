@@ -16,14 +16,19 @@ const QardList= () => {
 
   const handleOpenNewQard = () => setOpenNewQard((prev) => !prev)
 
-  const getQards = useCallback(async () => {
-    setLoading(true)
+  const getQards = useCallback(async (showLoader = true) => {
+    if (showLoader) {
+      setLoading(true)
+    }
 
     const response = await fetch('/api/qard')
     const { qards } = await response.json()
 
     setQards(qards)
-    setLoading(false)
+    
+    if (showLoader) {
+      setLoading(false)
+    }
   }, [])
 
   const reorder = (
@@ -31,11 +36,11 @@ const QardList= () => {
     startIndex: number,
     endIndex: number
   ) => {
-    const [removed] = qardsOrder.splice(startIndex, 1)
+    const result = Array.from(qardsOrder)
+    const [removed] = result.splice(startIndex, 1)
+    result.splice(endIndex, 0, removed)
 
-    qardsOrder.splice(endIndex, 0, removed)
-
-    return qardsOrder
+    return result
   }
 
   const onDragEnd = (result: any) => {
@@ -61,7 +66,7 @@ const QardList= () => {
   }
 
   useEffect(() => {
-    getQards()
+    getQards(true).catch(console.error)
   }, [getQards])
 
   return (
@@ -78,7 +83,7 @@ const QardList= () => {
       </div>
       {openNewQard && (
         <Modal open={openNewQard} onClose={handleOpenNewQard}>
-          <QardForm onClose={handleOpenNewQard} getQards={getQards} />
+          <QardForm onClose={handleOpenNewQard} getQards={() => getQards(false)} />
         </Modal>
       )}
 
@@ -99,7 +104,7 @@ const QardList= () => {
                   <QardListItem
                     qard={qard}
                     key={qard.id}
-                    getQards={getQards}
+                    getQards={() => getQards(false)}
                     index={index}
                   />
                 ))}

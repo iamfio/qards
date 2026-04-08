@@ -1,9 +1,10 @@
 import QCookieConsent from '@/components/ui/cookie-consent/QCookieConsent'
-import { authOptions } from '@/pages/api/auth/[...nextauth]'
+import { authOptions } from '@/app/api/auth/[...nextauth]/route'
 import { getServerSession } from 'next-auth'
 import { redirect } from 'next/navigation'
+import { Metadata } from 'next'
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Qards',
 }
 
