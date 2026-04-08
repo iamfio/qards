@@ -6,8 +6,9 @@ import { redirect } from 'next/navigation'
 import { Suspense } from 'react'
 
 import Loading from './loading'
+import { Metadata } from 'next'
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Qards | Dashboard',
 }
 
