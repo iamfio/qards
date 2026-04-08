@@ -17,11 +17,11 @@ type QardListItemProps = {
   index: number
 }
 
-const QardListItem: React.FC<QardListItemProps> = ({
+const QardListItem= ({
   qard,
   getQards,
   index,
-}) => {
+}: QardListItemProps) => {
   const [openEditQard, setOpenEditQard] = useState<boolean>(false)
   const handleOpenEditQard = () => setOpenEditQard((prev) => !prev)
 
@@ -33,7 +33,7 @@ const QardListItem: React.FC<QardListItemProps> = ({
       })
 
       if (response.ok) {
-        getQards()
+        await getQards()
       }
     }
   }
@@ -49,12 +49,14 @@ const QardListItem: React.FC<QardListItemProps> = ({
       })
 
       if (response.ok) {
-        getQards()
+        await getQards()
       }
     }
 
-    updatePosition(qard)
-  }, [index])
+    updatePosition(qard).catch((error) => {
+      console.error('Failed to update position:', error)
+    })
+  }, [index, qard, getQards])
 
   return (
     <Draggable draggableId={String(qard.id)} index={index}>

@@ -9,18 +9,20 @@ type ModalProps = {
   onClose(): void
 }
 
-const Modal: React.FC<ModalProps> = ({
+const Modal = ({
   children,
   open,
   disableClickOutside,
   onClose,
-}) => {
-  const ref = useRef(null)
-  useOnClickOutside(ref, () => {
+}: ModalProps) => {
+  const ref = useRef<HTMLDivElement>(null)
+  
+  useOnClickOutside(ref as React.RefObject<HTMLDivElement>, () => {
     if (!disableClickOutside) {
       onClose()
     }
   })
+
   const modalClass = cn({
     'modal modal-bottom sm:modal-middle': true,
     'modal-open': open,
