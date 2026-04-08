@@ -2,7 +2,7 @@
 
 import { signIn, useSession } from 'next-auth/react'
 
-const AuthButton: React.FC = () => {
+const AuthButton= () => {
   const { data: session } = useSession()
 
   return (
@@ -10,8 +10,8 @@ const AuthButton: React.FC = () => {
       {!session && (
         <div>
           <button
-            onClick={() => {
-              signIn()
+            onClick={async () => {
+              await signIn()
             }}
             className="btn btn-sm btn-outline btn-primary"
           >

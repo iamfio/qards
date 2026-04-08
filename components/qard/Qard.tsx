@@ -12,7 +12,7 @@ type QardProps = {
   accountLink: string
 }
 
-const Qard: React.FC<QardProps> = ({ accountName, accountLink }) => {
+const Qard = ({ accountName, accountLink }: QardProps) => {
   const { Canvas } = useQRCode()
   const theme = useReadLocalStorage('theme')
 
@@ -23,7 +23,7 @@ const Qard: React.FC<QardProps> = ({ accountName, accountLink }) => {
           <Canvas
             text={accountLink}
             options={{
-              level: 'H',
+              errorCorrectionLevel: 'H',
               margin: 1,
               scale: 4,
               width: 320,

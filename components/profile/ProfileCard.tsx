@@ -9,7 +9,7 @@ type ProfileCardProps = {
   user: (User & { qards: Qard[] }) | null
 }
 
-const ProfileCard: React.FC<ProfileCardProps> = ({ user }) => {
+const ProfileCard = ({ user }: ProfileCardProps) => {
   const { Canvas } = useQRCode()
   const theme = useReadLocalStorage('theme')
 
@@ -48,7 +48,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ user }) => {
           <Canvas
             text={getURL(`/${user?.username}`)}
             options={{
-              level: 'H',
+              errorCorrectionLevel: 'H',
               margin: 1,
               scale: 3,
               width: 200,

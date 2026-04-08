@@ -1,8 +1,7 @@
-'use client'
-
+'use client';
 import CookieConsent from 'react-cookie-consent'
 
-const QCookieConsent = (): JSX.Element => {
+const QCookieConsent = () => {
   return (
     <>
       <CookieConsent

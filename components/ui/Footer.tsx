@@ -1,6 +1,7 @@
 import { AiFillGithub } from 'react-icons/ai'
 
-const Footer = (): JSX.Element => (
+
+const Footer = () => (
   <footer className="grid grid-flow-col gap-1 footer-center">
     <a href="https://github.com/iamfio/qards">
       <AiFillGithub className="text-4xl" />

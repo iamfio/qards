@@ -10,7 +10,7 @@ import { User } from '@prisma/client'
 import Loading from './loading'
 
 type UserPageProps = {
-  params: { username: string }
+  params: Promise<{ username: string }>
 }
 
 const getUserByUsername = async (username: User['username']) => {
@@ -18,7 +18,7 @@ const getUserByUsername = async (username: User['username']) => {
     return null
   }
 
-  return await prisma.user.findUnique({
+  return prisma.user.findUnique({
     where: { username },
     include: {
       qards: {
@@ -30,15 +30,15 @@ const getUserByUsername = async (username: User['username']) => {
   })
 }
 
-export const generateMetadata = async ({
-  params,
-}: UserPageProps): Promise<Metadata> => {
-  const user = await getUserByUsername(params.username)
+export const generateMetadata = async ({ params }: UserPageProps): Promise<Metadata> => {
+  const { username } = await params;
+  const user = await getUserByUsername(username)
   return { title: `${user?.name}'s Qards` }
 }
 
 const UserPage = async ({ params }: UserPageProps) => {
-  const user = await getUserByUsername(params.username)
+  const { username } = await params;
+  const user = await getUserByUsername(username)
 
   if (!user) {
     return <UserNotFound />

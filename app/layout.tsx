@@ -18,7 +18,9 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <head />
+      <head>
+        <title>Qards</title>
+      </head>
       <AuthContext session={session}>
         <body className={urbanist.className}>
           <Navbar />

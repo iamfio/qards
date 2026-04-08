@@ -18,12 +18,12 @@ import {
   faTelegram,
   faWhatsapp,
   IconDefinition,
-  IconName,
+  IconName
 } from '@fortawesome/free-brands-svg-icons'
 import { faQrcode } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-const IconGeneric: React.FC<{ name: string }> = ({ name }) => {
+const IconGeneric = ({ name }: { name: string }) => {
   let i: IconDefinition = faQrcode
 
   const icons: IconDefinition[] = [
@@ -43,7 +43,7 @@ const IconGeneric: React.FC<{ name: string }> = ({ name }) => {
     faFacebookF,
     faFlickr,
     faTelegram,
-    faWhatsapp,
+    faWhatsapp
   ]
 
   icons.map((icon) => {

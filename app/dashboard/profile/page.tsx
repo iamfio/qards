@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { redirect } from 'next/navigation'
 
 const getUserById = async (userId: string) => {
-  return await prisma.user.findUnique({
+  return prisma.user.findUnique({
     where: { id: userId },
   })
 }

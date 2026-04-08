@@ -22,14 +22,14 @@ type QardProps = {
   getQards(): Promise<void>
 }
 
-const QardForm: React.FC<QardProps> = ({
+const QardForm= ({
   qardId,
   isEdit,
   accountName,
   accountLink,
   onClose,
   getQards,
-}) => {
+}: QardProps) => {
   const { data: session } = useSession()
 
   const {
