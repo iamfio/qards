@@ -24,7 +24,7 @@ export default function Modal({
   })
 
   const modalClass = cn({
-    'modal modal-bottom sm:modal-middle': true,
+    'modal modal-middle': true, // Changed from 'modal-bottom sm:modal-middle' to always center
     'modal-open': open,
   })
 

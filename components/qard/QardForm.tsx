@@ -35,7 +35,6 @@ export default function QardForm({
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<FormData>({
     defaultValues: {
@@ -44,7 +43,6 @@ export default function QardForm({
     },
   })
 
-  const watchAccountLink = watch('accountLink')
 
   async function onSubmit(data: FormData) {
     const response = await fetch('/api/qard/', {
@@ -58,7 +56,7 @@ export default function QardForm({
     })
 
     if (response.ok) {
-      getQards()
+      await getQards()
       onClose()
     }
   }
@@ -104,9 +102,7 @@ export default function QardForm({
             <input
               {...register('accountLink', {
                 required: 'Required field',
-                validate: (value) =>
-                  (value === watchAccountLink) === isURL(value) ||
-                  'Invalid URL',
+                validate: (value) => isURL(value) || 'Invalid URL',
               })}
               type="text"
               className="w-full max-w-xs input input-bordered"

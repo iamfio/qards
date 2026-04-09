@@ -10,6 +10,8 @@ import { capitalize } from '@/lib/utils'
 import QardForm from '@/components/qard/QardForm'
 import IconGeneric from '@/components/ui/icons/IconGeneric'
 import Modal from '@/components/ui/modal/Modal'
+import ConfirmModal from '@/components/ui/modal/ConfirmModal'
+import AlertDialog from '@/components/ui/modal/AlertDialog' // Import the new AlertDialog
 
 type QardListItemProps = {
   qard: Qard
@@ -23,18 +25,33 @@ export default function QardListItem({
   index,
 }: QardListItemProps) {
   const [openEditQard, setOpenEditQard] = useState<boolean>(false)
-  const handleOpenEditQard = () => setOpenEditQard((prev) => !prev)
+  const [openConfirmDelete, setOpenConfirmDelete] = useState<boolean>(false)
+  const [openAlertDialog, setOpenAlertDialog] = useState<boolean>(false)
+  const [alertMessage, setAlertMessage] = useState<string>('')
 
-  async function deleteQard(qardId: string) {
-    if (window.confirm('Delete Qard?')) {
+  const handleOpenEditQard = () => setOpenEditQard((prev) => !prev)
+  const handleOpenConfirmDelete = () => setOpenConfirmDelete((prev) => !prev)
+  const handleOpenAlertDialog = () => setOpenAlertDialog((prev) => !prev)
+
+  async function confirmDeleteQard() {
+    try {
       const response = await fetch('/api/qard', {
         method: 'DELETE',
-        body: JSON.stringify(qardId),
+        body: JSON.stringify(qard.id),
       })
 
-      if (response.ok) {
-        await getQards()
+      if (!response.ok) {
+        const errorData = await response.json()
+        console.error(errorData.message || 'Failed to delete Qard')
       }
+
+      await getQards()
+    } catch (error: any) {
+      console.error('Error deleting Qard:', error)
+      setAlertMessage(error.message || 'Failed to delete Qard. Please try again.')
+      setOpenAlertDialog(true) // Open alert modal on error
+    } finally {
+      setOpenConfirmDelete(false) // Always close the confirm modal
     }
   }
 
@@ -50,13 +67,18 @@ export default function QardListItem({
           }),
         })
 
-        if (response.ok) {
-          await getQards()
+        if (!response.ok) {
+          const errorData = await response.json()
+          throw new Error(errorData.message || 'Failed to update position')
         }
+
+        await getQards()
       }
 
-      updatePosition(qard).catch((error) => {
+      updatePosition(qard).catch((error: any) => {
         console.error('Failed to update position:', error)
+        setAlertMessage(error.message || 'Failed to update position. Please try again.')
+        setOpenAlertDialog(true)
       })
     }
   }, [index, qard, getQards])
@@ -86,6 +108,23 @@ export default function QardListItem({
               </Modal>
             )}
 
+            {openConfirmDelete && (
+              <ConfirmModal
+                open={openConfirmDelete}
+                message="Delete Qard?"
+                onConfirmAction={confirmDeleteQard}
+                onCancelAction={handleOpenConfirmDelete}
+              />
+            )}
+
+            {openAlertDialog && (
+              <AlertDialog
+                open={openAlertDialog}
+                message={alertMessage}
+                onCloseAction={handleOpenAlertDialog}
+              />
+            )}
+
             <div className="mr-4 avatar placeholder">
               <div className="w-12 rounded-full">
                 {qard.accountLink === null ? (
@@ -109,7 +148,7 @@ export default function QardListItem({
               <div className="mx-1">
                 <button
                   className="btn btn-sm btn-error btn-square btn-outline"
-                  onClick={() => deleteQard(qard.id)}
+                  onClick={handleOpenConfirmDelete}
                 >
                   <AiOutlineDelete className="text-xl" />
                 </button>

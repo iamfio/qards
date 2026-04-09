@@ -21,13 +21,23 @@ export default function QardList() {
       setLoading(true)
     }
 
-    const response = await fetch('/api/qard')
-    const { qards } = await response.json()
+    try {
+      const response = await fetch('/api/qard')
+      
+      if (!response.ok) {
+        const errorData = await response.json()
+        console.error(errorData.message || 'Failed to fetch Qards')
+      }
 
-    setQards(qards)
-    
-    if (showLoader) {
-      setLoading(false)
+      const data = await response.json()
+      setQards(data.qards) // Assuming the API returns { qards: [...] }
+    } catch (error) {
+      console.error('Error fetching Qards:', error)
+      // Optionally, show a user-friendly error message
+    } finally {
+      if (showLoader) {
+        setLoading(false)
+      }
     }
   }, [])
 
