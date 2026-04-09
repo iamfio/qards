@@ -3,6 +3,7 @@
 import { getURL } from '@/lib/utils'
 import { Qard, User } from '@prisma/client'
 import { useQRCode } from 'next-qrcode'
+import { useEffect, useState } from 'react'
 import { useReadLocalStorage } from 'usehooks-ts'
 
 type ProfileCardProps = {
@@ -11,7 +12,12 @@ type ProfileCardProps = {
 
 export default function ProfileCard({ user }: ProfileCardProps) {
   const { Canvas } = useQRCode()
-  const theme = useReadLocalStorage('theme')
+  const storedTheme = useReadLocalStorage('theme')
+  const [theme, setTheme] = useState<string | null>('dark')
+
+  useEffect(() => {
+    setTheme(storedTheme as string)
+  }, [storedTheme])
 
   return (
     <div className="card w-[350px] bg-base-100 shadow-xl">
@@ -53,7 +59,7 @@ export default function ProfileCard({ user }: ProfileCardProps) {
               width: 200,
               color: {
                 light: '#fff',
-                dark: theme === 'night' ? '#2a303c' : '#282a36',
+                dark: theme === 'night' || theme === 'dark' ? '#2a303c' : '#282a36',
               },
             }}
           />

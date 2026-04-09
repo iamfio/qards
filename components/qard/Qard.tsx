@@ -3,6 +3,7 @@
 import { useReadLocalStorage } from 'usehooks-ts'
 import { useQRCode } from 'next-qrcode'
 import { capitalize } from '@/lib/utils'
+import { useEffect, useState } from 'react'
 
 import IconGeneric from '@/components/ui/icons/IconGeneric'
 
@@ -14,7 +15,12 @@ type QardProps = {
 
 export default function Qard({ accountName, accountLink }: QardProps) {
   const { Canvas } = useQRCode()
-  const theme = useReadLocalStorage('theme')
+  const storedTheme = useReadLocalStorage('theme')
+  const [theme, setTheme] = useState<string | null>('dark')
+
+  useEffect(() => {
+    setTheme(storedTheme as string)
+  }, [storedTheme])
 
   return (
     <div className="my-6">
@@ -27,7 +33,7 @@ export default function Qard({ accountName, accountLink }: QardProps) {
               scale: 4,
               width: 320,
               color: {
-                dark: theme === 'night' ? '#2a303c' : '#282a36',
+                dark: theme === 'night' || theme === 'dark' ? '#2a303c' : '#282a36',
                 light: '#fff',
               },
             }}

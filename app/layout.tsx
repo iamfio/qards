@@ -17,9 +17,24 @@ export default async function RootLayout({
   const session = await getServerSession(authOptions)
 
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <title>Qards</title>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              try {
+                const theme = localStorage.getItem('theme');
+                if (theme) {
+                  const parsedTheme = JSON.parse(theme);
+                  document.documentElement.setAttribute('data-theme', parsedTheme);
+                } else {
+                  document.documentElement.setAttribute('data-theme', 'dark');
+                }
+              } catch (e) {}
+            `,
+          }}
+        />
       </head>
       <AuthContext session={session}>
         <body className={urbanist.className}>
