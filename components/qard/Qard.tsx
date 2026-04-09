@@ -1,9 +1,8 @@
 'use client'
 
-import { useReadLocalStorage } from 'usehooks-ts'
 import { useQRCode } from 'next-qrcode'
 import { capitalize } from '@/lib/utils'
-import { useEffect, useState } from 'react'
+import { useTheme } from '@/components/theme/ThemeProvider' // Import useTheme
 
 import IconGeneric from '@/components/ui/icons/IconGeneric'
 
@@ -15,12 +14,7 @@ type QardProps = {
 
 export default function Qard({ accountName, accountLink }: QardProps) {
   const { Canvas } = useQRCode()
-  const storedTheme = useReadLocalStorage('theme')
-  const [theme, setTheme] = useState<string | null>('dark')
-
-  useEffect(() => {
-    setTheme(storedTheme as string)
-  }, [storedTheme])
+  const { theme } = useTheme() // Use the context theme
 
   return (
     <div className="my-6">
@@ -31,11 +25,11 @@ export default function Qard({ accountName, accountLink }: QardProps) {
             options={{
               margin: 1,
               scale: 4,
-              width: 320,
               color: {
-                dark: theme === 'night' || theme === 'dark' ? '#2a303c' : '#282a36',
+                dark: theme === 'business' ? '#202020' : '#1f2937',
                 light: '#fff',
               },
+              errorCorrectionLevel: 'H',
             }}
           />
         </figure>
