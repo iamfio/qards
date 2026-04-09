@@ -49,9 +49,9 @@ export default function QardListItem({
     } catch (error: any) {
       console.error('Error deleting Qard:', error)
       setAlertMessage(error.message || 'Failed to delete Qard. Please try again.')
-      setOpenAlertDialog(true) // Open alert modal on error
+      setOpenAlertDialog(true)
     } finally {
-      setOpenConfirmDelete(false) // Always close the confirm modal
+      setOpenConfirmDelete(false)
     }
   }
 
