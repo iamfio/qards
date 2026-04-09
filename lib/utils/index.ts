@@ -1,16 +1,24 @@
 //* String Utils
 
 export function getFQDN(url: string) {
-  return new URL(url).hostname.replace('www.', '').split('.')[0]
+  try {
+    return new URL(url).hostname.replace('www.', '').split('.')[0]
+  } catch (e) {
+    return ''
+  }
 }
 
 export function getURL(path: string) {
-  const BASE_URL =
-    typeof window === 'undefined'
-      ? process.env.NEXT_PUBLIC_SITE_URL!
-      : window.location.origin
+  try {
+    const BASE_URL =
+      typeof window === 'undefined'
+        ? process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
+        : window.location.origin
 
-  return new URL(path, BASE_URL).toString()
+    return new URL(path, BASE_URL).toString()
+  } catch (e) {
+    return path
+  }
 }
 
 export function isURL(url: string) {
@@ -18,5 +26,8 @@ export function isURL(url: string) {
 }
 
 export function capitalize(txt: string) {
+  if (!txt) {
+    return ''
+  }
   return txt.charAt(0).toUpperCase() + txt.slice(1)
 }
