@@ -1,23 +1,34 @@
 'use client'
 
-import { useEffect, type JSX } from 'react';
+import { useEffect, useState, type JSX } from 'react'
 import { useLocalStorage } from 'usehooks-ts'
 
-export default function SwitchTheme(): JSX.Element {
+export default function SwitchTheme(): JSX.Element | null {
   const [theme, setTheme] = useLocalStorage('theme', 'dark')
+  const [mounted, setMounted] = useState(false)
+
+  // Ensure component only renders on client to avoid hydration mismatch
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   function toggleTheme() {
     setTheme(theme === 'dark' ? 'light' : 'dark')
   }
 
   useEffect(() => {
-    const body = document.body
-    body.setAttribute('data-theme', theme)
-  }, [theme])
+    if (mounted) {
+      document.documentElement.setAttribute('data-theme', theme)
+    }
+  }, [theme, mounted])
+
+  if (!mounted) {
+    return null
+  }
 
   return (
     <label className="swap swap-rotate">
-      <input type="checkbox" className="hidden" onChange={toggleTheme} />
+      <input type="checkbox" className="hidden" onChange={toggleTheme} checked={theme === 'dark'} />
 
       <svg
         className="w-10 h-10 fill-current swap-on text-primary"
