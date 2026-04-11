@@ -6,10 +6,10 @@ import { useTheme } from "next-themes";
 export default function SwitchThemeClient(): JSX.Element {
   const { theme, setTheme } = useTheme();
 
-  const isCorporate = theme === "corporate";
+  const isLightTheme = theme === "corporate";
 
   const toggleTheme = () => {
-    setTheme(isCorporate ? "black" : "corporate");
+    setTheme(isLightTheme ? "black" : "corporate");
   };
 
   return (
@@ -20,9 +20,9 @@ export default function SwitchThemeClient(): JSX.Element {
       <input
         type="checkbox"
         className="hidden"
-        checked={isCorporate}
+        checked={isLightTheme}
         onChange={toggleTheme}
-        aria-checked={isCorporate}
+        aria-checked={isLightTheme}
       />
 
       <svg
