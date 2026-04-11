@@ -1,7 +1,7 @@
 "use client";
 
 import { getURL } from "@/lib/utils";
-import { Qard, User } from "@prisma/client";
+import type { Qard, User } from "@prisma/client";
 import { useQRCode } from "next-qrcode";
 import { useTheme } from "@/components/theme/ThemeProvider";
 import Image from "next/image";

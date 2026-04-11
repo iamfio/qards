@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Draggable } from "@hello-pangea/dnd";
 import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 
-import { Qard } from "@prisma/client";
+import type { Qard } from "@prisma/client";
 import { capitalize } from "@/lib/utils";
 
 import QardForm from "@/components/qard/QardForm";
