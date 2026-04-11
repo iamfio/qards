@@ -1,109 +1,121 @@
-'use client'
+"use client";
 
-import { useEffect, useState } from 'react'
-import { Draggable } from '@hello-pangea/dnd'
-import { AiOutlineDelete, AiOutlineEdit } from 'react-icons/ai'
+import { useEffect, useState } from "react";
+import { Draggable } from "@hello-pangea/dnd";
+import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 
-import { Qard } from '@prisma/client'
-import { capitalize } from '@/lib/utils'
+import { Qard } from "@prisma/client";
+import { capitalize } from "@/lib/utils";
 
-import QardForm from '@/components/qard/QardForm'
-import IconGeneric from '@/components/ui/icons/IconGeneric'
-import Modal from '@/components/ui/modal/Modal'
-import ConfirmModal from '@/components/ui/modal/ConfirmModal'
-import AlertDialog from '@/components/ui/modal/AlertDialog'
+import QardForm from "@/components/qard/QardForm";
+import IconGeneric from "@/components/ui/icons/IconGeneric";
+import Modal from "@/components/ui/modal/Modal";
+import ConfirmModal from "@/components/ui/modal/ConfirmModal";
+import AlertDialog from "@/components/ui/modal/AlertDialog";
 
 type QardListItemProps = {
-  qard: Qard
-  getQards(): Promise<void>
-  index: number
-}
+  qard: Qard;
+  getQards(): Promise<void>;
+  index: number;
+};
 
 export default function QardListItem({
   qard,
   getQards,
   index,
 }: QardListItemProps) {
-  const [openEditQard, setOpenEditQard] = useState<boolean>(false)
-  const [openConfirmDelete, setOpenConfirmDelete] = useState<boolean>(false)
-  const [openAlertDialog, setOpenAlertDialog] = useState<boolean>(false)
-  const [alertMessage, setAlertMessage] = useState<string>('')
+  const [openEditQard, setOpenEditQard] = useState<boolean>(false);
+  const [openConfirmDelete, setOpenConfirmDelete] = useState<boolean>(false);
+  const [openAlertDialog, setOpenAlertDialog] = useState<boolean>(false);
+  const [alertMessage, setAlertMessage] = useState<string>("");
 
-  const handleOpenEditQard = () => setOpenEditQard((prev) => !prev)
-  const handleOpenConfirmDelete = () => setOpenConfirmDelete((prev) => !prev)
-  const handleOpenAlertDialog = () => setOpenAlertDialog((prev) => !prev)
+  const handleOpenEditQard = () => setOpenEditQard((prev) => !prev);
+  const handleOpenConfirmDelete = () => setOpenConfirmDelete((prev) => !prev);
+  const handleOpenAlertDialog = () => setOpenAlertDialog((prev) => !prev);
 
   async function confirmDeleteQard() {
-    let success = false
+    let success = false;
     try {
-      const response = await fetch('/api/qard', {
-        method: 'DELETE',
+      const response = await fetch("/api/qard", {
+        method: "DELETE",
         body: JSON.stringify(qard.id),
-      })
+      });
 
       if (!response.ok) {
-        const errorData = await response.json()
-        setAlertMessage(errorData.message || 'Failed to delete Qard')
-        setOpenAlertDialog(true)
+        const errorData = await response.json();
+        setAlertMessage(errorData.message || "Failed to delete Qard");
+        setOpenAlertDialog(true);
       } else {
-        success = true
+        success = true;
       }
     } catch (error) {
-      console.error('Error deleting Qard:', error)
-      const errMessage = error instanceof Error ? error.message : 'Failed to delete Qard. Please try again.'
-      setAlertMessage(errMessage)
-      setOpenAlertDialog(true)
+      console.error("Error deleting Qard:", error);
+      const errMessage =
+        error instanceof Error
+          ? error.message
+          : "Failed to delete Qard. Please try again.";
+      setAlertMessage(errMessage);
+      setOpenAlertDialog(true);
     } finally {
-      setOpenConfirmDelete(false)
+      setOpenConfirmDelete(false);
       if (success) {
-         await getQards()
+        await getQards();
       }
     }
   }
 
   useEffect(() => {
-    // Only update if the position in DB doesn't match the current index
     if (qard.position !== index) {
       const updatePosition = async (qard: Qard) => {
-        const response = await fetch('/api/qard', {
-          method: 'PATCH',
+        const response = await fetch("/api/qard", {
+          method: "PATCH",
           body: JSON.stringify({
             ...qard,
             position: index,
           }),
-        })
+        });
 
         if (!response.ok) {
-          const errorData = await response.json()
-          throw new Error(errorData.message || 'Failed to update position')
+          const errorData = await response.json();
+          throw new Error(errorData.message || "Failed to update position");
         }
 
-        await getQards()
-      }
+        await getQards();
+      };
 
       updatePosition(qard).catch((error) => {
-        console.error('Failed to update position:', error)
-        const errMessage = error instanceof Error ? error.message : 'Failed to update position. Please try again.'
-        setAlertMessage(errMessage)
-        setOpenAlertDialog(true)
-      })
+        console.error("Failed to update position:", error);
+        const errMessage =
+          error instanceof Error
+            ? error.message
+            : "Failed to update position. Please try again.";
+        setAlertMessage(errMessage);
+        setOpenAlertDialog(true);
+      });
     }
-  }, [index, qard, getQards])
+  }, [index, qard, getQards]);
 
   return (
-    <Draggable draggableId={String(qard.id)} index={index}>
+    <Draggable
+      draggableId={String(qard.id)}
+      index={index}
+    >
       {(provided, snapshot) => (
         <div
           key={qard.id}
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          className={`qard-list-item ${snapshot.isDragging ? 'border-4 border-info/80' : 'border-inherit'
-            }`}
+          className={`qard-list-item ${
+            snapshot.isDragging ? "border-4 border-info/80" : "border-inherit"
+          }`}
         >
           <div className="flex items-center">
             {openEditQard && (
-              <Modal open={openEditQard} onClose={handleOpenEditQard}>
+              <Modal
+                open={openEditQard}
+                onClose={handleOpenEditQard}
+              >
                 <QardForm
                   isEdit
                   qardId={qard.id}
@@ -135,7 +147,7 @@ export default function QardListItem({
             <div className="mr-4 avatar placeholder">
               <div className="w-12 rounded-full">
                 {qard.accountLink === null ? (
-                  <IconGeneric name={'undef'} />
+                  <IconGeneric name={"undef"} />
                 ) : (
                   <IconGeneric name={qard.accountLink} />
                 )}
@@ -165,5 +177,5 @@ export default function QardListItem({
         </div>
       )}
     </Draggable>
-  )
+  );
 }

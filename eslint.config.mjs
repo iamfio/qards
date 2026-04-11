@@ -13,6 +13,13 @@ const eslintConfig = [
       "next-env.d.ts",
     ],
   },
+  {
+    rules: {
+      semi: ["error", "always"],
+      quotes: ["error", "double"],
+      "comma-dangle": ["error", "always-multiline"],
+    },
+  },
 ];
 
 export default eslintConfig;

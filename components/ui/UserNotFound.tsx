@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import Link from "next/link";
 
 export default function UserNotFound() {
   return (
@@ -9,12 +9,15 @@ export default function UserNotFound() {
             <h1 className="text-5xl font-bold">🤷</h1>
             <p className="pt-8 pb-3 text-xl">User successfully not found!</p>
             <p className="pt-3 pb-8 text-xl">Please go back and try again.</p>
-            <Link href="/" className="btn btn-outline btn-primary">
+            <Link
+              href="/"
+              className="btn btn-outline btn-primary"
+            >
               Go Back
             </Link>
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }

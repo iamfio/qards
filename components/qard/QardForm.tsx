@@ -1,25 +1,25 @@
-'use client'
+"use client";
 
-import { isURL } from '@/lib/utils'
-import { ErrorMessage } from '@hookform/error-message'
-import { Qard } from '@prisma/client'
-import { useSession } from 'next-auth/react'
-import { useForm } from 'react-hook-form'
+import { isURL } from "@/lib/utils";
+import { ErrorMessage } from "@hookform/error-message";
+import { Qard } from "@prisma/client";
+import { useSession } from "next-auth/react";
+import { useForm } from "react-hook-form";
 
 type FormData = {
-  accountName: string
-  accountLink: string
-}
+  accountName: string;
+  accountLink: string;
+};
 
 type QardProps = {
-  qardId?: string
-  userId?: string
-  isEdit?: boolean
-  accountName?: Qard['accountName']
-  accountLink?: Qard['accountLink']
-  onClose(): void
-  getQards(): Promise<void>
-}
+  qardId?: string;
+  userId?: string;
+  isEdit?: boolean;
+  accountName?: Qard["accountName"];
+  accountLink?: Qard["accountLink"];
+  onClose(): void;
+  getQards(): Promise<void>;
+};
 
 export default function QardForm({
   qardId,
@@ -29,7 +29,7 @@ export default function QardForm({
   onClose,
   getQards,
 }: QardProps) {
-  const { data: session } = useSession()
+  const { data: session } = useSession();
 
   const {
     register,
@@ -40,23 +40,22 @@ export default function QardForm({
       accountName: accountName,
       accountLink: accountLink,
     },
-  })
-
+  });
 
   async function onSubmit(data: FormData) {
-    const response = await fetch('/api/qard/', {
-      method: isEdit ? 'PUT' : 'POST',
+    const response = await fetch("/api/qard/", {
+      method: isEdit ? "PUT" : "POST",
       body: JSON.stringify({
         qardId: qardId,
         userId: session?.user?.id,
         accountName: data.accountName,
         accountLink: data.accountLink,
       }),
-    })
+    });
 
     if (response.ok) {
-      await getQards()
-      onClose()
+      await getQards();
+      onClose();
     }
   }
 
@@ -65,26 +64,32 @@ export default function QardForm({
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="card-body">
           <h2 className="card-title text-primary">
-            {isEdit ? 'Edit' : 'New'} Qard
+            {isEdit ? "Edit" : "New"} Qard
           </h2>
 
           <p className="font-light text-secondary">
             {isEdit
-              ? 'Please alter existing data to edit the '
-              : 'Please fill out the form to create new '}{' '}
+              ? "Please alter existing data to edit the "
+              : "Please fill out the form to create new "}{" "}
             Qard
           </p>
 
           <div className="w-full max-w-xs form-control">
-            <label htmlFor="accountName" className="label">
+            <label
+              htmlFor="accountName"
+              className="label"
+            >
               <span className="label-text">Account Name</span>
               <span className="font-light text-secondary">
-                <ErrorMessage errors={errors} name="accountName" />
+                <ErrorMessage
+                  errors={errors}
+                  name="accountName"
+                />
               </span>
             </label>
             <input
-              {...register('accountName', {
-                required: 'Required field',
+              {...register("accountName", {
+                required: "Required field",
               })}
               type="text"
               className="w-full max-w-xs input input-bordered"
@@ -92,16 +97,22 @@ export default function QardForm({
             />
           </div>
           <div className="w-full max-w-xs form-control">
-            <label htmlFor="accountLink" className="label">
+            <label
+              htmlFor="accountLink"
+              className="label"
+            >
               <span className="label-text">Account Link</span>
               <span className="font-light text-secondary">
-                <ErrorMessage errors={errors} name="accountLink" />
+                <ErrorMessage
+                  errors={errors}
+                  name="accountLink"
+                />
               </span>
             </label>
             <input
-              {...register('accountLink', {
-                required: 'Required field',
-                validate: (value) => isURL(value) || 'Invalid URL',
+              {...register("accountLink", {
+                required: "Required field",
+                validate: (value) => isURL(value) || "Invalid URL",
               })}
               type="text"
               className="w-full max-w-xs input input-bordered"
@@ -109,7 +120,10 @@ export default function QardForm({
             />
           </div>
           <div className="justify-end card-actions">
-            <button type="submit" className="btn btn-primary">
+            <button
+              type="submit"
+              className="btn btn-primary"
+            >
               Save
             </button>
 
@@ -124,5 +138,5 @@ export default function QardForm({
         </div>
       </form>
     </div>
-  )
+  );
 }

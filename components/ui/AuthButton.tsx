@@ -1,9 +1,9 @@
-'use client'
+"use client";
 
-import { signIn, useSession } from 'next-auth/react'
+import { signIn, useSession } from "next-auth/react";
 
 export default function AuthButton() {
-  const { data: session } = useSession()
+  const { data: session } = useSession();
 
   return (
     <div>
@@ -11,7 +11,7 @@ export default function AuthButton() {
         <div>
           <button
             onClick={async () => {
-              await signIn()
+              await signIn();
             }}
             className="btn btn-sm btn-outline btn-primary"
           >
@@ -20,5 +20,5 @@ export default function AuthButton() {
         </div>
       )}
     </div>
-  )
+  );
 }

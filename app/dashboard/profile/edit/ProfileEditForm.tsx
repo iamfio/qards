@@ -1,30 +1,32 @@
-'use client'
+"use client";
 
-import { User } from '@prisma/client'
-import { useRouter } from 'next/navigation'
-import { useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { User } from "@prisma/client";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 
 type FormData = {
-  name: User['name']
-  username: User['username']
-  company: User['company']
-  jobRole: User['jobRole']
-}
+  name: User["name"];
+  username: User["username"];
+  company: User["company"];
+  jobRole: User["jobRole"];
+};
 
 export default function ProfileEditForm({ user }: { user: User }) {
-  const router = useRouter()
+  const router = useRouter();
 
-  const [usernamePresent, setUsernamePresent] = useState<boolean>(!!user.username)
+  const [usernamePresent, setUsernamePresent] = useState<boolean>(
+    !!user.username,
+  );
 
   const { register, handleSubmit, formState } = useForm<FormData>({
     defaultValues: {
-      name: user.name ?? '',
-      username: user.username ?? '',
-      company: user.company ?? '',
-      jobRole: user.jobRole ?? '',
+      name: user.name ?? "",
+      username: user.username ?? "",
+      company: user.company ?? "",
+      jobRole: user.jobRole ?? "",
     },
-  })
+  });
 
   async function onSubmit(data: FormData) {
     const userData = {
@@ -33,21 +35,21 @@ export default function ProfileEditForm({ user }: { user: User }) {
       username: data.username,
       company: data.company,
       jobRole: data.jobRole,
-    }
+    };
 
-    const response = await fetch(`/api/user`, {
-      method: 'PUT',
+    const response = await fetch("/api/user", {
+      method: "PUT",
       body: JSON.stringify(userData),
-    })
+    });
 
     if (response.ok) {
-      const updatedUser = await response.json()
+      const updatedUser = await response.json();
 
       if (updatedUser.username) {
-        setUsernamePresent(true)
+        setUsernamePresent(true);
       }
 
-      router.push('/dashboard')
+      router.push("/dashboard");
     }
   }
 
@@ -56,12 +58,15 @@ export default function ProfileEditForm({ user }: { user: User }) {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="w-full max-w-xs form-control">
           {!usernamePresent && <WelcomeCTA name={user.name} />}
-          <label htmlFor="username" className="label">
+          <label
+            htmlFor="username"
+            className="label"
+          >
             <span className="label-text">Username</span>
           </label>
           <input
             type="text"
-            {...register('username', { required: true })}
+            {...register("username", { required: true })}
             className="w-full max-w-xs input input-bordered"
             placeholder="Username"
             disabled={usernamePresent}
@@ -69,40 +74,49 @@ export default function ProfileEditForm({ user }: { user: User }) {
           {formState.errors.username && <div>Username is required</div>}
         </div>
         <div className="w-full max-w-xs form-control">
-          <label htmlFor="name" className="label">
+          <label
+            htmlFor="name"
+            className="label"
+          >
             <span className="label-text">Full Name</span>
           </label>
           <input
             type="text"
-            {...register('name')}
+            {...register("name")}
             className="w-full max-w-xs input input-bordered"
             placeholder="Full Name"
           />
         </div>
         <div className="w-full max-w-xs form-control">
-          <label htmlFor="company" className="label">
+          <label
+            htmlFor="company"
+            className="label"
+          >
             <span className="label-text">Company</span>
           </label>
           <input
             type="text"
-            {...register('company')}
+            {...register("company")}
             className="w-full max-w-xs input input-bordered"
             placeholder="Company"
           />
           {formState.errors.company && <div>Company is required</div>}
         </div>
         <div className="w-full max-w-xs form-control">
-          <label htmlFor="jobRole" className="label">
+          <label
+            htmlFor="jobRole"
+            className="label"
+          >
             <span className="label-text">Job Role</span>
           </label>
           <input
             type="text"
-            {...register('jobRole')}
+            {...register("jobRole")}
             className="w-full max-w-xs input input-bordered"
             placeholder="Job Role"
           />
         </div>
-        <div className='mt-6'>
+        <div className="mt-6">
           <button
             type="submit"
             className="my-2 btn btn-primary btn-block btn-outline"
@@ -120,10 +134,10 @@ export default function ProfileEditForm({ user }: { user: User }) {
         </div>
       </form>
     </div>
-  )
+  );
 }
 
-function WelcomeCTA({ name }: { name: User['name'] }) {
+function WelcomeCTA({ name }: { name: User["name"] }) {
   return (
     <div className="text-center shadow-lg alert alert-info">
       <div>
@@ -143,16 +157,16 @@ function WelcomeCTA({ name }: { name: User['name'] }) {
         <div>
           <h1 className="mb-4 text-lg">Hello {name}!</h1>
           <p className="mb-2">
-            This is your first sign in into Qards App. Please create your profile
-            so that you can use it properly.
+            This is your first sign in into Qards App. Please create your
+            profile so that you can use it properly.
           </p>
           <p>
-            Please notice, you must set your <strong>Username</strong> and you can
-            do it just <strong>ONCE!</strong>{' '}
+            Please notice, you must set your <strong>Username</strong> and you
+            can do it just <strong>ONCE!</strong>{" "}
           </p>
           <div>So, choose wisely.</div>
         </div>
       </div>
     </div>
-  )
+  );
 }

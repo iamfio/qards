@@ -1,10 +1,10 @@
-import { DefaultSession } from "next-auth"
+import { DefaultSession } from "next-auth";
 
-declare module 'next-auth' {
+declare module "next-auth" {
   interface Session {
     user: {
-      id?: string | null // NOTE: made "id" optional (?) and nullable (null) so that it matches types with ones already existing in DefaultSession
-      username?: string | null
-    } & DefaultSession['user']
+      id?: string | null;
+      username?: string | null;
+    } & DefaultSession["user"];
   }
 }

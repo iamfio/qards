@@ -1,4 +1,4 @@
-import { AiFillGithub } from 'react-icons/ai'
+import { AiFillGithub } from "react-icons/ai";
 
 export default function Footer() {
   return (
@@ -7,5 +7,5 @@ export default function Footer() {
         <AiFillGithub className="text-4xl" />
       </a>
     </footer>
-  )
+  );
 }

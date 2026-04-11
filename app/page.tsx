@@ -1,18 +1,18 @@
-import QCookieConsent from '@/components/ui/cookie-consent/QCookieConsent'
-import { authOptions } from '@/app/api/auth/[...nextauth]/route'
-import { getServerSession } from 'next-auth'
-import { redirect } from 'next/navigation'
-import { Metadata } from 'next'
+import QCookieConsent from "@/components/ui/cookie-consent/QCookieConsent";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
+import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: 'Qards',
-}
+  title: "Qards",
+};
 
 export default async function Home() {
-  const session = await getServerSession(authOptions)
+  const session = await getServerSession(authOptions);
 
   if (session?.user) {
-    redirect('/dashboard')
+    redirect("/dashboard");
   }
 
   return (
@@ -39,5 +39,5 @@ export default async function Home() {
       </div>
       <QCookieConsent />
     </div>
-  )
+  );
 }

@@ -1,5 +1,5 @@
-'use client';
-import CookieConsent from 'react-cookie-consent'
+"use client";
+import CookieConsent from "react-cookie-consent";
 
 export default function QCookieConsent() {
   return (
@@ -19,5 +19,5 @@ export default function QCookieConsent() {
         <p>If you are Ok with it, welcome!</p>
       </CookieConsent>
     </>
-  )
+  );
 }

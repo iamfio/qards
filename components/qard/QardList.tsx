@@ -1,83 +1,83 @@
-'use client'
+"use client";
 
-import { useCallback, useEffect, useState } from 'react'
-import { DragDropContext, Droppable, DropResult } from '@hello-pangea/dnd'
-import { Qard } from '@prisma/client'
+import { useCallback, useEffect, useState } from "react";
+import { DragDropContext, Droppable, DropResult } from "@hello-pangea/dnd";
+import { Qard } from "@prisma/client";
 
-import DotLoader from '@/components/loader/DotLoader'
-import QardForm from '@/components/qard/QardForm'
-import QardListItem from '@/components/qard/QardListItem'
-import Modal from '@/components/ui/modal/Modal'
+import DotLoader from "@/components/loader/DotLoader";
+import QardForm from "@/components/qard/QardForm";
+import QardListItem from "@/components/qard/QardListItem";
+import Modal from "@/components/ui/modal/Modal";
 
 export default function QardList() {
-  const [qards, setQards] = useState<Qard[]>()
-  const [openNewQard, setOpenNewQard] = useState<boolean>(false)
-  const [loading, setLoading] = useState<boolean>(false)
+  const [qards, setQards] = useState<Qard[]>();
+  const [openNewQard, setOpenNewQard] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
-  const handleOpenNewQard = () => setOpenNewQard((prev) => !prev)
+  const handleOpenNewQard = () => setOpenNewQard((prev) => !prev);
 
   const getQards = useCallback(async (showLoader = true) => {
     if (showLoader) {
-      setLoading(true)
+      setLoading(true);
     }
 
     try {
-      const response = await fetch('/api/qard')
-      
+      const response = await fetch("/api/qard");
+
       if (!response.ok) {
-        const errorData = await response.json()
-        console.error(errorData.message || 'Failed to fetch Qards')
+        const errorData = await response.json();
+        console.error(errorData.message || "Failed to fetch Qards");
       }
 
-      const data = await response.json()
-      setQards(data.qards) // Assuming the API returns { qards: [...] }
+      const data = await response.json();
+      setQards(data.qards);
     } catch (error) {
-      console.error('Error fetching Qards:', error)
+      console.error("Error fetching Qards:", error);
       // TODO: show a user-friendly error message
     } finally {
       if (showLoader) {
-        setLoading(false)
+        setLoading(false);
       }
     }
-  }, [])
+  }, []);
 
   const reorder = (
     qardsOrder: Qard[],
     startIndex: number,
-    endIndex: number
+    endIndex: number,
   ) => {
-    const result = Array.from(qardsOrder)
-    const [removed] = result.splice(startIndex, 1)
-    result.splice(endIndex, 0, removed)
+    const result = Array.from(qardsOrder);
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex, 0, removed);
 
-    return result
-  }
+    return result;
+  };
 
   const onDragEnd = (result: DropResult) => {
     if (!result.destination) {
-      return
+      return;
     }
 
     if (result.destination.index === result.source.index) {
-      return
+      return;
     }
 
     const qardsOrdered = reorder(
       qards!,
       result.source.index,
-      result.destination.index
-    )
+      result.destination.index,
+    );
 
-    setQards(qardsOrdered)
+    setQards(qardsOrdered);
 
     if (window.navigator.vibrate) {
-      window.navigator.vibrate(100)
+      window.navigator.vibrate(100);
     }
-  }
+  };
 
   useEffect(() => {
-    getQards(true).catch(console.error)
-  }, [getQards])
+    getQards(true).catch(console.error);
+  }, [getQards]);
 
   return (
     <div>
@@ -92,8 +92,14 @@ export default function QardList() {
         </div>
       </div>
       {openNewQard && (
-        <Modal open={openNewQard} onClose={handleOpenNewQard}>
-          <QardForm onClose={handleOpenNewQard} getQards={() => getQards(false)} />
+        <Modal
+          open={openNewQard}
+          onClose={handleOpenNewQard}
+        >
+          <QardForm
+            onClose={handleOpenNewQard}
+            getQards={() => getQards(false)}
+          />
         </Modal>
       )}
 
@@ -107,7 +113,7 @@ export default function QardList() {
                 ref={provided.innerRef}
                 {...provided.droppableProps}
                 className={`w-full ${
-                  snapshot.isDraggingOver ? 'bg-primary/10' : 'bg-inherit'
+                  snapshot.isDraggingOver ? "bg-primary/10" : "bg-inherit"
                 }`}
               >
                 {qards?.map((qard: Qard, index: number) => (
@@ -131,5 +137,5 @@ export default function QardList() {
         )}
       </div>
     </div>
-  )
+  );
 }

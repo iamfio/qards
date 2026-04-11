@@ -1,15 +1,15 @@
-'use client'
+"use client";
 
-import { signOut, useSession } from 'next-auth/react'
-import Link from 'next/link'
-import Image from 'next/image'
+import { signOut, useSession } from "next-auth/react";
+import Link from "next/link";
+import Image from "next/image";
 
-import AuthButton from '@/components/ui/AuthButton'
-import Logo from '@/components/ui/Logo'
-import SwitchTheme from '@/components/ui/SwitchTheme'
+import AuthButton from "@/components/ui/AuthButton";
+import Logo from "@/components/ui/Logo";
+import SwitchTheme from "@/components/ui/SwitchTheme";
 
 export default function Navbar() {
-  const { data: session } = useSession()
+  const { data: session } = useSession();
 
   return (
     <div className="shadow-md navbar bg-base-100">
@@ -22,10 +22,20 @@ export default function Navbar() {
 
         {session?.user && (
           <div className="dropdown dropdown-end">
-            <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
+            <label
+              tabIndex={0}
+              className="btn btn-ghost btn-circle avatar"
+            >
               <div className="w-10 rounded-full">
                 {session?.user.image && (
-                  <Image src={session.user.image} alt="User Avatar" width={40} height={40} unoptimized className="rounded-full" />
+                  <Image
+                    src={session.user.image}
+                    alt="User Avatar"
+                    width={40}
+                    height={40}
+                    unoptimized
+                    className="rounded-full"
+                  />
                 )}
               </div>
             </label>
@@ -51,5 +61,5 @@ export default function Navbar() {
         {!session?.user && <AuthButton />}
       </div>
     </div>
-  )
+  );
 }
