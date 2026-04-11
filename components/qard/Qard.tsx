@@ -18,7 +18,7 @@ export default function Qard({ accountName, accountLink }: QardProps) {
 
   return (
     <div className="my-6">
-      <div className="shadow-xl card w-[350px] bg-base-100 ">
+      <div className="shadow-xl card w-87.5 bg-base-100 ">
         <figure className="px-10 pt-10">
           <Canvas
             text={accountLink}
@@ -26,7 +26,7 @@ export default function Qard({ accountName, accountLink }: QardProps) {
               margin: 1,
               scale: 4,
               color: {
-                dark: theme === "business" ? "#202020" : "#1f2937",
+                dark: theme === "black" ? "#000000" : "#1f2937",
                 light: "#fff",
               },
               errorCorrectionLevel: "H",
