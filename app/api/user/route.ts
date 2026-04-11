@@ -32,6 +32,7 @@ export async function PUT(req: Request) {
 
     return NextResponse.json(user, { status: 201 })
   } catch (error) {
+    console.error(error)
     return NextResponse.json({ message: 'Error updating user' }, { status: 500 })
   }
 }

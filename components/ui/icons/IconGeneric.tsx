@@ -46,8 +46,10 @@ export default function IconGeneric({ name }: { name: string }) {
     faWhatsapp
   ]
 
-  icons.map((icon) => {
-    icon.iconName === (getFQDN(name) as IconName) && (i = icon)
+  icons.forEach((icon) => {
+    if (icon.iconName === (getFQDN(name) as IconName)) {
+      i = icon
+    }
   })
 
   return <FontAwesomeIcon className="big-icon text-primary" icon={i} />

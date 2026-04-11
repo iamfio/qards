@@ -2,7 +2,7 @@
 
 import { User } from '@prisma/client'
 import { useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 type FormData = {
@@ -15,13 +15,7 @@ type FormData = {
 export default function ProfileEditForm({ user }: { user: User }) {
   const router = useRouter()
 
-  const [usernamePresent, setUsernamePresent] = useState<boolean>(false)
-
-  useEffect(() => {
-    if (user.username) {
-      setUsernamePresent(true)
-    }
-  }, [user.username])
+  const [usernamePresent, setUsernamePresent] = useState<boolean>(!!user.username)
 
   const { register, handleSubmit, formState } = useForm<FormData>({
     defaultValues: {
@@ -47,9 +41,9 @@ export default function ProfileEditForm({ user }: { user: User }) {
     })
 
     if (response.ok) {
-      const user = await response.json()
+      const updatedUser = await response.json()
 
-      if (user.username) {
+      if (updatedUser.username) {
         setUsernamePresent(true)
       }
 

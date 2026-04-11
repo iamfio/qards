@@ -1,6 +1,6 @@
-import ContentLoader from 'react-content-loader'
+import ContentLoader, { IContentLoaderProps } from 'react-content-loader'
 
-export default function DotLoader(props: any) {
+export default function DotLoader(props: IContentLoaderProps) {
   return (
     <ContentLoader
       viewBox="0 0 400 160"

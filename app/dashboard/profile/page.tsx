@@ -2,6 +2,7 @@ import { prisma } from '@/lib/globalPrisma'
 import { authOptions } from '@/app/api/auth/[...nextauth]/route'
 import { getServerSession } from 'next-auth'
 import Link from 'next/link'
+import Image from 'next/image'
 import { redirect } from 'next/navigation'
 
 async function getUserById(userId: string) {
@@ -23,7 +24,9 @@ export default async function Profile() {
     <>
       <div className="shadow-xl card w-[300px] bg-base-100 my-8">
         <figure>
-          <img src={user?.image || ''} alt={user?.name || ''} />
+          {user?.image && (
+             <Image src={user.image} alt={user?.name || 'Profile Picture'} width={300} height={300} unoptimized />
+          )}
         </figure>
         <div className="card-body">
           <h2 className="card-title">{user?.name}</h2>

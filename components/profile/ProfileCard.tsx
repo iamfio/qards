@@ -3,7 +3,8 @@
 import { getURL } from '@/lib/utils'
 import { Qard, User } from '@prisma/client'
 import { useQRCode } from 'next-qrcode'
-import { useTheme } from '@/components/theme/ThemeProvider' // Import useTheme
+import { useTheme } from '@/components/theme/ThemeProvider'
+import Image from 'next/image'
 
 type ProfileCardProps = {
   user: (User & { qards: Qard[] }) | null
@@ -16,7 +17,9 @@ export default function ProfileCard({ user }: ProfileCardProps) {
   return (
     <div className="card w-[350px] bg-base-100 shadow-xl">
       <figure>
-        <img src={user?.image || ''} alt={user?.name || ''} />
+        {user?.image && (
+          <Image src={user.image} alt={user?.name || 'Profile Picture'} width={350} height={350} unoptimized />
+        )}
       </figure>
 
       <div className="card-body">
@@ -53,7 +56,7 @@ export default function ProfileCard({ user }: ProfileCardProps) {
               width: 200,
               color: {
                 light: '#fff',
-                dark: theme === 'business' ? '#202020' : '#1f2937', // Approximate dark colors for business vs corporate
+                dark: theme === 'business' ? '#202020' : '#1f2937',
               },
             }}
           />

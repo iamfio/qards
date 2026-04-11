@@ -11,7 +11,7 @@ import QardForm from '@/components/qard/QardForm'
 import IconGeneric from '@/components/ui/icons/IconGeneric'
 import Modal from '@/components/ui/modal/Modal'
 import ConfirmModal from '@/components/ui/modal/ConfirmModal'
-import AlertDialog from '@/components/ui/modal/AlertDialog' // Import the new AlertDialog
+import AlertDialog from '@/components/ui/modal/AlertDialog'
 
 type QardListItemProps = {
   qard: Qard
@@ -34,6 +34,7 @@ export default function QardListItem({
   const handleOpenAlertDialog = () => setOpenAlertDialog((prev) => !prev)
 
   async function confirmDeleteQard() {
+    let success = false
     try {
       const response = await fetch('/api/qard', {
         method: 'DELETE',
@@ -42,16 +43,21 @@ export default function QardListItem({
 
       if (!response.ok) {
         const errorData = await response.json()
-        console.error(errorData.message || 'Failed to delete Qard')
+        setAlertMessage(errorData.message || 'Failed to delete Qard')
+        setOpenAlertDialog(true)
+      } else {
+        success = true
       }
-
-      await getQards()
-    } catch (error: any) {
+    } catch (error) {
       console.error('Error deleting Qard:', error)
-      setAlertMessage(error.message || 'Failed to delete Qard. Please try again.')
+      const errMessage = error instanceof Error ? error.message : 'Failed to delete Qard. Please try again.'
+      setAlertMessage(errMessage)
       setOpenAlertDialog(true)
     } finally {
       setOpenConfirmDelete(false)
+      if (success) {
+         await getQards()
+      }
     }
   }
 
@@ -75,9 +81,10 @@ export default function QardListItem({
         await getQards()
       }
 
-      updatePosition(qard).catch((error: any) => {
+      updatePosition(qard).catch((error) => {
         console.error('Failed to update position:', error)
-        setAlertMessage(error.message || 'Failed to update position. Please try again.')
+        const errMessage = error instanceof Error ? error.message : 'Failed to update position. Please try again.'
+        setAlertMessage(errMessage)
         setOpenAlertDialog(true)
       })
     }

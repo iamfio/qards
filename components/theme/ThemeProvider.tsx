@@ -1,6 +1,6 @@
 'use client'
 
-import React, { createContext, useContext, useEffect, useState, useCallback } from 'react'
+import React, { createContext, useContext, useEffect, useCallback } from 'react'
 import { useLocalStorage } from 'usehooks-ts'
 
 type ThemeContextType = {
@@ -12,27 +12,11 @@ type ThemeContextType = {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
 
 export default function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [storedTheme, setStoredTheme] = useLocalStorage('theme', 'business') // Default to 'business' (dark)
-  const [theme, setThemeState] = useState<string>(storedTheme)
-  const [mounted, setMounted] = useState(false)
+  const [storedTheme, setStoredTheme] = useLocalStorage('theme', 'business')
 
   useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  // Sync theme state with localStorage on initial load and changes
-  useEffect(() => {
-    if (mounted) {
-      setThemeState(storedTheme)
-    }
-  }, [storedTheme, mounted])
-
-  // Apply theme to document element
-  useEffect(() => {
-    if (mounted) {
-      document.documentElement.setAttribute('data-theme', theme)
-    }
-  }, [theme, mounted])
+    document.documentElement.setAttribute('data-theme', storedTheme)
+  }, [storedTheme])
 
   const toggleTheme = useCallback(() => {
     setStoredTheme(prevTheme => (prevTheme === 'business' ? 'corporate' : 'business'))
@@ -42,12 +26,8 @@ export default function ThemeProvider({ children }: { children: React.ReactNode 
     setStoredTheme(themeName)
   }, [setStoredTheme])
 
-  if (!mounted) {
-    return null // Avoid rendering children until mounted to prevent hydration issues
-  }
-
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme, setTheme }}>
+    <ThemeContext.Provider value={{ theme: storedTheme, toggleTheme, setTheme }}>
       {children}
     </ThemeContext.Provider>
   )

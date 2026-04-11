@@ -1,7 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useState } from 'react'
-import { DragDropContext, Droppable } from '@hello-pangea/dnd'
+import { DragDropContext, Droppable, DropResult } from '@hello-pangea/dnd'
 import { Qard } from '@prisma/client'
 
 import DotLoader from '@/components/loader/DotLoader'
@@ -33,7 +33,7 @@ export default function QardList() {
       setQards(data.qards) // Assuming the API returns { qards: [...] }
     } catch (error) {
       console.error('Error fetching Qards:', error)
-      // Optionally, show a user-friendly error message
+      // TODO: show a user-friendly error message
     } finally {
       if (showLoader) {
         setLoading(false)
@@ -53,7 +53,7 @@ export default function QardList() {
     return result
   }
 
-  const onDragEnd = (result: any) => {
+  const onDragEnd = (result: DropResult) => {
     if (!result.destination) {
       return
     }

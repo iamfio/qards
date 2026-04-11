@@ -17,7 +17,6 @@ type QardProps = {
   isEdit?: boolean
   accountName?: Qard['accountName']
   accountLink?: Qard['accountLink']
-  handleToggle?: any
   onClose(): void
   getQards(): Promise<void>
 }
@@ -49,7 +48,7 @@ export default function QardForm({
       method: isEdit ? 'PUT' : 'POST',
       body: JSON.stringify({
         qardId: qardId,
-        userId: session?.user.id,
+        userId: session?.user?.id,
         accountName: data.accountName,
         accountLink: data.accountLink,
       }),

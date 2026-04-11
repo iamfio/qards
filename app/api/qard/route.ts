@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '../auth/[...nextauth]/route'
 
-export async function GET(req: Request) {
+export async function GET() {
   const session = await getServerSession(authOptions)
 
   if (!session?.user?.id) {
@@ -104,6 +104,7 @@ export async function PUT(req: Request) {
 
     return NextResponse.json(updatedUser)
   } catch (error) {
+    console.error(error)
     return NextResponse.json({ message: 'Error UPDATE Qard' }, { status: 500 })
   }
 }
@@ -138,6 +139,7 @@ export async function PATCH(req: Request) {
 
     return NextResponse.json(updatedUser)
   } catch (error) {
+    console.error(error)
     return NextResponse.json(
       { message: 'Error UPDATE Qard Position' },
       { status: 500 }
@@ -169,10 +171,11 @@ export async function DELETE(req: Request) {
     })
 
     return NextResponse.json({
-      message: 'QARD DELETED SUCESSFULLY',
+      message: 'QARD DELETED SUCCESSFULLY',
       response,
     })
   } catch (error) {
+    console.error(error)
     return NextResponse.json({ message: 'Error DELETE Qard' }, { status: 500 })
   }
 }

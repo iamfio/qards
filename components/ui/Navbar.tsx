@@ -2,6 +2,7 @@
 
 import { signOut, useSession } from 'next-auth/react'
 import Link from 'next/link'
+import Image from 'next/image'
 
 import AuthButton from '@/components/ui/AuthButton'
 import Logo from '@/components/ui/Logo'
@@ -23,7 +24,9 @@ export default function Navbar() {
           <div className="dropdown dropdown-end">
             <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
               <div className="w-10 rounded-full">
-                <img src={session?.user.image ?? ''} />
+                {session?.user.image && (
+                  <Image src={session.user.image} alt="User Avatar" width={40} height={40} unoptimized className="rounded-full" />
+                )}
               </div>
             </label>
             <ul
