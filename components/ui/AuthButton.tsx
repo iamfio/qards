@@ -1,9 +1,9 @@
-'use client'
+"use client";
 
-import { signIn, useSession } from 'next-auth/react'
+import { signIn, useSession } from "next-auth/react";
 
-const AuthButton= () => {
-  const { data: session } = useSession()
+export default function AuthButton() {
+  const { data: session } = useSession();
 
   return (
     <div>
@@ -11,7 +11,7 @@ const AuthButton= () => {
         <div>
           <button
             onClick={async () => {
-              await signIn()
+              await signIn();
             }}
             className="btn btn-sm btn-outline btn-primary"
           >
@@ -20,7 +20,5 @@ const AuthButton= () => {
         </div>
       )}
     </div>
-  )
+  );
 }
-
-export default AuthButton

@@ -1,20 +1,20 @@
-'use client'
+"use client";
 
-import { useReadLocalStorage } from 'usehooks-ts'
-import { useQRCode } from 'next-qrcode'
-import { capitalize } from '@/lib/utils'
+import { useQRCode } from "next-qrcode";
+import { capitalize } from "@/lib/utils";
+import { useTheme } from "@/components/theme/ThemeProvider";
 
-import IconGeneric from '@/components/ui/icons/IconGeneric'
+import IconGeneric from "@/components/ui/icons/IconGeneric";
 
 type QardProps = {
-  id?: string
-  accountName: string
-  accountLink: string
-}
+  id?: string;
+  accountName: string;
+  accountLink: string;
+};
 
-const Qard = ({ accountName, accountLink }: QardProps) => {
-  const { Canvas } = useQRCode()
-  const theme = useReadLocalStorage('theme')
+export default function Qard({ accountName, accountLink }: QardProps) {
+  const { Canvas } = useQRCode();
+  const { theme } = useTheme();
 
   return (
     <div className="my-6">
@@ -23,14 +23,13 @@ const Qard = ({ accountName, accountLink }: QardProps) => {
           <Canvas
             text={accountLink}
             options={{
-              level: 'H',
               margin: 1,
               scale: 4,
-              width: 320,
               color: {
-                dark: theme === 'night' ? '#2a303c' : '#282a36',
-                light: '#fff',
+                dark: theme === "business" ? "#202020" : "#1f2937",
+                light: "#fff",
               },
+              errorCorrectionLevel: "H",
             }}
           />
         </figure>
@@ -45,7 +44,5 @@ const Qard = ({ accountName, accountLink }: QardProps) => {
         </div>
       </div>
     </div>
-  )
+  );
 }
-
-export default Qard

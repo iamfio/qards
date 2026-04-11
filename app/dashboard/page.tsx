@@ -1,26 +1,26 @@
-import QardList from '@/components/qard/QardList'
-import { authOptions } from '@/app/api/auth/[...nextauth]/route'
-import { getServerSession } from 'next-auth'
-import Link from 'next/link'
-import { redirect } from 'next/navigation'
-import { Suspense } from 'react'
+import QardList from "@/components/qard/QardList";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { getServerSession } from "next-auth";
+import Link from "next/link";
+import { redirect } from "next/navigation";
+import { Suspense } from "react";
 
-import Loading from './loading'
-import { Metadata } from 'next'
+import Loading from "./loading";
+import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: 'Qards | Dashboard',
-}
+  title: "Qards | Dashboard",
+};
 
-const Dashboard = async () => {
-  const session = await getServerSession(authOptions)
+export default async function Dashboard() {
+  const session = await getServerSession(authOptions);
 
   if (!session) {
-    redirect('/')
+    redirect("/");
   }
 
   if (!session.user.username) {
-    redirect('/dashboard/profile/edit')
+    redirect("/dashboard/profile/edit");
   }
 
   return (
@@ -28,13 +28,13 @@ const Dashboard = async () => {
       <div className="w-full my-8 sm:w-96">
         <div className="text-center">
           <h1 className="text-xl font-semibold">
-            Hello{' '}
+            Hello{" "}
             <Link
               href={encodeURIComponent(session.user.username)}
               className="underline underline-offset-2"
             >
               {session.user.name}
-            </Link>{' '}
+            </Link>{" "}
             👋
           </h1>
 
@@ -46,7 +46,5 @@ const Dashboard = async () => {
         </Suspense>
       </div>
     </>
-  )
+  );
 }
-
-export default Dashboard

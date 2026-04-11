@@ -1,4 +1,4 @@
-import { getFQDN } from '@/lib/utils'
+import { getFQDN } from "@/lib/utils";
 import {
   faBitbucket,
   faCodepen,
@@ -18,13 +18,13 @@ import {
   faTelegram,
   faWhatsapp,
   IconDefinition,
-  IconName
-} from '@fortawesome/free-brands-svg-icons'
-import { faQrcode } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+  IconName,
+} from "@fortawesome/free-brands-svg-icons";
+import { faQrcode } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const IconGeneric = ({ name }: { name: string }) => {
-  let i: IconDefinition = faQrcode
+export default function IconGeneric({ name }: { name: string }) {
+  let i: IconDefinition = faQrcode;
 
   const icons: IconDefinition[] = [
     faGithub,
@@ -43,14 +43,19 @@ const IconGeneric = ({ name }: { name: string }) => {
     faFacebookF,
     faFlickr,
     faTelegram,
-    faWhatsapp
-  ]
+    faWhatsapp,
+  ];
 
-  icons.map((icon) => {
-    icon.iconName === (getFQDN(name) as IconName) && (i = icon)
-  })
+  icons.forEach((icon) => {
+    if (icon.iconName === (getFQDN(name) as IconName)) {
+      i = icon;
+    }
+  });
 
-  return <FontAwesomeIcon className="big-icon text-primary" icon={i} />
+  return (
+    <FontAwesomeIcon
+      className="big-icon text-primary"
+      icon={i}
+    />
+  );
 }
-
-export default IconGeneric

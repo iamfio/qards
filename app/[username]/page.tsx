@@ -1,21 +1,21 @@
-import { Suspense } from 'react'
-import type { Metadata } from 'next'
+import { Suspense } from "react";
+import type { Metadata } from "next";
 
-import ProfileCard from '@/components/profile/ProfileCard'
-import Qard from '@/components/qard/Qard'
-import UserNotFound from '@/components/ui/UserNotFound'
-import { prisma } from '@/lib/globalPrisma'
-import { User } from '@prisma/client'
+import ProfileCard from "@/components/profile/ProfileCard";
+import Qard from "@/components/qard/Qard";
+import UserNotFound from "@/components/ui/UserNotFound";
+import { prisma } from "@/lib/globalPrisma";
+import { User } from "@prisma/client";
 
-import Loading from './loading'
+import Loading from "./loading";
 
 type UserPageProps = {
-  params: Promise<{ username: string }>
-}
+  params: Promise<{ username: string }>;
+};
 
-const getUserByUsername = async (username: User['username']) => {
+async function getUserByUsername(username: User["username"]) {
   if (!username) {
-    return null
+    return null;
   }
 
   return prisma.user.findUnique({
@@ -23,25 +23,27 @@ const getUserByUsername = async (username: User['username']) => {
     include: {
       qards: {
         orderBy: {
-          position: 'asc',
+          position: "asc",
         },
       },
     },
-  })
+  });
 }
 
-export const generateMetadata = async ({ params }: UserPageProps): Promise<Metadata> => {
+export async function generateMetadata({
+  params,
+}: UserPageProps): Promise<Metadata> {
   const { username } = await params;
-  const user = await getUserByUsername(username)
-  return { title: `${user?.name}'s Qards` }
+  const user = await getUserByUsername(username);
+  return { title: `${user?.name}'s Qards` };
 }
 
-const UserPage = async ({ params }: UserPageProps) => {
+export default async function UserPage({ params }: UserPageProps) {
   const { username } = await params;
-  const user = await getUserByUsername(username)
+  const user = await getUserByUsername(username);
 
   if (!user) {
-    return <UserNotFound />
+    return <UserNotFound />;
   }
 
   return (
@@ -86,7 +88,5 @@ const UserPage = async ({ params }: UserPageProps) => {
         </div>
       </div>
     </div>
-  )
+  );
 }
-
-export default UserPage

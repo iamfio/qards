@@ -1,29 +1,38 @@
-import { prisma } from '@/lib/globalPrisma'
-import { authOptions } from '@/app/api/auth/[...nextauth]/route'
-import { getServerSession } from 'next-auth'
-import Link from 'next/link'
-import { redirect } from 'next/navigation'
+import { prisma } from "@/lib/globalPrisma";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { getServerSession } from "next-auth";
+import Link from "next/link";
+import Image from "next/image";
+import { redirect } from "next/navigation";
 
-const getUserById = async (userId: string) => {
+async function getUserById(userId: string) {
   return prisma.user.findUnique({
     where: { id: userId },
-  })
+  });
 }
 
-const Profile = async () => {
-  const session = await getServerSession(authOptions)
+export default async function Profile() {
+  const session = await getServerSession(authOptions);
 
   if (!session) {
-    redirect('/')
+    redirect("/");
   }
 
-  const user = await getUserById(session?.user?.id as string)
+  const user = await getUserById(session?.user?.id as string);
 
   return (
     <>
       <div className="shadow-xl card w-[300px] bg-base-100 my-8">
         <figure>
-          <img src={user?.image || ''} alt={user?.name || ''} />
+          {user?.image && (
+            <Image
+              src={user.image}
+              alt={user?.name || "Profile Picture"}
+              width={300}
+              height={300}
+              unoptimized
+            />
+          )}
         </figure>
         <div className="card-body">
           <h2 className="card-title">{user?.name}</h2>
@@ -32,21 +41,21 @@ const Profile = async () => {
 
           {user?.email && (
             <div>
-              <div className="mt-2 text-sm">E-Mail:</div>{' '}
+              <div className="mt-2 text-sm">E-Mail:</div>{" "}
               <span className="text-lg">{user?.email}</span>
             </div>
           )}
 
           {user?.username && (
             <div>
-              <div className="mt-2 text-sm">Username:</div>{' '}
+              <div className="mt-2 text-sm">Username:</div>{" "}
               <span className="text-lg">{user?.username}</span>
             </div>
           )}
 
           {user?.company && (
             <div>
-              <div className="mt-2 text-sm">Company:</div>{' '}
+              <div className="mt-2 text-sm">Company:</div>{" "}
               <span className="text-lg">{user?.company}</span>
             </div>
           )}
@@ -64,7 +73,5 @@ const Profile = async () => {
         </div>
       </div>
     </>
-  )
+  );
 }
-
-export default Profile

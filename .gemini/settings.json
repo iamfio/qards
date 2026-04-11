@@ -2,9 +2,7 @@
   "mcpServers": {
     "next-devtools": {
       "command": "pnpx",
-      "args": [
-        "next-devtools-mcp@latest"
-      ]
+      "args": ["next-devtools-mcp@latest"]
     }
   }
 }

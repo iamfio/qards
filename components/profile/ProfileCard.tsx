@@ -1,22 +1,31 @@
-'use client'
+"use client";
 
-import { getURL } from '@/lib/utils'
-import { Qard, User } from '@prisma/client'
-import { useQRCode } from 'next-qrcode'
-import { useReadLocalStorage } from 'usehooks-ts'
+import { getURL } from "@/lib/utils";
+import { Qard, User } from "@prisma/client";
+import { useQRCode } from "next-qrcode";
+import { useTheme } from "@/components/theme/ThemeProvider";
+import Image from "next/image";
 
 type ProfileCardProps = {
-  user: (User & { qards: Qard[] }) | null
-}
+  user: (User & { qards: Qard[] }) | null;
+};
 
-const ProfileCard = ({ user }: ProfileCardProps) => {
-  const { Canvas } = useQRCode()
-  const theme = useReadLocalStorage('theme')
+export default function ProfileCard({ user }: ProfileCardProps) {
+  const { Canvas } = useQRCode();
+  const { theme } = useTheme();
 
   return (
     <div className="card w-[350px] bg-base-100 shadow-xl">
       <figure>
-        <img src={user?.image || ''} alt={user?.name || ''} />
+        {user?.image && (
+          <Image
+            src={user.image}
+            alt={user?.name || "Profile Picture"}
+            width={350}
+            height={350}
+            unoptimized
+          />
+        )}
       </figure>
 
       <div className="card-body">
@@ -30,14 +39,14 @@ const ProfileCard = ({ user }: ProfileCardProps) => {
 
         {user?.email && (
           <div>
-            <div className="mt-2 text-sm font-bold">E-Mail:</div>{' '}
+            <div className="mt-2 text-sm font-bold">E-Mail:</div>{" "}
             <span className="text-lg">{user?.email}</span>
           </div>
         )}
 
         {user?.company && (
           <div>
-            <div className="mt-2 text-sm font-bold">Company:</div>{' '}
+            <div className="mt-2 text-sm font-bold">Company:</div>{" "}
             <span className="text-lg">{user?.company}</span>
           </div>
         )}
@@ -48,20 +57,17 @@ const ProfileCard = ({ user }: ProfileCardProps) => {
           <Canvas
             text={getURL(`/${user?.username}`)}
             options={{
-              level: 'H',
               margin: 1,
               scale: 3,
               width: 200,
               color: {
-                light: '#fff',
-                dark: theme === 'night' ? '#2a303c' : '#282a36',
+                light: "#fff",
+                dark: theme === "business" ? "#202020" : "#1f2937",
               },
             }}
           />
         </div>
       </div>
     </div>
-  )
+  );
 }
-
-export default ProfileCard

@@ -1,11 +1,11 @@
-import { prisma } from '@/lib/globalPrisma'
-import { NextResponse } from 'next/server'
+import { prisma } from "@/lib/globalPrisma";
+import { NextResponse } from "next/server";
 
 export async function GET(
-  req: Request,
-  { params }: { params: Promise<{ uid: string }> }
+  _req: Request,
+  { params }: { params: Promise<{ uid: string }> },
 ) {
-  const { uid } = await params
+  const { uid } = await params;
 
   try {
     const user = await prisma.user.findUnique({
@@ -15,17 +15,18 @@ export async function GET(
       include: {
         qards: true,
       },
-    })
+    });
 
     if (!user) {
-      return NextResponse.json({ message: 'User not found' }, { status: 404 })
+      return NextResponse.json({ message: "User not found" }, { status: 404 });
     }
 
-    return NextResponse.json(user)
+    return NextResponse.json(user);
   } catch (error) {
+    console.error(error);
     return NextResponse.json(
-      { message: 'Error fetching user' },
-      { status: 500 }
-    )
+      { message: "Error fetching user" },
+      { status: 500 },
+    );
   }
 }

@@ -1,38 +1,36 @@
-import { useRef } from 'react'
-import cn from 'classnames'
-import { useOnClickOutside } from 'usehooks-ts'
+import { useRef } from "react";
+import cn from "classnames";
+import { useOnClickOutside } from "usehooks-ts";
 
 type ModalProps = {
-  children: React.ReactNode
-  open: boolean
-  disableClickOutside?: boolean
-  onClose(): void
-}
+  children: React.ReactNode;
+  open: boolean;
+  disableClickOutside?: boolean;
+  onClose(): void;
+};
 
-const Modal = ({
+export default function Modal({
   children,
   open,
   disableClickOutside,
   onClose,
-}: ModalProps) => {
-  const ref = useRef<HTMLDivElement>(null)
-  
+}: ModalProps) {
+  const ref = useRef<HTMLDivElement>(null);
+
   useOnClickOutside(ref as React.RefObject<HTMLDivElement>, () => {
     if (!disableClickOutside) {
-      onClose()
+      onClose();
     }
-  })
+  });
 
   const modalClass = cn({
-    'modal modal-bottom sm:modal-middle': true,
-    'modal-open': open,
-  })
+    "modal modal-middle": true,
+    "modal-open": open,
+  });
 
   return (
     <div className={modalClass}>
       <div ref={ref}>{children}</div>
     </div>
-  )
+  );
 }
-
-export default Modal

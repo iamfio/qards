@@ -1,11 +1,9 @@
-import DotLoader from '@/components/loader/DotLoader'
+import DotLoader from "@/components/loader/DotLoader";
 
-const Loading = () => {
+export default function Loading() {
   return (
     <div>
       <DotLoader />
     </div>
-  )
+  );
 }
-
-export default Loading

@@ -1,23 +1,23 @@
-import { prisma } from '@/lib/prismadb'
-import { PrismaAdapter } from '@next-auth/prisma-adapter'
-import { randomBytes, randomUUID } from 'crypto'
-import NextAuth, { AuthOptions, Session } from 'next-auth'
+import { prisma } from "@/lib/prismadb";
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import { randomBytes, randomUUID } from "crypto";
+import NextAuth, { type AuthOptions } from "next-auth";
 
-import { JWT } from 'next-auth/jwt'
-import GithubProvider from 'next-auth/providers/github'
-import GoogleProvider from 'next-auth/providers/google'
+import GithubProvider from "next-auth/providers/github";
+import GoogleProvider from "next-auth/providers/google";
+import type { User } from "@prisma/client";
 
 export const authOptions: AuthOptions = {
   secret: process.env.JWT_SIGNING_PRIVATE_KEY,
   adapter: PrismaAdapter(prisma),
   providers: [
     GithubProvider({
-      clientId: process.env.GITHUB_CLIENT_ID ?? '',
-      clientSecret: process.env.GITHUB_CLIENT_SECRET ?? '',
+      clientId: process.env.GITHUB_CLIENT_ID ?? "",
+      clientSecret: process.env.GITHUB_CLIENT_SECRET ?? "",
     }),
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID ?? '',
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? '',
+      clientId: process.env.GOOGLE_CLIENT_ID ?? "",
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? "",
     }),
   ],
   jwt: {
@@ -28,33 +28,27 @@ export const authOptions: AuthOptions = {
     // strategy: 'jwt',
     maxAge: 7 * 24 * 60 * 60, // 1 Week
     generateSessionToken: () => {
-      return randomUUID?.() ?? randomBytes(32).toString('hex')
+      return randomUUID?.() ?? randomBytes(32).toString("hex");
     },
   },
   callbacks: {
-    async session({
-      session,
-      user,
-      token,
-    }: {
-      session: Session
-      user: any
-      token: JWT
-    }) {
-      session.user.id = user.id
-      session.user.username = user.username
-      return session
+    async session({ session, user }) {
+      if (session.user && user) {
+        session.user.id = user.id;
+        session.user.username = (user as User).username;
+      }
+      return session;
     },
-    async jwt({ token, user, account, profile, isNewUser }) {
+    async jwt({ token, user, trigger }) {
       return {
         token,
         user,
-        isNewUser,
-      }
+        trigger,
+      };
     },
   },
-}
+};
 
-const handler = NextAuth(authOptions)
+const handler = NextAuth(authOptions);
 
-export { handler as GET, handler as POST }
+export { handler as GET, handler as POST };
