@@ -2,6 +2,7 @@ import { prisma } from "@/lib/globalPrisma";
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/route";
+import { Qard, User } from '@prisma/client'
 
 export async function GET() {
   const session = await getServerSession(authOptions);
@@ -116,7 +117,7 @@ export async function PATCH(req: Request) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
 
-  const existingQard = await req.json();
+  const existingQard: Qard = await req.json();
 
   try {
     const updatedUser = await prisma.user.update({
@@ -127,7 +128,7 @@ export async function PATCH(req: Request) {
         qards: {
           update: {
             where: {
-              id: String(existingQard.id),
+              id: existingQard.id,
             },
             data: {
               position: existingQard.position,
