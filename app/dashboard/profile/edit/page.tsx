@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/globalPrisma";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { User } from "@prisma/client";
+import type { User } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import ProfileEditForm from "./ProfileEditForm";

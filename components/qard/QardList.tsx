@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { DragDropContext, Droppable, DropResult } from "@hello-pangea/dnd";
-import { Qard } from "@prisma/client";
+import type { Qard } from "@prisma/client";
 
 import DotLoader from "@/components/loader/DotLoader";
 import QardForm from "@/components/qard/QardForm";

@@ -1,7 +1,7 @@
 "use client";
 
 import { getURL } from "@/lib/utils";
-import { Qard, User } from "@prisma/client";
+import type { Qard, User } from "@prisma/client";
 import { useQRCode } from "next-qrcode";
 import { useTheme } from "@/components/theme/ThemeProvider";
 import Image from "next/image";
@@ -15,7 +15,7 @@ export default function ProfileCard({ user }: ProfileCardProps) {
   const { theme } = useTheme();
 
   return (
-    <div className="card w-[350px] bg-base-100 shadow-xl">
+    <div className="card w-87.5 bg-base-100 shadow-xl">
       <figure>
         {user?.image && (
           <Image
@@ -62,7 +62,7 @@ export default function ProfileCard({ user }: ProfileCardProps) {
               width: 200,
               color: {
                 light: "#fff",
-                dark: theme === "business" ? "#202020" : "#1f2937",
+                dark: theme === "black" ? "#000000" : "#1f2937",
               },
             }}
           />

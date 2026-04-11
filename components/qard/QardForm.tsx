@@ -2,7 +2,7 @@
 
 import { isURL } from "@/lib/utils";
 import { ErrorMessage } from "@hookform/error-message";
-import { Qard } from "@prisma/client";
+import type { Qard } from "@prisma/client";
 import { useSession } from "next-auth/react";
 import { useForm } from "react-hook-form";
 

@@ -7,8 +7,14 @@ import ThemeProvider from "@/components/theme/ThemeProvider";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
 import { Urbanist } from "next/font/google";
+import { Metadata } from "next";
 
 const urbanist = Urbanist({ subsets: ["latin"] });
+
+export const metadata: Metadata = {
+  title: "Qards",
+  description: "Advanced dynamic theme management in Next.js 16",
+};
 
 export default async function RootLayout({
   children,
@@ -23,11 +29,13 @@ export default async function RootLayout({
       suppressHydrationWarning
     >
       <head>
+        <link
+          rel="icon"
+          href="/favicon.ico"
+        />
         <title>Qards</title>
       </head>
       <body className={urbanist.className}>
-        {" "}
-        {/* <body> tag must be directly rendered here */}
         <AuthContext session={session}>
           <ThemeProvider>
             <Navbar />

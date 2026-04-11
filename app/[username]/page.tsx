@@ -5,7 +5,7 @@ import ProfileCard from "@/components/profile/ProfileCard";
 import Qard from "@/components/qard/Qard";
 import UserNotFound from "@/components/ui/UserNotFound";
 import { prisma } from "@/lib/globalPrisma";
-import { User } from "@prisma/client";
+import type { User } from "@prisma/client";
 
 import Loading from "./loading";
 

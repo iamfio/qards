@@ -1,26 +1,15 @@
-@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500&family=Righteous&family=Urbanist&display=swap");
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* global.css */
+@import "tailwindcss";
 
-* {
-  font-family: "Urbanist", sans-serif;
+@plugin "daisyui" {
+  themes:
+    corporate --default,
+    black --prefersdark;
 }
 
-.text-3xl {
-  font-family: monospace;
-}
-
-.big-icon {
-  max-width: 50%;
-  height: auto;
-}
-.dropdown-end {
-  margin-right: 0.5vw;
-}
-
-.white-shadow {
-  box-shadow: 4px 4px 60px #002456;
+@theme {
+  --font-family-sans: "Urbanist", sans-serif;
+  --font-family-mono: monospace;
 }
 
 body {
@@ -28,6 +17,19 @@ body {
   padding: 0;
   min-height: 100vh;
   position: relative;
+}
+
+.big-icon {
+  max-width: 50%;
+  height: auto;
+}
+
+.dropdown-end {
+  margin-right: 0.5vw;
+}
+
+.white-shadow {
+  box-shadow: 4px 4px 60px #002456;
 }
 
 .justify-around {

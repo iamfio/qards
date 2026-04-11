@@ -1,58 +1,23 @@
 "use client";
 
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useCallback,
-} from "react";
-import { useLocalStorage } from "usehooks-ts";
-
-type ThemeContextType = {
-  theme: string;
-  toggleTheme: () => void;
-  setTheme: (themeName: string) => void;
-};
-
-const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+import * as React from "react";
+import { ThemeProvider as NextThemesProvider } from "next-themes";
 
 export default function ThemeProvider({
   children,
-}: {
-  children: React.ReactNode;
-}) {
-  const [storedTheme, setStoredTheme] = useLocalStorage("theme", "business");
-
-  useEffect(() => {
-    document.documentElement.setAttribute("data-theme", storedTheme);
-  }, [storedTheme]);
-
-  const toggleTheme = useCallback(() => {
-    setStoredTheme((prevTheme) =>
-      prevTheme === "business" ? "corporate" : "business",
-    );
-  }, [setStoredTheme]);
-
-  const setTheme = useCallback(
-    (themeName: string) => {
-      setStoredTheme(themeName);
-    },
-    [setStoredTheme],
-  );
-
+  ...props
+}: React.ComponentProps<typeof NextThemesProvider>) {
   return (
-    <ThemeContext.Provider
-      value={{ theme: storedTheme, toggleTheme, setTheme }}
+    <NextThemesProvider
+      attribute="data-theme"
+      defaultTheme="black"
+      enableSystem={false}
+      disableTransitionOnChange
+      {...props}
     >
       {children}
-    </ThemeContext.Provider>
+    </NextThemesProvider>
   );
 }
 
-export function useTheme() {
-  const context = useContext(ThemeContext);
-  if (context === undefined) {
-    throw new Error("useTheme must be used within a ThemeProvider");
-  }
-  return context;
-}
+export { useTheme } from "next-themes";
