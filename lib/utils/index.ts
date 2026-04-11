@@ -1,33 +1,50 @@
 //* String Utils
 
-export function getFQDN(url: string) {
+import { parse } from "tldts";
+
+export function getFQDN(url: string): string {
   try {
-    return new URL(url).hostname.replace("www.", "").split(".")[0];
+    return parse(url).domainWithoutSuffix ?? "";
   } catch {
     return "";
   }
 }
 
-export function getURL(path: string) {
-  try {
-    const BASE_URL =
-      typeof window === "undefined"
-        ? process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"
-        : window.location.origin;
+// cache base URL once
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined);
 
-    return new URL(path, BASE_URL).toString();
+// normalize path + build absolute URL
+export function getURL(path = ""): string {
+  const base =
+    typeof globalThis.window !== "undefined"
+      ? window.location.origin
+      : (SITE_URL ?? "http://localhost:3000");
+
+  return new URL(path, base).toString();
+}
+
+export function isURL(value: string): boolean {
+  if (!value.includes(".")) {
+    return false;
+  }
+
+  try {
+    const url = new URL(value);
+    return url.hostname.length > 0;
   } catch {
-    return path;
+    return false;
   }
 }
 
-export function isURL(url: string) {
-  return /^(?:\w+:)?\/\/([^\s.]+\.\S{2}|localhost[:?\d]*)\S*$/.test(url);
-}
-
-export function capitalize(txt: string) {
-  if (!txt) {
+export function capitalize(value: string): string {
+  if (!value) {
     return "";
   }
-  return txt.charAt(0).toUpperCase() + txt.slice(1);
+
+  const chars = Array.from(value);
+  chars[0] = chars[0].toLocaleUpperCase();
+
+  return chars.join("");
 }
