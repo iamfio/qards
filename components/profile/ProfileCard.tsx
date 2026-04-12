@@ -1,6 +1,6 @@
 "use client";
 
-import { getURL } from "@/lib/utils";
+import { getURL } from "@/lib/utils/strings;
 import type { Qard, User } from "@prisma/client";
 import { useQRCode } from "next-qrcode";
 import { useTheme } from "@/components/theme/ThemeProvider";

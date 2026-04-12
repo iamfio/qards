@@ -3,7 +3,7 @@ import "./globals.css";
 import AuthContext from "@/components/AuthContext";
 import Footer from "@/components/ui/Footer";
 import Navbar from "@/components/ui/Navbar";
-import ThemeProvider from "@/components/theme/ThemeProvider";
+import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
 import { Urbanist, Oxanium } from "next/font/google";
@@ -29,7 +29,8 @@ export default async function RootLayout({
   return (
     <html
       lang="en"
-      suppressHydrationWarning className={cn("font-sans", oxanium.variable)}
+      suppressHydrationWarning
+      className={cn("font-sans", oxanium.variable)}
     >
       <head>
         <link
@@ -40,7 +41,12 @@ export default async function RootLayout({
       </head>
       <body className={urbanist.className}>
         <AuthContext session={session}>
-          <ThemeProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
             <Navbar />
             <div className="flex flex-col items-center justify-center mx-8 sm:mx-4">
               {children}

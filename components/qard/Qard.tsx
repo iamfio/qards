@@ -1,7 +1,7 @@
 "use client";
 
 import { useQRCode } from "next-qrcode";
-import { capitalize } from "@/lib/utils";
+import { capitalize } from "@/lib/utils/strings";
 import { useTheme } from "@/components/theme/ThemeProvider";
 
 import IconGeneric from "@/components/ui/icons/IconGeneric";

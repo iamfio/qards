@@ -1,6 +1,6 @@
 "use client";
 
-import { isURL } from "@/lib/utils";
+import { isURL } from "@/lib/utils/strings";
 import { ErrorMessage } from "@hookform/error-message";
 import type { Qard } from "@prisma/client";
 import { useSession } from "next-auth/react";

@@ -5,7 +5,7 @@ import { Draggable } from "@hello-pangea/dnd";
 import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 
 import type { Qard } from "@prisma/client";
-import { capitalize } from "@/lib/utils";
+import { capitalize } from "@/lib/utils/strings";
 
 import QardForm from "@/components/qard/QardForm";
 import IconGeneric from "@/components/ui/icons/IconGeneric";
