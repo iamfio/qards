@@ -6,8 +6,11 @@ import Navbar from "@/components/ui/Navbar";
 import ThemeProvider from "@/components/theme/ThemeProvider";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
-import { Urbanist } from "next/font/google";
+import { Urbanist, Oxanium } from "next/font/google";
 import { Metadata } from "next";
+import { cn } from "@/lib/utils";
+
+const oxanium = Oxanium({subsets:['latin'],variable:'--font-sans'});
 
 const urbanist = Urbanist({ subsets: ["latin"] });
 
@@ -26,7 +29,7 @@ export default async function RootLayout({
   return (
     <html
       lang="en"
-      suppressHydrationWarning
+      suppressHydrationWarning className={cn("font-sans", oxanium.variable)}
     >
       <head>
         <link
