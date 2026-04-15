@@ -12,7 +12,8 @@ import {
 
 export const metadata: Metadata = {
   title: "Qards - Your Digital Business Card",
-  description: "Create and manage all your social profiles and projects with a single QR code. Share your digital business card effortlessly.",
+  description:
+    "Create and manage all your social profiles and projects with a single QR code. Share your digital business card effortlessly.",
 };
 
 export default async function Home() {
@@ -52,7 +53,8 @@ export default async function Home() {
         </h2>
         <p className="mx-auto mt-6 max-w-xl text-lg">
           Effortlessly manage and share your digital presence. Create a personal
-          QR business card for all your social profiles and projects. Just create a Qard and let your partners scan it.
+          QR business card for all your social profiles and projects. Just
+          create a Qard and let your partners scan it.
         </p>
       </div>
 
