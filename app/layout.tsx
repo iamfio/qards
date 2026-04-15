@@ -5,9 +5,10 @@ import Footer from "@/components/ui/Footer";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
-import { Urbanist, Oxanium } from "next/font/google";
 import type { Metadata } from "next";
 import { Header } from "@/components/header";
+import { Oxanium } from "next/font/google";
+import React from "react";
 
 const oxanium = Oxanium({
   subsets: ["latin"],
@@ -37,6 +38,7 @@ export default async function RootLayout({
           rel="icon"
           href="/favicon.ico"
         />
+        <title>Qards</title>
       </head>
       <body className="min-h-screen bg-background font-sans antialiased">
         <AuthContext session={session}>
