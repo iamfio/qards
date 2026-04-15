@@ -1,4 +1,4 @@
-import { getFQDN } from "@/lib/utils";
+import { getFQDN } from "@/lib/utils/strings";
 import {
   faBitbucket,
   faCodepen,

@@ -7,6 +7,7 @@ import type { Qard } from "@prisma/client";
 import DotLoader from "@/components/loader/DotLoader";
 import QardForm from "@/components/qard/QardForm";
 import QardListItem from "@/components/qard/QardListItem";
+import { Button } from "@/components/ui/button";
 import Modal from "@/components/ui/modal/Modal";
 
 export default function QardList() {
@@ -83,12 +84,12 @@ export default function QardList() {
     <div>
       <div className="flex justify-center">
         <div className="mx-4 mt-4 mb-6">
-          <button
-            className="btn glass btn-wide bg-primary hover:bg-primary-focus text-primary-content"
+          <Button
+            className="min-w-40"
             onClick={handleOpenNewQard}
           >
             New Qard
-          </button>
+          </Button>
         </div>
       </div>
       {openNewQard && (

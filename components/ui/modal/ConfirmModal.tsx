@@ -1,5 +1,8 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+
 import Modal from "./Modal";
 
 type ConfirmModalProps = {
@@ -20,25 +23,20 @@ export default function ConfirmModal({
       open={open}
       onClose={onCancelAction}
     >
-      <div className="p-8 rounded-lg shadow-xl card bg-base-100 w-96">
-        <div className="card-body">
-          <h2 className="text-xl card-title">{message}</h2>
-          <div className="justify-end mt-4 card-actions">
-            <button
-              className="btn btn-primary"
-              onClick={onConfirmAction}
-            >
-              Yes
-            </button>
-            <button
-              className="btn btn-ghost"
+      <Card className="w-96 max-w-full shadow-xl">
+        <CardContent className="space-y-4 pt-4">
+          <h2 className="text-xl font-semibold">{message}</h2>
+          <div className="flex justify-end gap-2">
+            <Button
+              variant="outline"
               onClick={onCancelAction}
             >
               No
-            </button>
+            </Button>
+            <Button onClick={onConfirmAction}>Yes</Button>
           </div>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
     </Modal>
   );
 }

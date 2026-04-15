@@ -5,6 +5,23 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Field,
+  FieldDescription,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+} from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+
 type FormData = {
   name: User["name"];
   username: User["username"];
@@ -20,6 +37,7 @@ export default function ProfileEditForm({ user }: { user: User }) {
   );
 
   const { register, handleSubmit, formState } = useForm<FormData>({
+    mode: "onChange",
     defaultValues: {
       name: user.name ?? "",
       username: user.username ?? "",
@@ -54,119 +72,115 @@ export default function ProfileEditForm({ user }: { user: User }) {
   }
 
   return (
-    <div className="w-[300px]">
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="w-full max-w-xs form-control">
+    <Card className="w-full max-w-xl">
+      <CardHeader>
+        <CardTitle>Edit profile</CardTitle>
+        <CardDescription>
+          Update your public profile information.
+        </CardDescription>
+      </CardHeader>
+
+      <CardContent>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="space-y-5"
+        >
           {!usernamePresent && <WelcomeCTA name={user.name} />}
-          <label
-            htmlFor="username"
-            className="label"
-          >
-            <span className="label-text">Username</span>
-          </label>
-          <input
-            type="text"
-            {...register("username", { required: true })}
-            className="w-full max-w-xs input input-bordered"
-            placeholder="Username"
-            disabled={usernamePresent}
-          />
-          {formState.errors.username && <div>Username is required</div>}
-        </div>
-        <div className="w-full max-w-xs form-control">
-          <label
-            htmlFor="name"
-            className="label"
-          >
-            <span className="label-text">Full Name</span>
-          </label>
-          <input
-            type="text"
-            {...register("name")}
-            className="w-full max-w-xs input input-bordered"
-            placeholder="Full Name"
-          />
-        </div>
-        <div className="w-full max-w-xs form-control">
-          <label
-            htmlFor="company"
-            className="label"
-          >
-            <span className="label-text">Company</span>
-          </label>
-          <input
-            type="text"
-            {...register("company")}
-            className="w-full max-w-xs input input-bordered"
-            placeholder="Company"
-          />
-          {formState.errors.company && <div>Company is required</div>}
-        </div>
-        <div className="w-full max-w-xs form-control">
-          <label
-            htmlFor="jobRole"
-            className="label"
-          >
-            <span className="label-text">Job Role</span>
-          </label>
-          <input
-            type="text"
-            {...register("jobRole")}
-            className="w-full max-w-xs input input-bordered"
-            placeholder="Job Role"
-          />
-        </div>
-        <div className="mt-6">
-          <button
-            type="submit"
-            className="my-2 btn btn-primary btn-block btn-outline"
-            disabled={!formState.isValid}
-          >
-            Save
-          </button>
-          <button
-            type="button"
-            className="my-2 btn btn-secondary btn-block btn-outline"
-            onClick={() => router.back()}
-          >
-            Cancel
-          </button>
-        </div>
-      </form>
-    </div>
+
+          <FieldGroup>
+            <Field>
+              <FieldLabel htmlFor="username">Username</FieldLabel>
+              <Input
+                id="username"
+                type="text"
+                placeholder="Username"
+                disabled={usernamePresent}
+                aria-invalid={!!formState.errors.username}
+                {...register("username", {
+                  required: "Username is required",
+                })}
+              />
+              <FieldDescription>
+                {usernamePresent
+                  ? "Username already set and cannot be changed."
+                  : "You can set username only once."}
+              </FieldDescription>
+              <FieldError
+                errors={
+                  formState.errors.username
+                    ? [{ message: formState.errors.username.message }]
+                    : undefined
+                }
+              />
+            </Field>
+
+            <Field>
+              <FieldLabel htmlFor="name">Full Name</FieldLabel>
+              <Input
+                id="name"
+                type="text"
+                placeholder="Full Name"
+                {...register("name")}
+              />
+            </Field>
+
+            <Field>
+              <FieldLabel htmlFor="company">Company</FieldLabel>
+              <Input
+                id="company"
+                type="text"
+                placeholder="Company"
+                {...register("company")}
+              />
+            </Field>
+
+            <Field>
+              <FieldLabel htmlFor="jobRole">Job Role</FieldLabel>
+              <Input
+                id="jobRole"
+                type="text"
+                placeholder="Job Role"
+                {...register("jobRole")}
+              />
+            </Field>
+          </FieldGroup>
+
+          <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => router.back()}
+            >
+              Cancel
+            </Button>
+            <Button
+              type="submit"
+              disabled={!formState.isValid}
+            >
+              Save
+            </Button>
+          </div>
+        </form>
+      </CardContent>
+    </Card>
   );
 }
 
 function WelcomeCTA({ name }: { name: User["name"] }) {
   return (
-    <div className="text-center shadow-lg alert alert-info">
-      <div>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          className="flex-shrink-0 w-6 h-6 stroke-current"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-          ></path>
-        </svg>
-        <div>
-          <h1 className="mb-4 text-lg">Hello {name}!</h1>
-          <p className="mb-2">
-            This is your first sign in into Qards App. Please create your
-            profile so that you can use it properly.
-          </p>
-          <p>
-            Please notice, you must set your <strong>Username</strong> and you
-            can do it just <strong>ONCE!</strong>{" "}
-          </p>
-          <div>So, choose wisely.</div>
-        </div>
-      </div>
-    </div>
+    <Card className="bg-muted/40">
+      <CardContent className="space-y-2 pt-4 text-sm">
+        <p className="text-base font-medium">Hello {name}!</p>
+        <p>
+          This is your first sign in into Qards App. Please create your profile
+          so that you can use it properly.
+        </p>
+        <p>
+          Please notice, you must set your <strong>Username</strong> and you can
+          do it just <strong>ONCE!</strong>
+        </p>
+        <p>So, choose wisely.</p>
+      </CardContent>
+    </Card>
   );
 }

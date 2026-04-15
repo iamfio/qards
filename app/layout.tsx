@@ -2,17 +2,17 @@ import "./globals.css";
 
 import AuthContext from "@/components/AuthContext";
 import Footer from "@/components/ui/Footer";
-import Navbar from "@/components/ui/Navbar";
-import ThemeProvider from "@/components/theme/ThemeProvider";
+import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
 import { Urbanist, Oxanium } from "next/font/google";
-import { Metadata } from "next";
-import { cn } from "@/lib/utils";
+import type { Metadata } from "next";
+import { Header } from "@/components/header";
 
-const oxanium = Oxanium({subsets:['latin'],variable:'--font-sans'});
-
-const urbanist = Urbanist({ subsets: ["latin"] });
+const oxanium = Oxanium({
+  subsets: ["latin"],
+  variable: "--font-sans",
+});
 
 export const metadata: Metadata = {
   title: "Qards",
@@ -29,21 +29,28 @@ export default async function RootLayout({
   return (
     <html
       lang="en"
-      suppressHydrationWarning className={cn("font-sans", oxanium.variable)}
+      suppressHydrationWarning
+      className={oxanium.variable}
     >
       <head>
         <link
           rel="icon"
           href="/favicon.ico"
         />
-        <title>Qards</title>
       </head>
-      <body className={urbanist.className}>
+      <body className="min-h-screen bg-background font-sans antialiased">
         <AuthContext session={session}>
-          <ThemeProvider>
-            <Navbar />
-            <div className="flex flex-col items-center justify-center mx-8 sm:mx-4">
-              {children}
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <div className="relative flex min-h-screen flex-col">
+              <Header />
+              <div className="mx-8 flex flex-col items-center justify-center sm:mx-4">
+                {children}
+              </div>
             </div>
             <Footer />
           </ThemeProvider>
