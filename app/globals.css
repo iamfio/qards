@@ -5,12 +5,6 @@
 
 @custom-variant dark (&:is(.dark *));
 
-@plugin "daisyui" {
-  themes:
-    corporate --default,
-    black --prefersdark;
-}
-
 @theme {
   --font-family-sans: "Urbanist", sans-serif;
   --font-family-mono: monospace;
@@ -42,20 +36,6 @@ body {
 
 .my-8 {
   margin-bottom: 11vh;
-}
-
-.footer-center {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  height: 10vh;
-  width: 100%;
-}
-
-@layer components {
-  .qard-list-item {
-    @apply w-full px-2 py-4 my-4 border rounded-md shadow-sm cursor-pointer hover:shadow-xl bg-base-100 bg-gradient-to-r from-base-100 via-base-200 to-base-100;
-  }
 }
 
 @theme inline {
