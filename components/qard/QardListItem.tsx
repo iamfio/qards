@@ -5,9 +5,12 @@ import { Draggable } from "@hello-pangea/dnd";
 import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 
 import type { Qard } from "@prisma/client";
-import { capitalize } from "@/lib/utils";
+import { capitalize } from "@/lib/utils/strings";
 
 import QardForm from "@/components/qard/QardForm";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import IconGeneric from "@/components/ui/icons/IconGeneric";
 import Modal from "@/components/ui/modal/Modal";
 import ConfirmModal from "@/components/ui/modal/ConfirmModal";
@@ -106,74 +109,88 @@ export default function QardListItem({
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          className={`qard-list-item ${
-            snapshot.isDragging ? "border-4 border-info/80" : "border-inherit"
-          }`}
+          className="my-4"
         >
-          <div className="flex items-center">
-            {openEditQard && (
-              <Modal
-                open={openEditQard}
+          {openEditQard && (
+            <Modal
+              open={openEditQard}
+              onClose={handleOpenEditQard}
+            >
+              <QardForm
+                isEdit
+                qardId={qard.id}
                 onClose={handleOpenEditQard}
-              >
-                <QardForm
-                  isEdit
-                  qardId={qard.id}
-                  onClose={handleOpenEditQard}
-                  accountLink={qard.accountLink}
-                  accountName={qard.accountName}
-                  getQards={getQards}
-                />
-              </Modal>
-            )}
-
-            {openConfirmDelete && (
-              <ConfirmModal
-                open={openConfirmDelete}
-                message="Delete Qard?"
-                onConfirmAction={confirmDeleteQard}
-                onCancelAction={handleOpenConfirmDelete}
+                accountLink={qard.accountLink}
+                accountName={qard.accountName}
+                getQards={getQards}
               />
-            )}
+            </Modal>
+          )}
 
-            {openAlertDialog && (
-              <AlertDialog
-                open={openAlertDialog}
-                message={alertMessage}
-                onCloseAction={handleOpenAlertDialog}
-              />
-            )}
+          {openConfirmDelete && (
+            <ConfirmModal
+              open={openConfirmDelete}
+              message="Delete Qard?"
+              onConfirmAction={confirmDeleteQard}
+              onCancelAction={handleOpenConfirmDelete}
+            />
+          )}
 
-            <div className="mr-4 avatar placeholder">
-              <div className="w-12 rounded-full">
-                {qard.accountLink === null ? (
-                  <IconGeneric name={"undef"} />
-                ) : (
-                  <IconGeneric name={qard.accountLink} />
-                )}
+          {openAlertDialog && (
+            <AlertDialog
+              open={openAlertDialog}
+              message={alertMessage}
+              onCloseAction={handleOpenAlertDialog}
+            />
+          )}
+
+          <Card
+            className={`w-full border transition-all ${
+              snapshot.isDragging
+                ? "border-primary ring-2 ring-primary/40 shadow-lg"
+                : "border-border/80"
+            }`}
+          >
+            <CardContent className="flex items-center gap-3 py-3">
+              <Avatar size="lg">
+                <AvatarFallback>
+                  {qard.accountLink === null ? (
+                    <IconGeneric name="undef" />
+                  ) : (
+                    <IconGeneric name={qard.accountLink} />
+                  )}
+                </AvatarFallback>
+              </Avatar>
+
+              <div className="min-w-0 flex-1 text-sm font-medium">
+                <span className="truncate block">
+                  {capitalize(qard.accountName)}
+                </span>
               </div>
-            </div>
-            <div className="flex-1">{capitalize(qard.accountName!)}</div>
-            <div className="flex justify-around ">
-              <div className="mx-1">
-                <button
-                  className="btn btn-sm btn-primary btn-square btn-outline"
+
+              <div className="flex items-center gap-2">
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="icon-sm"
                   onClick={handleOpenEditQard}
+                  aria-label="Edit qard"
                 >
-                  <AiOutlineEdit className="text-xl" />
-                </button>
-              </div>
+                  <AiOutlineEdit className="size-4" />
+                </Button>
 
-              <div className="mx-1">
-                <button
-                  className="btn btn-sm btn-error btn-square btn-outline"
+                <Button
+                  type="button"
+                  variant="destructive"
+                  size="icon-sm"
                   onClick={handleOpenConfirmDelete}
+                  aria-label="Delete qard"
                 >
-                  <AiOutlineDelete className="text-xl" />
-                </button>
+                  <AiOutlineDelete className="size-4" />
+                </Button>
               </div>
-            </div>
-          </div>
+            </CardContent>
+          </Card>
         </div>
       )}
     </Draggable>

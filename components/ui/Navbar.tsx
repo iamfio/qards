@@ -6,7 +6,7 @@ import Image from "next/image";
 
 import AuthButton from "@/components/ui/AuthButton";
 import Logo from "@/components/ui/Logo";
-import SwitchTheme from "@/components/ui/SwitchTheme";
+import { ModeToggle } from "@/components/mode-toggle";
 
 export default function Navbar() {
   const { data: session } = useSession();
@@ -18,7 +18,7 @@ export default function Navbar() {
       </div>
 
       <div className="flex-none gap-2">
-        <SwitchTheme />
+        <ModeToggle />
 
         {session?.user && (
           <div className="dropdown dropdown-end">

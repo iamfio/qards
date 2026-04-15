@@ -2,6 +2,8 @@
 
 import { signIn, useSession } from "next-auth/react";
 
+import { Button } from "@/components/ui/button";
+
 export default function AuthButton() {
   const { data: session } = useSession();
 
@@ -9,14 +11,15 @@ export default function AuthButton() {
     <div>
       {!session && (
         <div>
-          <button
+          <Button
             onClick={async () => {
               await signIn();
             }}
-            className="btn btn-sm btn-outline btn-primary"
+            size="sm"
+            variant="outline"
           >
             SIGN IN / SIGN UP
-          </button>
+          </Button>
         </div>
       )}
     </div>

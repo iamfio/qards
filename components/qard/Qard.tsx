@@ -1,10 +1,12 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import { useQRCode } from "next-qrcode";
-import { capitalize } from "@/lib/utils";
-import { useTheme } from "@/components/theme/ThemeProvider";
+import { capitalize } from "@/lib/utils/strings";
 
 import IconGeneric from "@/components/ui/icons/IconGeneric";
+import { Card, CardContent } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 
 type QardProps = {
   id?: string;
@@ -14,35 +16,68 @@ type QardProps = {
 
 export default function Qard({ accountName, accountLink }: QardProps) {
   const { Canvas } = useQRCode();
-  const { theme } = useTheme();
+  const qrContainerRef = useRef<HTMLDivElement>(null);
+  const [qrSize, setQrSize] = useState(240);
+
+  useEffect(() => {
+    const element = qrContainerRef.current;
+
+    if (!element) {
+      return;
+    }
+
+    const updateSize = () => {
+      const next = Math.max(
+        160,
+        Math.min(320, Math.floor(element.clientWidth - 24)),
+      );
+      setQrSize(next);
+    };
+
+    updateSize();
+
+    const observer = new ResizeObserver(updateSize);
+    observer.observe(element);
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <div className="my-6">
-      <div className="shadow-xl card w-87.5 bg-base-100 ">
-        <figure className="px-10 pt-10">
-          <Canvas
-            text={accountLink}
-            options={{
-              margin: 1,
-              scale: 4,
-              color: {
-                dark: theme === "black" ? "#000000" : "#1f2937",
-                light: "#fff",
-              },
-              errorCorrectionLevel: "H",
-            }}
-          />
-        </figure>
-
-        <div className="items-center text-center card-body">
-          <div className="w-24 mb-2">
-            <IconGeneric name={accountLink} />
+    <div className="my-6 w-full px-2 sm:px-0">
+      <Card className="mx-auto w-full max-w-[420px] shadow-xl">
+        <CardContent className="flex flex-col items-center gap-4 pt-6">
+          <div
+            ref={qrContainerRef}
+            className="w-full max-w-[340px] rounded-lg border bg-background p-3"
+          >
+            <Canvas
+              text={accountLink}
+              options={{
+                margin: 1,
+                width: qrSize,
+                errorCorrectionLevel: "H",
+              }}
+            />
           </div>
-          <h2 className="mb-3 text-5xl card-title">
-            <a href={accountLink}>{capitalize(accountName)}</a>
-          </h2>
-        </div>
-      </div>
+
+          <Separator />
+
+          <div className="flex flex-col items-center text-center">
+            <div className="mb-2 w-24">
+              <IconGeneric name={accountLink} />
+            </div>
+
+            <h2 className="text-3xl font-semibold tracking-tight">
+              <a
+                href={accountLink}
+                className="hover:underline"
+              >
+                {capitalize(accountName)}
+              </a>
+            </h2>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }

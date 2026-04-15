@@ -1,10 +1,13 @@
 "use client";
 
-import { getURL } from "@/lib/utils";
+import { useEffect, useRef, useState } from "react";
+import { getURL } from "@/lib/utils/strings";
 import type { Qard, User } from "@prisma/client";
 import { useQRCode } from "next-qrcode";
-import { useTheme } from "@/components/theme/ThemeProvider";
 import Image from "next/image";
+
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 
 type ProfileCardProps = {
   user: (User & { qards: Qard[] }) | null;
@@ -12,62 +15,88 @@ type ProfileCardProps = {
 
 export default function ProfileCard({ user }: ProfileCardProps) {
   const { Canvas } = useQRCode();
-  const { theme } = useTheme();
+  const qrContainerRef = useRef<HTMLDivElement>(null);
+  const [qrSize, setQrSize] = useState(200);
+
+  useEffect(() => {
+    const element = qrContainerRef.current;
+
+    if (!element) {
+      return;
+    }
+
+    const updateSize = () => {
+      const next = Math.max(
+        150,
+        Math.min(260, Math.floor(element.clientWidth - 24)),
+      );
+      setQrSize(next);
+    };
+
+    updateSize();
+
+    const observer = new ResizeObserver(updateSize);
+    observer.observe(element);
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <div className="card w-87.5 bg-base-100 shadow-xl">
-      <figure>
-        {user?.image && (
-          <Image
-            src={user.image}
-            alt={user?.name || "Profile Picture"}
-            width={350}
-            height={350}
-            unoptimized
-          />
-        )}
-      </figure>
+    <Card className="w-[min(100%,420px)] overflow-hidden pt-0 shadow-xl">
+      <Image
+        src={user?.image || "/images/placeholder.svg"}
+        alt={user?.name || "Profile Picture"}
+        width={420}
+        height={260}
+        unoptimized
+        className="block h-auto w-full object-cover"
+        loading="eager"
+      />
 
-      <div className="card-body">
-        <h2 className="card-title">{user?.name}</h2>
+      <CardHeader className="gap-0">
+        <CardTitle>{user?.name}</CardTitle>
 
         {user?.jobRole && (
-          <h2 className="mt-[-0.4rem] mb-2 text-sm font-mono">
-            {user?.jobRole}
-          </h2>
+          <p className="mt-1 text-sm font-mono text-muted-foreground">
+            {user.jobRole}
+          </p>
         )}
+      </CardHeader>
 
+      <CardContent className="space-y-3">
         {user?.email && (
-          <div>
-            <div className="mt-2 text-sm font-bold">E-Mail:</div>{" "}
-            <span className="text-lg">{user?.email}</span>
+          <div className="space-y-1">
+            <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+              E-Mail
+            </p>
+            <p className="text-base">{user.email}</p>
           </div>
         )}
 
         {user?.company && (
-          <div>
-            <div className="mt-2 text-sm font-bold">Company:</div>{" "}
-            <span className="text-lg">{user?.company}</span>
+          <div className="space-y-1">
+            <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+              Company
+            </p>
+            <p className="text-base">{user.company}</p>
           </div>
         )}
 
-        <div className="divider"></div>
+        <Separator className="my-2" />
 
-        <div className="self-center">
+        <div
+          ref={qrContainerRef}
+          className="flex w-full justify-center"
+        >
           <Canvas
             text={getURL(`/${user?.username}`)}
             options={{
               margin: 1,
-              scale: 3,
-              width: 200,
-              color: {
-                light: "#fff",
-                dark: theme === "black" ? "#000000" : "#1f2937",
-              },
+              width: qrSize,
             }}
           />
         </div>
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   );
 }

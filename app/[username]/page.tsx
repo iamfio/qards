@@ -8,6 +8,7 @@ import { prisma } from "@/lib/globalPrisma";
 import type { User } from "@prisma/client";
 
 import Loading from "./loading";
+import QardEmptyList from "@/components/qard/QardEmptyList";
 
 type UserPageProps = {
   params: Promise<{ username: string }>;
@@ -65,26 +66,7 @@ export default async function UserPage({ params }: UserPageProps) {
             ))}
           </Suspense>
 
-          {user.qards.length === 0 && (
-            <div className="h-24 mt-12 shadow-lg alert">
-              <div className="my-auto">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  className="flex-shrink-0 w-6 h-6 stroke-info"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                  ></path>
-                </svg>
-                <span>You have no cards yet.</span>
-              </div>
-            </div>
-          )}
+          {user.qards.length === 0 && <QardEmptyList />}
         </div>
       </div>
     </div>

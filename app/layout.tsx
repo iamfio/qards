@@ -2,14 +2,18 @@ import "./globals.css";
 
 import AuthContext from "@/components/AuthContext";
 import Footer from "@/components/ui/Footer";
-import Navbar from "@/components/ui/Navbar";
-import ThemeProvider from "@/components/theme/ThemeProvider";
+import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
-import { Urbanist } from "next/font/google";
-import { Metadata } from "next";
+import type { Metadata } from "next";
+import { Header } from "@/components/header";
+import { Oxanium } from "next/font/google";
+import React from "react";
 
-const urbanist = Urbanist({ subsets: ["latin"] });
+const oxanium = Oxanium({
+  subsets: ["latin"],
+  variable: "--font-sans",
+});
 
 export const metadata: Metadata = {
   title: "Qards",
@@ -27,6 +31,7 @@ export default async function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
+      className={oxanium.variable}
     >
       <head>
         <link
@@ -35,16 +40,21 @@ export default async function RootLayout({
         />
         <title>Qards</title>
       </head>
-      <body className={urbanist.className}>
-        <AuthContext session={session}>
-          <ThemeProvider>
-            <Navbar />
-            <div className="flex flex-col items-center justify-center mx-8 sm:mx-4">
+      <body className="min-h-screen bg-background font-sans antialiased flex flex-col">
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <AuthContext session={session}>
+            <Header />
+            <main className="grow mx-8 flex flex-col items-center justify-center sm:mx-4">
               {children}
-            </div>
+            </main>
             <Footer />
-          </ThemeProvider>
-        </AuthContext>
+          </AuthContext>
+        </ThemeProvider>
       </body>
     </html>
   );

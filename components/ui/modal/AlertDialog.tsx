@@ -1,5 +1,8 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+
 import Modal from "./Modal";
 
 type AlertDialogProps = {
@@ -18,19 +21,14 @@ export default function AlertDialog({
       open={open}
       onClose={onCloseAction}
     >
-      <div className="p-8 rounded-lg shadow-xl card bg-base-100 w-96">
-        <div className="card-body">
-          <h2 className="text-xl card-title">{message}</h2>
-          <div className="justify-end mt-4 card-actions">
-            <button
-              className="btn btn-primary"
-              onClick={onCloseAction}
-            >
-              OK
-            </button>
+      <Card className="w-96 max-w-full shadow-xl">
+        <CardContent className="space-y-4 pt-4">
+          <h2 className="text-xl font-semibold">{message}</h2>
+          <div className="flex justify-end">
+            <Button onClick={onCloseAction}>OK</Button>
           </div>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
     </Modal>
   );
 }
