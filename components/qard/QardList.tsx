@@ -8,8 +8,8 @@ import DotLoader from "@/components/loader/DotLoader";
 import QardForm from "@/components/qard/QardForm";
 import QardListItem from "@/components/qard/QardListItem";
 import { Button } from "@/components/ui/button";
-import { Empty, EmptyDescription, EmptyHeader, EmptyTitle } from "@/components/ui/empty";
 import Modal from "@/components/ui/modal/Modal";
+import QardEmptyList from "@/components/qard/QardEmptyList";
 
 export default function QardList() {
   const [qards, setQards] = useState<Qard[]>();
@@ -132,16 +132,7 @@ export default function QardList() {
           </Droppable>
         </DragDropContext>
 
-        {qards?.length === 0 && (
-          <Empty className="mt-12 border border-dashed border-border bg-muted/20">
-              <EmptyHeader>
-                <EmptyTitle>You have no cards yet.</EmptyTitle>
-                <EmptyDescription>
-                  This profile has not published any qards yet.
-                </EmptyDescription>
-              </EmptyHeader>
-            </Empty>
-        )}
+        {qards?.length === 0 && <QardEmptyList />}
       </div>
     </div>
   );

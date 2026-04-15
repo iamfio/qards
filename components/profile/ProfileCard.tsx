@@ -1,10 +1,9 @@
 "use client";
 
-import * as React from "react";
+import { useEffect, useRef, useState } from "react";
 import { getURL } from "@/lib/utils/strings";
 import type { Qard, User } from "@prisma/client";
 import { useQRCode } from "next-qrcode";
-import { useTheme } from "@/components/theme/ThemeProvider";
 import Image from "next/image";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -16,11 +15,10 @@ type ProfileCardProps = {
 
 export default function ProfileCard({ user }: ProfileCardProps) {
   const { Canvas } = useQRCode();
-  const { theme } = useTheme();
-  const qrContainerRef = React.useRef<HTMLDivElement>(null);
-  const [qrSize, setQrSize] = React.useState(200);
+  const qrContainerRef = useRef<HTMLDivElement>(null);
+  const [qrSize, setQrSize] = useState(200);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const element = qrContainerRef.current;
 
     if (!element) {
@@ -98,10 +96,6 @@ export default function ProfileCard({ user }: ProfileCardProps) {
             options={{
               margin: 1,
               width: qrSize,
-              color: {
-                light: "#fff",
-                dark: theme === "black" ? "#000000" : "#1f2937",
-              },
             }}
           />
         </div>

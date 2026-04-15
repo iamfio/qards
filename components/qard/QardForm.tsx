@@ -91,7 +91,7 @@ export default function QardForm({
       </CardHeader>
 
       <form onSubmit={handleSubmit(onSubmit)}>
-        <CardContent>
+        <CardContent className="mb-4">
           <FieldGroup>
             <Field>
               <FieldLabel htmlFor="accountName">Account Name</FieldLabel>

@@ -3,12 +3,12 @@ import type { Metadata } from "next";
 
 import ProfileCard from "@/components/profile/ProfileCard";
 import Qard from "@/components/qard/Qard";
-import { Empty, EmptyDescription, EmptyHeader, EmptyTitle } from "@/components/ui/empty";
 import UserNotFound from "@/components/ui/UserNotFound";
 import { prisma } from "@/lib/globalPrisma";
 import type { User } from "@prisma/client";
 
 import Loading from "./loading";
+import QardEmptyList from "@/components/qard/QardEmptyList";
 
 type UserPageProps = {
   params: Promise<{ username: string }>;
@@ -66,16 +66,7 @@ export default async function UserPage({ params }: UserPageProps) {
             ))}
           </Suspense>
 
-          {user.qards.length === 0 && (
-            <Empty className="mt-12 border border-dashed border-border bg-muted/20">
-              <EmptyHeader>
-                <EmptyTitle>You have no cards yet.</EmptyTitle>
-                <EmptyDescription>
-                  This profile has not published any qards yet.
-                </EmptyDescription>
-              </EmptyHeader>
-            </Empty>
-          )}
+          {user.qards.length === 0 && <QardEmptyList />}
         </div>
       </div>
     </div>

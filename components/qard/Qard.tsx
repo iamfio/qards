@@ -1,9 +1,8 @@
 "use client";
 
-import * as React from "react";
+import { useEffect, useRef, useState } from "react";
 import { useQRCode } from "next-qrcode";
 import { capitalize } from "@/lib/utils/strings";
-import { useTheme } from "@/components/theme/ThemeProvider";
 
 import IconGeneric from "@/components/ui/icons/IconGeneric";
 import { Card, CardContent } from "@/components/ui/card";
@@ -17,11 +16,10 @@ type QardProps = {
 
 export default function Qard({ accountName, accountLink }: QardProps) {
   const { Canvas } = useQRCode();
-  const { theme } = useTheme();
-  const qrContainerRef = React.useRef<HTMLDivElement>(null);
-  const [qrSize, setQrSize] = React.useState(240);
+  const qrContainerRef = useRef<HTMLDivElement>(null);
+  const [qrSize, setQrSize] = useState(240);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const element = qrContainerRef.current;
 
     if (!element) {
@@ -57,10 +55,6 @@ export default function Qard({ accountName, accountLink }: QardProps) {
               options={{
                 margin: 1,
                 width: qrSize,
-                color: {
-                  dark: theme === "black" ? "#000000" : "#1f2937",
-                  light: "#fff",
-                },
                 errorCorrectionLevel: "H",
               }}
             />

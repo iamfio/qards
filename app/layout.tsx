@@ -40,23 +40,21 @@ export default async function RootLayout({
         />
         <title>Qards</title>
       </head>
-      <body className="min-h-screen bg-background font-sans antialiased">
-        <AuthContext session={session}>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <div className="relative flex min-h-screen flex-col">
-              <Header />
-              <div className="mx-8 flex flex-col items-center justify-center sm:mx-4">
-                {children}
-              </div>
-            </div>
+      <body className="min-h-screen bg-background font-sans antialiased flex flex-col">
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <AuthContext session={session}>
+            <Header />
+            <main className="grow mx-8 flex flex-col items-center justify-center sm:mx-4">
+              {children}
+            </main>
             <Footer />
-          </ThemeProvider>
-        </AuthContext>
+          </AuthContext>
+        </ThemeProvider>
       </body>
     </html>
   );

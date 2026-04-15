@@ -27,7 +27,6 @@
     "class-variance-authority": "^0.7.1",
     "classnames": "^2.3.2",
     "clsx": "^2.1.1",
-    "daisyui": "5.5.19",
     "eslint-config-next": "16.2.3",
     "lucide-react": "^1.8.0",
     "next": "16.2.3",
