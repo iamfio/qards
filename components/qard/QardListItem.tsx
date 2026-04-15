@@ -164,7 +164,7 @@ export default function QardListItem({
 
               <div className="min-w-0 flex-1 text-sm font-medium">
                 <span className="truncate block">
-                  {capitalize(qard.accountName!)}
+                  {capitalize(qard.accountName)}
                 </span>
               </div>
 

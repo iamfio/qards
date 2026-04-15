@@ -1,10 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { LogOut, User as UserIcon } from "lucide-react";
 
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -15,9 +15,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ModeToggle } from "@/components/mode-toggle";
+import { getUserInitials } from "@/lib/utils/avatar";
 
 export function Header() {
   const { data: session } = useSession();
+  const initials = getUserInitials(session?.user?.name, session?.user?.email);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-backdrop-blur:bg-background/60">
@@ -40,20 +42,19 @@ export function Header() {
                   size="icon"
                   className="relative size-10 rounded-full"
                 >
-                  {session.user.image ? (
-                    <Image
-                      src={session.user.image}
-                      alt={session.user.name || "User Avatar"}
-                      width={40}
-                      height={40}
-                      unoptimized
-                      className="rounded-full"
-                    />
-                  ) : (
-                    <div className="flex size-10 items-center justify-center rounded-full bg-muted">
-                      <UserIcon className="size-5 text-muted-foreground" />
-                    </div>
-                  )}
+                  <Avatar className="size-10">
+                    {session.user.image && (
+                      <AvatarImage
+                        src={session.user.image}
+                        alt={session.user.name || "User Avatar"}
+                      />
+                    )}
+                    <AvatarFallback>
+                      {initials || (
+                        <UserIcon className="size-5 text-muted-foreground" />
+                      )}
+                    </AvatarFallback>
+                  </Avatar>
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent

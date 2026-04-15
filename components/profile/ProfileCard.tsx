@@ -42,26 +42,23 @@ export default function ProfileCard({ user }: ProfileCardProps) {
   }, []);
 
   return (
-    <Card className="w-[min(100%,420px)] shadow-xl">
-      <div>
-        {user?.image && (
-          <Image
-            src={user.image}
-            alt={user?.name || "Profile Picture"}
-            width={350}
-            height={350}
-            unoptimized
-            className="w-full rounded-t-xl object-cover"
-          />
-        )}
-      </div>
+    <Card className="w-[min(100%,420px)] overflow-hidden pt-0 shadow-xl">
+      <Image
+        src={user?.image || "/images/placeholder.svg"}
+        alt={user?.name || "Profile Picture"}
+        width={420}
+        height={260}
+        unoptimized
+        className="block h-auto w-full object-cover"
+        loading="eager"
+      />
 
       <CardHeader className="gap-0">
         <CardTitle>{user?.name}</CardTitle>
 
         {user?.jobRole && (
           <p className="mt-1 text-sm font-mono text-muted-foreground">
-            {user?.jobRole}
+            {user.jobRole}
           </p>
         )}
       </CardHeader>
@@ -72,7 +69,7 @@ export default function ProfileCard({ user }: ProfileCardProps) {
             <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
               E-Mail
             </p>
-            <p className="text-base">{user?.email}</p>
+            <p className="text-base">{user.email}</p>
           </div>
         )}
 
@@ -81,7 +78,7 @@ export default function ProfileCard({ user }: ProfileCardProps) {
             <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
               Company
             </p>
-            <p className="text-base">{user?.company}</p>
+            <p className="text-base">{user.company}</p>
           </div>
         )}
 
