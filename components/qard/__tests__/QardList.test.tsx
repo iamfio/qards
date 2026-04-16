@@ -29,8 +29,8 @@ global.fetch = vi.fn(() =>
   Promise.resolve({
     ok: true,
     json: () => Promise.resolve({ qards: mockQards }),
-  }),
-) as any;
+  } as Response),
+) as typeof fetch;
 
 vi.mock("@/components/ui/icons/IconGeneric", () => ({
   default: ({ name }: { name: string }) => (
@@ -66,8 +66,8 @@ describe("QardList Component", () => {
       Promise.resolve({
         ok: true,
         json: () => Promise.resolve({ qards: [] }),
-      }),
-    ) as any;
+      } as Response),
+    ) as typeof fetch;
 
     renderWithProviders(<QardList />);
 
