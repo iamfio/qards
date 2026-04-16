@@ -168,7 +168,7 @@ export default function ProfileEditForm({ user }: { user: User }) {
 
 function WelcomeCTA({ name }: { name: User["name"] }) {
   return (
-    <Card className="bg-muted/40">
+    <Card className="w-full">
       <CardContent className="space-y-2 pt-4 text-sm">
         <p className="text-base font-medium">Hello {name}!</p>
         <p>
