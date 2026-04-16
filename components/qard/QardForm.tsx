@@ -7,13 +7,11 @@ import { useForm } from "react-hook-form";
 
 import { Button } from "@/components/ui/button";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from "@/components/ui/dialog";
 import {
   Field,
   FieldError,
@@ -77,66 +75,67 @@ export default function QardForm({
   }
 
   return (
-    <Card className="w-96 max-w-full shadow-xl">
-      <CardHeader>
-        <CardTitle className="text-primary">
+    <>
+      <DialogHeader>
+        <DialogTitle className="text-primary">
           {isEdit ? "Edit" : "New"} Qard
-        </CardTitle>
+        </DialogTitle>
 
-        <CardDescription>
+        <DialogDescription>
           {isEdit
             ? "Please alter existing data to edit the Qard"
             : "Please fill out the form to create new Qard"}
-        </CardDescription>
-      </CardHeader>
+        </DialogDescription>
+      </DialogHeader>
 
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <CardContent className="mb-4">
-          <FieldGroup>
-            <Field>
-              <FieldLabel htmlFor="accountName">Account Name</FieldLabel>
-              <Input
-                id="accountName"
-                type="text"
-                placeholder="Account Name"
-                aria-invalid={!!errors.accountName}
-                {...register("accountName", {
-                  required: "Required field",
-                })}
-              />
-              <FieldError
-                errors={
-                  errors.accountName
-                    ? [{ message: errors.accountName.message }]
-                    : undefined
-                }
-              />
-            </Field>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="space-y-4"
+      >
+        <FieldGroup>
+          <Field>
+            <FieldLabel htmlFor="accountName">Account Name</FieldLabel>
+            <Input
+              id="accountName"
+              type="text"
+              placeholder="Account Name"
+              aria-invalid={!!errors.accountName}
+              {...register("accountName", {
+                required: "Required field",
+              })}
+            />
+            <FieldError
+              errors={
+                errors.accountName
+                  ? [{ message: errors.accountName.message }]
+                  : undefined
+              }
+            />
+          </Field>
 
-            <Field>
-              <FieldLabel htmlFor="accountLink">Account Link</FieldLabel>
-              <Input
-                id="accountLink"
-                type="text"
-                placeholder="Account URL"
-                aria-invalid={!!errors.accountLink}
-                {...register("accountLink", {
-                  required: "Required field",
-                  validate: (value) => isURL(value) || "Invalid URL",
-                })}
-              />
-              <FieldError
-                errors={
-                  errors.accountLink
-                    ? [{ message: errors.accountLink.message }]
-                    : undefined
-                }
-              />
-            </Field>
-          </FieldGroup>
-        </CardContent>
+          <Field>
+            <FieldLabel htmlFor="accountLink">Account Link</FieldLabel>
+            <Input
+              id="accountLink"
+              type="text"
+              placeholder="Account URL"
+              aria-invalid={!!errors.accountLink}
+              {...register("accountLink", {
+                required: "Required field",
+                validate: (value) => isURL(value) || "Invalid URL",
+              })}
+            />
+            <FieldError
+              errors={
+                errors.accountLink
+                  ? [{ message: errors.accountLink.message }]
+                  : undefined
+              }
+            />
+          </Field>
+        </FieldGroup>
 
-        <CardFooter className="justify-end gap-2">
+        <DialogFooter>
           <Button
             type="button"
             variant="outline"
@@ -145,8 +144,8 @@ export default function QardForm({
             Cancel
           </Button>
           <Button type="submit">Save</Button>
-        </CardFooter>
+        </DialogFooter>
       </form>
-    </Card>
+    </>
   );
 }
