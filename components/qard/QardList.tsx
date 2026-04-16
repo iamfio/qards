@@ -8,15 +8,19 @@ import DotLoader from "@/components/loader/DotLoader";
 import QardForm from "@/components/qard/QardForm";
 import QardListItem from "@/components/qard/QardListItem";
 import { Button } from "@/components/ui/button";
-import Modal from "@/components/ui/modal/Modal";
+import {
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import QardEmptyList from "@/components/qard/QardEmptyList";
 
 export default function QardList() {
   const [qards, setQards] = useState<Qard[]>();
   const [openNewQard, setOpenNewQard] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-
-  const handleOpenNewQard = () => setOpenNewQard((prev) => !prev);
 
   const getQards = useCallback(async (showLoader = true) => {
     if (showLoader) {
@@ -82,28 +86,28 @@ export default function QardList() {
   }, [getQards]);
 
   return (
-    <div>
+    <div className="w-full">
       <div className="flex justify-center">
         <div className="mx-4 mt-4 mb-6">
-          <Button
-            className="min-w-40"
-            onClick={handleOpenNewQard}
+          <Dialog
+            open={openNewQard}
+            onOpenChange={setOpenNewQard}
           >
-            New Qard
-          </Button>
+            <DialogTrigger asChild>
+              <Button className="min-w-40">New Qard</Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader className="sr-only">
+                <DialogTitle>New Qard Form</DialogTitle>
+              </DialogHeader>
+              <QardForm
+                onClose={() => setOpenNewQard(false)}
+                getQards={() => getQards(false)}
+              />
+            </DialogContent>
+          </Dialog>
         </div>
       </div>
-      {openNewQard && (
-        <Modal
-          open={openNewQard}
-          onClose={handleOpenNewQard}
-        >
-          <QardForm
-            onClose={handleOpenNewQard}
-            getQards={() => getQards(false)}
-          />
-        </Modal>
-      )}
 
       <div className="flex flex-col items-center w-full m-auto">
         {loading && <DotLoader />}

@@ -12,7 +12,13 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import IconGeneric from "@/components/ui/icons/IconGeneric";
-import Modal from "@/components/ui/modal/Modal";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import ConfirmModal from "@/components/ui/modal/ConfirmModal";
 import AlertDialog from "@/components/ui/modal/AlertDialog";
 
@@ -32,7 +38,6 @@ export default function QardListItem({
   const [openAlertDialog, setOpenAlertDialog] = useState<boolean>(false);
   const [alertMessage, setAlertMessage] = useState<string>("");
 
-  const handleOpenEditQard = () => setOpenEditQard((prev) => !prev);
   const handleOpenConfirmDelete = () => setOpenConfirmDelete((prev) => !prev);
   const handleOpenAlertDialog = () => setOpenAlertDialog((prev) => !prev);
 
@@ -111,22 +116,6 @@ export default function QardListItem({
           {...provided.dragHandleProps}
           className="my-4"
         >
-          {openEditQard && (
-            <Modal
-              open={openEditQard}
-              onClose={handleOpenEditQard}
-            >
-              <QardForm
-                isEdit
-                qardId={qard.id}
-                onClose={handleOpenEditQard}
-                accountLink={qard.accountLink}
-                accountName={qard.accountName}
-                getQards={getQards}
-              />
-            </Modal>
-          )}
-
           {openConfirmDelete && (
             <ConfirmModal
               open={openConfirmDelete}
@@ -169,15 +158,34 @@ export default function QardListItem({
               </div>
 
               <div className="flex items-center gap-2">
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="icon-sm"
-                  onClick={handleOpenEditQard}
-                  aria-label="Edit qard"
+                <Dialog
+                  open={openEditQard}
+                  onOpenChange={setOpenEditQard}
                 >
-                  <AiOutlineEdit className="size-4" />
-                </Button>
+                  <DialogTrigger asChild>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="icon-sm"
+                      aria-label="Edit qard"
+                    >
+                      <AiOutlineEdit className="size-4" />
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader className="sr-only">
+                      <DialogTitle>Edit Qard Form</DialogTitle>
+                    </DialogHeader>
+                    <QardForm
+                      isEdit
+                      qardId={qard.id}
+                      onClose={() => setOpenEditQard(false)}
+                      accountLink={qard.accountLink}
+                      accountName={qard.accountName}
+                      getQards={getQards}
+                    />
+                  </DialogContent>
+                </Dialog>
 
                 <Button
                   type="button"
