@@ -42,35 +42,3 @@ export function getUserInitials(
 
   return "U";
 }
-
-// type ResolveAvatarImageSrcOptions = {
-//   size?: number;
-// };
-
-// export function resolveAvatarImageSrc(
-//   source?: AvatarSource | null,
-//   options?: ResolveAvatarImageSrcOptions,
-// ): string | null {
-//   if (!source) {
-//     return null;
-//   }
-//
-//   const cloudName =
-//     process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME ||
-//     process.env.CLOUDINARY_CLOUD_NAME;
-//   const size = options?.size ?? 96;
-//
-//   if (source.avatarPublicId && cloudName) {
-//     return getCldImageUrl({
-//       src: source.avatarPublicId,
-//       width: size,
-//       height: size,
-//       crop: "fill",
-//       gravity: "face",
-//       quality: "auto",
-//       format: "auto",
-//     });
-//   }
-//
-//   return resolveAvatarUrl(source);
-// }
