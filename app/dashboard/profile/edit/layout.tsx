@@ -6,8 +6,8 @@ export default async function ProfileEditLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="h-screen">
-      <div className="flex flex-col">{children}</div>
+    <div className="w-full">
+      <div className="flex flex-col justify-center">{children}</div>
     </div>
   );
 }

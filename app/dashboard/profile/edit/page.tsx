@@ -31,7 +31,7 @@ export default async function Profile() {
 
   return (
     <div>
-      <div className="w-full my-8">
+      <div className="flex justify-center">
         <ProfileEditForm user={user} />
       </div>
     </div>
