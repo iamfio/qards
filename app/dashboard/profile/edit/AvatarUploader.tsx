@@ -7,6 +7,16 @@ import { useCallback, useEffect, useState, type ChangeEvent } from "react";
 
 import { uploadAvatarAction } from "@/app/actions/upload-avatar";
 import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { FieldError, FieldLabel } from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+import { Separator } from "@/components/ui/separator";
 
 const MAX_FILE_SIZE_BYTES = 2 * 1024 * 1024;
 const ALLOWED_MIME_TYPES = ["image/jpeg", "image/png", "image/webp"];
@@ -72,7 +82,7 @@ export default function AvatarUploader({
       }
 
       if (file.size > MAX_FILE_SIZE_BYTES) {
-        setError("File is too large. Maximum allowed size is 5MB.");
+        setError("File is too large. Maximum allowed size is 2MB.");
         event.target.value = "";
         return;
       }
@@ -122,75 +132,89 @@ export default function AvatarUploader({
   }, [getImageScaledToCanvas, onUploadedAction, selectedImageUrl]);
 
   return (
-    <div className="space-y-4 rounded-lg border p-4">
-      <div>
-        <p className="text-sm font-medium">Avatar</p>
-        <p className="text-xs text-muted-foreground">
-          Upload and crop a JPG, PNG, or WEBP image up to 5MB.
-        </p>
-      </div>
+    <Card
+      size="sm"
+      className="border"
+    >
+      <CardHeader>
+        <CardTitle>Avatar</CardTitle>
+        <CardDescription>
+          Upload and crop a JPG, PNG, or WEBP image up to 2MB.
+        </CardDescription>
+      </CardHeader>
 
-      <div className="flex flex-col gap-4 md:flex-row md:items-start">
-        <div className="relative h-28 w-28 overflow-hidden rounded-full border bg-muted">
-          <Image
-            src={currentImageUrl ?? "/images/placeholder.svg"}
-            alt="Current avatar preview"
-            fill
-            className="object-cover"
-            sizes="112px"
-          />
-        </div>
+      <CardContent className="space-y-4">
+        <div className="flex flex-col gap-4 md:flex-row md:items-start">
+          <div className="relative h-28 w-28 overflow-hidden rounded-full border bg-muted">
+            <Image
+              src={currentImageUrl ?? "/images/placeholder.svg"}
+              alt="Current avatar preview"
+              fill
+              className="object-cover"
+              sizes="112px"
+            />
+          </div>
 
-        <div className="space-y-3">
-          <input
-            type="file"
-            accept="image/png,image/jpeg,image/webp"
-            onChange={onFileChange}
-            disabled={isSaving}
-            className="block w-full text-sm"
-          />
-
-          {selectedImageUrl && (
-            <div className="space-y-3">
-              <div className="inline-block overflow-hidden rounded-md">
-                <AvatarEditor
-                  ref={editorRef}
-                  image={selectedImageUrl}
-                  width={220}
-                  height={220}
-                  border={16}
-                  borderRadius={999}
-                  scale={zoom}
-                />
-              </div>
-
-              <label className="block text-sm">
-                Zoom: {zoom.toFixed(1)}x
-                <input
-                  type="range"
-                  min={1}
-                  max={3}
-                  step={0.1}
-                  value={zoom}
-                  onChange={(event) => setZoom(Number(event.target.value))}
-                  disabled={isSaving}
-                  className="mt-2 w-full"
-                />
-              </label>
-
-              <Button
-                type="button"
-                onClick={onSave}
+          <div className="flex-1 space-y-3">
+            <div className="space-y-1.5">
+              <FieldLabel htmlFor="avatar-file">Choose image</FieldLabel>
+              <Input
+                id="avatar-file"
+                type="file"
+                accept="image/png,image/jpeg,image/webp"
+                onChange={onFileChange}
                 disabled={isSaving}
-              >
-                {isSaving ? "Saving..." : "Save Avatar"}
-              </Button>
+              />
             </div>
-          )}
-        </div>
-      </div>
 
-      {error && <p className="text-sm text-destructive">{error}</p>}
-    </div>
+            {selectedImageUrl && (
+              <>
+                <Separator />
+
+                <div className="space-y-3">
+                  <div className="inline-block overflow-hidden rounded-md border">
+                    <AvatarEditor
+                      ref={editorRef}
+                      image={selectedImageUrl}
+                      width={220}
+                      height={220}
+                      border={16}
+                      borderRadius={999}
+                      scale={zoom}
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <FieldLabel htmlFor="avatar-zoom">
+                      Zoom: {zoom.toFixed(1)}x
+                    </FieldLabel>
+                    <Input
+                      id="avatar-zoom"
+                      type="range"
+                      min={1}
+                      max={3}
+                      step={0.1}
+                      value={zoom}
+                      onChange={(event) => setZoom(Number(event.target.value))}
+                      disabled={isSaving}
+                    />
+                  </div>
+
+                  <Button
+                    type="button"
+                    onClick={onSave}
+                    disabled={isSaving}
+                  >
+                    {isSaving ? "Saving..." : "Save Avatar"}
+                  </Button>
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+
+        <FieldError errors={error ? [{ message: error }] : undefined} />
+      </CardContent>
+    </Card>
   );
 }
