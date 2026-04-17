@@ -17,6 +17,8 @@ export default function ProfileCard({ user }: ProfileCardProps) {
   const { Canvas } = useQRCode();
   const qrContainerRef = useRef<HTMLDivElement>(null);
   const [qrSize, setQrSize] = useState(200);
+  const avatarSrc = user?.image ?? "/images/placeholder.svg";
+  const avatarAlt = user?.name ?? "Profile picture";
 
   useEffect(() => {
     const element = qrContainerRef.current;
@@ -44,11 +46,10 @@ export default function ProfileCard({ user }: ProfileCardProps) {
   return (
     <Card className="w-[min(100%,420px)] overflow-hidden pt-0 shadow-xl">
       <Image
-        src={user?.image || "/images/placeholder.svg"}
-        alt={user?.name || "Profile Picture"}
+        src={avatarSrc}
+        alt={avatarAlt}
         width={420}
         height={260}
-        unoptimized
         className="block h-auto w-full object-cover"
         loading="eager"
       />

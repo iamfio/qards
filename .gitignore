@@ -26,7 +26,7 @@ yarn-error.log*
 .pnpm-debug.log*
 
 # local env files
-.env*.local
+.envlocal
 .env
 
 # vercel
@@ -42,3 +42,4 @@ notes.txt
 
 # not public
 components/ui/accordion
+.env*.local
