@@ -21,6 +21,7 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import AvatarUploader from "./AvatarUploader";
 
 type FormData = {
   name: User["name"];
@@ -31,6 +32,7 @@ type FormData = {
 
 export default function ProfileEditForm({ user }: { user: User }) {
   const router = useRouter();
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(user.image ?? null);
 
   const [usernamePresent, setUsernamePresent] = useState<boolean>(
     !!user.username,
@@ -86,6 +88,23 @@ export default function ProfileEditForm({ user }: { user: User }) {
           className="space-y-5"
         >
           {!usernamePresent && <WelcomeCTA name={user.name} />}
+
+          <AvatarUploader
+            currentImageUrl={avatarUrl}
+            onUploadedAction={(url) => {
+              setAvatarUrl(url);
+
+              window.dispatchEvent(
+                new CustomEvent("avatar-updated", {
+                  detail: {
+                    url,
+                  },
+                }),
+              );
+
+              router.refresh();
+            }}
+          />
 
           <FieldGroup>
             <Field>

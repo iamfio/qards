@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { LogOut, User as UserIcon } from "lucide-react";
+import { useEffect, useState } from "react";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -19,7 +20,26 @@ import { getUserInitials } from "@/lib/utils/avatar";
 
 export function Header() {
   const { data: session } = useSession();
+  const [liveAvatarUrl, setLiveAvatarUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    function onAvatarUpdated(event: Event) {
+      const customEvent = event as CustomEvent<{ url?: string }>;
+      if (customEvent.detail?.url) {
+        setLiveAvatarUrl(customEvent.detail.url);
+      }
+    }
+
+    window.addEventListener("avatar-updated", onAvatarUpdated);
+
+    return () => {
+      window.removeEventListener("avatar-updated", onAvatarUpdated);
+    };
+  }, []);
+
   const initials = getUserInitials(session?.user?.name, session?.user?.email);
+  const avatarSrc = liveAvatarUrl ?? session?.user?.image ?? null;
+  const avatarAlt = session?.user?.name || "User Avatar";
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-backdrop-blur:bg-background/60">
@@ -42,19 +62,23 @@ export function Header() {
                   size="icon"
                   className="relative size-10 rounded-full"
                 >
-                  <Avatar className="size-10">
-                    {session.user.image && (
-                      <AvatarImage
-                        src={session.user.image}
-                        alt={session.user.name || "User Avatar"}
+                  <div className="relative size-10 overflow-hidden rounded-full border bg-muted">
+                    {avatarSrc ? (
+                      <Image
+                        src={avatarSrc}
+                        alt={avatarAlt}
+                        fill
+                        sizes="40px"
+                        className="object-cover"
                       />
+                    ) : (
+                      <div className="flex size-full items-center justify-center text-xs font-medium text-muted-foreground">
+                        {initials || (
+                          <UserIcon className="size-5 text-muted-foreground" />
+                        )}
+                      </div>
                     )}
-                    <AvatarFallback>
-                      {initials || (
-                        <UserIcon className="size-5 text-muted-foreground" />
-                      )}
-                    </AvatarFallback>
-                  </Avatar>
+                  </div>
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent
