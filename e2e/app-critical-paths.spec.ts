@@ -59,6 +59,16 @@ test.describe("Qards critical app flows", () => {
     await expect(page).toHaveURL(/\/$/);
   });
 
+  test("guest cannot access avatar editor controls", async ({ page }) => {
+    await page.goto("/dashboard/profile/edit");
+
+    await expect(page).toHaveURL(/\/$/);
+    await expect(page.getByRole("button", { name: "Save Avatar" })).toHaveCount(
+      0,
+    );
+    await expect(page.getByLabel("Choose image")).toHaveCount(0);
+  });
+
   test("cookie consent can be accepted when banner is visible", async ({
     page,
     context,
